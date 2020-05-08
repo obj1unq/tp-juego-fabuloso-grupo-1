@@ -1,0 +1,30 @@
+import wollok.game.*
+import tanque.*
+
+program TanquesGame {
+	
+//	CONFIG	
+	game.title("Tanques")
+	game.height(20)
+	game.width(20)
+	game.cellSize(25)
+	//game.ground("")
+
+//	VISUALES
+	game.addVisualIn(tanque, game.at(5,5))
+//	game.addVisual(pared)
+	
+
+//	TECLADO
+	keyboard.x().onPressDo { tanque.disparar(balaComun) }
+	keyboard.z().onPressDo { tanque.disparar(balaPerforante) }
+	
+
+	keyboard.up().onPressDo { tanque.move(tanque.position().up(1), "norte") }
+	keyboard.down().onPressDo { tanque.move(tanque.position().down(1), "sur") }
+	keyboard.left().onPressDo { tanque.move(tanque.position().left(1), "oeste") }
+	keyboard.right().onPressDo { tanque.move(tanque.position().right(1), "este") }
+		
+//	START
+	game.start()
+}
