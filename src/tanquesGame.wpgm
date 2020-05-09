@@ -17,6 +17,7 @@ program TanquesGame {
 	game.addVisual(tanque)
 	game.addVisual(tanqueEnemigo)
 	game.addVisual(pared1)
+	//game.addVisual(asd) quiero hacer push
 	
 	
 
