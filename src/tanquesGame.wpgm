@@ -7,7 +7,7 @@ program TanquesGame {
 	game.title("Tanques")
 	game.height(40)
 	game.width(40)
-	game.cellSize(25)
+	game.cellSize(40)
 	game.ground("Assert/Fondos/Fondo-1.png")
 	
 
@@ -29,6 +29,8 @@ program TanquesGame {
 	keyboard.down().onPressDo { tanque.move(tanque.position().down(1), sur) }
 	keyboard.left().onPressDo { tanque.move(tanque.position().left(1), oeste) }
 	keyboard.right().onPressDo { tanque.move(tanque.position().right(1), este) }
+	
+	game.whenCollideDo(pared1, {tanque })
 
 		
 //	START

@@ -30,7 +30,7 @@ object tanque{
 	
 	method move(nuevaPosicion, enSentido) {
 		self.orientacion(enSentido)
-		if (self.puedeMover(enSentido)) {
+		if (self.puedeMover(nuevaPosicion)) {
 			self.position(nuevaPosicion)
 		}
 	}
@@ -69,25 +69,25 @@ object tanque{
 		 * 
 		 * POR HORA SIEMPRE TRUE
 		 */
-		return true
+		return game.getObjectsIn(hacia).isEmpty()
 	}
 }
 
 object tanqueEnemigo{
 	var property vida = 100
 	var property position = game.at(6,6)
-	var property orientacion = norte
+	var property orientacion = sur
 	/* norte - este - sur -  oeste */
 	
 	method move(nuevaPosicion, enSentido) {
 		self.orientacion(enSentido)
-		if (self.puedeMover(enSentido)) {
+		if (self.puedeMover(nuevaPosicion)) {
 			self.position(nuevaPosicion)
 		}
 	}
 	method image(){
 		
-		return   "Assert/Players/TanqueEnemigo_" + orientacion.imagen()
+		return   "Assert/Players/Tanque-2-" + orientacion.imagen()
 		
 	}
 	
@@ -120,7 +120,7 @@ object tanqueEnemigo{
 		 * 
 		 * POR HORA SIEMPRE TRUE
 		 */
-		return true
+		return game.getObjectsIn(hacia).isEmpty()
 	}
 }
 
