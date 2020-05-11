@@ -8,7 +8,7 @@ program TanquesGame {
 	game.height(40)
 	game.width(40)
 	game.cellSize(40)
-	game.ground("Assert/Fondos/Fondo-1.png")
+	game.ground("Fondos/Fondo-1.png")
 	
 
 //	VISUALES

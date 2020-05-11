@@ -37,7 +37,7 @@ object tanque{
 	
 	method image(){
 		
-		return "Assert/Players/Tanque-2-" + orientacion.imagen()
+		return "Players/Tanque-2-" + orientacion.imagen()
 	}
 	
 	
@@ -87,7 +87,7 @@ object tanqueEnemigo{
 	}
 	method image(){
 		
-		return   "Assert/Players/Tanque-2-" + orientacion.imagen()
+		return   "Players/Tanque-2-" + orientacion.imagen()
 		
 	}
 	
@@ -150,7 +150,7 @@ object sur{
 object pared1{
 	var property position = game.at(3,3)
 	method image(){
-		return "Assert/Paredes/ParedGrande.png"
+		return "Paredes/ParedGrande.png"
 		
 	}
 }
