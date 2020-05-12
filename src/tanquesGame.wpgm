@@ -5,35 +5,27 @@ program TanquesGame {
 	
 //	CONFIG	
 	game.title("Tanques")
-	game.height(40)
-	game.width(40)
+	game.height(30)
+	game.width(30)
 	game.cellSize(40)
 	game.ground("Fondos/Fondo-1.png")
 	
 
 //	VISUALES
-
-	
 	game.addVisual(tanque)
-	game.addVisual(tanqueEnemigo)
 	game.addVisual(pared1)
-	//game.addVisual(asd) quiero hacer push
-	
-	
+	// creo el tanque enemigo y lo pongo  a mover
+	game.addVisual(tanqueEnemigo)
+	game.onTick(1000, "tanqueEnemigo", {norte.mover(tanqueEnemigo)})
 
 //	TECLADO
-	keyboard.x().onPressDo { tanque.disparar(balaComun) }
-	keyboard.z().onPressDo { tanque.disparar(balaPerforante) }
-	game.onTick(1000, "tanqueEnemigo", {tanqueEnemigo.move(tanqueEnemigo.position().up(1),norte)})
+	keyboard.space().onPressDo { tanque.disparar() }
+	keyboard.up().onPressDo { norte.mover(tanque) }
+	keyboard.down().onPressDo { sur.mover(tanque) }
+	keyboard.left().onPressDo { oeste.mover(tanque) }
+	keyboard.right().onPressDo { este.mover(tanque) }
 	
-	keyboard.up().onPressDo { tanque.move(tanque.position().up(1), norte) }
-	keyboard.down().onPressDo { tanque.move(tanque.position().down(1), sur) }
-	keyboard.left().onPressDo { tanque.move(tanque.position().left(1), oeste) }
-	keyboard.right().onPressDo { tanque.move(tanque.position().right(1), este) }
-	
-	game.whenCollideDo(pared1, {tanque })
-
-		
+			
 //	START
 	game.start()
 }
