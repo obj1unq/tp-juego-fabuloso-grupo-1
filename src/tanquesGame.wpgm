@@ -16,7 +16,8 @@ program TanquesGame {
 	game.addVisual(pared1)
 	// creo el tanque enemigo y lo pongo  a mover
 	game.addVisual(tanqueEnemigo)
-	game.onTick(1000, "tanqueEnemigo", {norte.mover(tanqueEnemigo)})
+	//game.onTick(1000, "tanqueEnemigo", {norte.mover(tanqueEnemigo)})
+	game.onTick(1000, "tanqueEnemigo", {tanqueEnemigo.ataque(tanque)})
 
 //	TECLADO
 	keyboard.space().onPressDo { tanque.disparar() }
@@ -24,6 +25,7 @@ program TanquesGame {
 	keyboard.down().onPressDo { sur.mover(tanque) }
 	keyboard.left().onPressDo { oeste.mover(tanque) }
 	keyboard.right().onPressDo { este.mover(tanque) }
+	keyboard.a().onPressDo { tanque.autoAtaque() }
 	
 			
 //	START
