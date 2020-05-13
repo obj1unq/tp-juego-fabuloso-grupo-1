@@ -16,7 +16,6 @@ program TanquesGame {
 	game.addVisual(pared1)
 	// creo el tanque enemigo y lo pongo  a mover
 	game.addVisual(tanqueEnemigo)
-	//game.onTick(1000, "tanqueEnemigo", {norte.mover(tanqueEnemigo)})
 	game.onTick(1000, "tanqueEnemigo", {tanqueEnemigo.ataque(tanque)})
 
 //	TECLADO
