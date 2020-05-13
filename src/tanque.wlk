@@ -8,7 +8,7 @@ object balaComun {
 	const property nombreTick = "bala" 
 	
 	method image(){
-		return "Players/BalaNorte.png"// + orientacion.imagen()
+		return "Disparos/normal-" + orientacion.imagen()
 	}
 	method salirDisparada(){ 
 		self.orientacion().mover(self)
@@ -50,7 +50,7 @@ object balaComunEnemigo {
 	const property nombreTick = "balaEnemigo" 
 	
 	method image(){
-		return "Players/BalaNorte.png"// + orientacion.imagen()
+		return "Disparos/normal-" + orientacion.imagen()
 	}
 	method salirDisparada(){ 
 		self.orientacion().mover(self)
