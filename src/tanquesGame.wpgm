@@ -1,5 +1,7 @@
 import wollok.game.*
 import tanque.*
+import base.*
+import enemigo.*
 
 program TanquesGame {
 	
@@ -12,6 +14,8 @@ program TanquesGame {
 	
 
 //	VISUALES
+    base.dibujarParedes()	
+    game.addVisual(base)
 	game.addVisual(tanque)
 	game.addVisual(pared1)
 	// creo el tanque enemigo y lo pongo  a mover
