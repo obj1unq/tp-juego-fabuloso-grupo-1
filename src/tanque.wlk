@@ -4,6 +4,7 @@ object balaComun {
 	const property danio = 20
 	var property position = null
 	var property orientacion = norte 
+	const property nombreTick = "bala" 
 	
 	method image(){
 		return "Players/BalaNorte.png"// + orientacion.imagen()
@@ -16,7 +17,7 @@ object balaComun {
 		if (self.puedeMover(nuevaPosicion)) {
 			self.position(nuevaPosicion)
 		} else {
-			game.removeTickEvent("bala")
+			game.removeTickEvent(self.nombreTick())
 			game.removeVisual(self)
 		}
 	}
@@ -26,15 +27,26 @@ object balaComun {
 	}
 	
 	method ocasionarDanio(){
-		game.removeTickEvent("bala")
+		game.removeTickEvent(self.nombreTick())
 		game.uniqueCollider(self).recibirImpactoDe(self)		
+	}
+	
+	method recibirImpactoDe(objeto){
+		if (game.hasVisual(objeto)) {
+			game.removeVisual(objeto)
+		}
+		if (game.hasVisual(self)) {
+			game.removeTickEvent(self.nombreTick())
+			game.removeVisual(self)
+		}
 	}
 }
 
 object balaComunEnemigo {
 	const property danio = 20
 	var property position = null
-	var property orientacion = norte 
+	var property orientacion = norte
+	const property nombreTick = "balaEnemigo" 
 	
 	method image(){
 		return "Players/BalaNorte.png"// + orientacion.imagen()
@@ -47,7 +59,7 @@ object balaComunEnemigo {
 		if (self.puedeMover(nuevaPosicion)) {
 			self.position(nuevaPosicion)
 		} else {
-			game.removeTickEvent("balaEnemigo")
+			game.removeTickEvent(self.nombreTick())
 			game.removeVisual(self)
 		}
 	}
@@ -57,8 +69,18 @@ object balaComunEnemigo {
 	}
 	
 	method ocasionarDanio(){
-		game.removeTickEvent("balaEnemigo")
+		game.removeTickEvent(self.nombreTick())
 		game.uniqueCollider(self).recibirImpactoDe(self)		
+	}
+	
+	method recibirImpactoDe(objeto){
+		if (game.hasVisual(objeto)) {
+			game.removeVisual(objeto)
+		}
+		if (game.hasVisual(self)) {
+			game.removeTickEvent(self.nombreTick())
+			game.removeVisual(self)
+		}
 	}
 }
 
@@ -85,8 +107,8 @@ object tanque{
 			self.bala().orientacion(self.orientacion())
 			game.addVisual(self.bala())
 			self.bala().salirDisparada()
-			game.onTick(500, "bala", { self.bala().salirDisparada() })
-			game.whenCollideDo(self.bala(), { self.bala().ocasionarDanio() })
+			game.onTick(500, self.bala().nombreTick(), { self.bala().salirDisparada() })
+			game.whenCollideDo(self.bala(), { elemento => self.bala().ocasionarDanio() })
 		}
 	}
 	
@@ -186,8 +208,8 @@ object tanqueEnemigo{
 			self.bala().orientacion(self.orientacion())
 			game.addVisual(self.bala())
 			self.bala().salirDisparada()
-			game.onTick(500, "balaEnemigo", { self.bala().salirDisparada() })
-			game.whenCollideDo(self.bala(), { self.bala().ocasionarDanio() })
+			game.onTick(500, self.bala().nombreTick(), { self.bala().salirDisparada() })
+			game.whenCollideDo(self.bala(), { elemento => self.bala().ocasionarDanio() })
 		}
 	}
 	
