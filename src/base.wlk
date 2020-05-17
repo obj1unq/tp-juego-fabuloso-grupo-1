@@ -1,48 +1,75 @@
 import wollok.game.*
 
 object base {
-	var property position = game.at(10,15)
+	var property nivel = 1
+	// var property position = game.at(10,15)
+	var property position = game.at(game.center().x(),game.center().y() )
 	method image(){
 		return "Bases/base.png"
 	}
 	
+	method subirNivel(){
+		if (nivel < 4 ) {
+		nivel= self.nivel() + 1
+		self.actualizarVistas()
+		}
+	}
+	
+	method actualizarVistas(){
+		self.removerParedes()
+		self.dibujarParedes()
+	
+	}
+	
+	method removerParedes(){
+		game.removeVisual(pared1)
+		game.removeVisual(pared2)
+		game.removeVisual(pared3)
+		game.removeVisual(pared4)
+		game.removeVisual(pared5)
+		game.removeVisual(pared6)
+		game.removeVisual(pared7)
+		game.removeVisual(pared8)
+	}
+	
 	method dibujarParedes (){
-		game.addVisualIn(pared1, game.at(11,16))
-		game.addVisualIn(pared2, game.at(10,16))
-		game.addVisualIn(pared3, game.at(9,16))
-		game.addVisualIn(pared4, game.at(9,15))
-		game.addVisualIn(pared5, game.at(9,14))
-		game.addVisualIn(pared6, game.at(10,14))
-		game.addVisualIn(pared7, game.at(11,14))
-		game.addVisualIn(pared8, game.at(11,15))
+	    game.addVisualIn(pared1, game.at(self.position().x() + 1 ,self.position().y() + 1))
+		game.addVisualIn(pared2, game.at(self.position().x(),self.position().y() + 1))
+		game.addVisualIn(pared3, game.at(self.position().x() - 1, self.position().y() + 1))
+		game.addVisualIn(pared4, game.at(self.position().x() - 1,self.position().y()))
+		game.addVisualIn(pared5, game.at(self.position().x() - 1,self.position().y() - 1))
+		game.addVisualIn(pared6, game.at(self.position().x(),self.position().y() - 1))
+		game.addVisualIn(pared7, game.at(self.position().x() + 1 ,self.position().y() - 1))
+		game.addVisualIn(pared8, game.at(self.position().x() + 1,self.position().y()))
 		
 	}
 	
 }
 
 object pared1 {
-	method image(){	return "Bases/pared-norte-este.png"}
+	const property tipo = "pared"
+	method image(){	return "Paredes/pared-" + base.nivel().toString() + ".png"}
 }
 
 object pared2 {
-	method image(){	return "Bases/pared-norte.png"}
+	method image(){	return "Paredes/pared-" + base.nivel().toString() + ".png"}
 }
 object pared3 {
-	method image(){	return "Bases/pared-norte-oeste.png"}
+	method image(){	return "Paredes/pared-" + base.nivel().toString() + ".png"}
 }
 object pared4{
-	method image(){	return "Bases/pared-oeste.png"}
+	method image(){	return "Paredes/pared-" + base.nivel().toString() + ".png"}
 }
 object pared5{
-	method image(){	return "Bases/pared-sur-oeste.png"}
+		method image(){	return "Paredes/pared-" + base.nivel().toString() + ".png"}
 }
 
 object pared6{
-	method image(){	return "Bases/pared-sur.png"}
+	method image(){	return "Paredes/pared-" + base.nivel().toString() + ".png"}
 }
 object pared7{
-	method image(){	return "Bases/pared-sur-este.png"}
+	method image(){	return "Paredes/pared-" + base.nivel().toString() + ".png"}
 }
 object pared8{
-	method image(){	return "Bases/pared-este.png"}
+	method image(){	return "Paredes/pared-" + base.nivel().toString() + ".png"}
 }

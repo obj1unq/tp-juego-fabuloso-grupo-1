@@ -12,16 +12,18 @@ program TanquesGame {
 	game.cellSize(40)
 	game.ground("Fondos/Fondo-1.png")
 	
-
+ 
+  
 //	VISUALES
+    game.addVisual(powerUpsAumentoDanio)
     base.dibujarParedes()	
     game.addVisual(base)
 	game.addVisual(tanque)
 	game.addVisual(pared1)
 	// creo el tanque enemigo y lo pongo  a mover
 	game.addVisual(tanqueEnemigo)
+	
 	game.onTick(1000, "tanqueEnemigo", {tanqueEnemigo.ataque(tanque)})
-
 //	TECLADO
 	keyboard.space().onPressDo { tanque.disparar() }
 	keyboard.up().onPressDo { norte.mover(tanque) }
@@ -29,6 +31,8 @@ program TanquesGame {
 	keyboard.left().onPressDo { oeste.mover(tanque) }
 	keyboard.right().onPressDo { este.mover(tanque) }
 	keyboard.a().onPressDo { tanque.autoAtaque() }
+	keyboard.x().onPressDo { base.subirNivel()}
+	
 	
 			
 //	START

@@ -2,6 +2,7 @@ import wollok.game.*
 import tanque.*
 
 object tanqueEnemigo{
+	const property tipo = "enemigo"
 	var property vida = 100
 	var property position = game.at(6,6)
 	var property orientacion = norte

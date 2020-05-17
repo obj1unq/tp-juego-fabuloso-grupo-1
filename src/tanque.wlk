@@ -92,11 +92,16 @@ object tanque{
 	var property bala = balaComun
 	var modoAutomatico = false
 	var property nivel = 2
+	const property tipo = "player"
 	
 	method move(nuevaPosicion) {
-		if (self.puedeMover(nuevaPosicion)) {
+		if (self.puedeMover(nuevaPosicion) or self.hayPowerUpsEn (nuevaPosicion)) {
 			self.position(nuevaPosicion)
 		}
+	}
+	
+	method hayPowerUpsEn(posicion){
+		return game.getObjectsIn(posicion).contains({elemento=>elemento.tipo() == "powerUp"})
 	}
 	
 	method image(){
@@ -255,6 +260,40 @@ object pared1{
 	method recibirImpactoDe(unaBala){
 		game.removeVisual(unaBala)
 	}
+}
+
+
+
+object powerUpsAumentoDanio{
+	const property tipo = "powerUp"
+	var nivelDeDanio = 1
+//	var property aplicableA= aliada
+	var property position = game.at(randomizer.emptyPosition().x(),randomizer.emptyPosition().y())	
+	 method  image (){ return "powerups/Shot1.png" }
+	
+	method aumentarDanio (unidad){
+			nivelDeDanio= nivelDeDanio + 1
+			unidad.danio(nivelDeDanio)
+			game.removeVisual(self)
+			game.say(unidad,"Subi Eneriga" + unidad.danio())}
+	
+}
+	
+object randomizer {
+	method emptyPosition(){
+		const positionRandom = game.at(
+			0.randomUpTo(game.width() - 1 ).truncate(0),
+			0.randomUpTo(game.height() - 1 ).truncate(0) 
+		)
+		
+		if(game.getObjectsIn(positionRandom).isEmpty()){
+			return positionRandom
+		}
+		else{
+			return self.emptyPosition()
+		}
+	}
+	
 }
 
 
