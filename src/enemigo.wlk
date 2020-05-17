@@ -1,11 +1,14 @@
 import wollok.game.*
 import tanque.*
+import orientaciones.*
+import bala.*
 
 object tanqueEnemigo{
+	const property tipo = "enemigo"
 	var property vida = 100
 	var property position = game.at(6,6)
 	var property orientacion = norte
-	var property bala = balaComunEnemigo
+	var property bala = balaEnemigo
 	var property nivel = 1
 	
 	method move(nuevaPosicion) {

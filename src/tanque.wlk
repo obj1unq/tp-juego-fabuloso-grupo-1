@@ -1,89 +1,10 @@
 import wollok.game.*
 import enemigo.*
-
-object balaComun {
-	const property danio = 20
-	var property position = null
-	var property orientacion = norte 
-	const property nombreTick = "bala" 
-	
-	method image(){
-		return "Disparos/normal-" + orientacion.imagen()
-	}
-	method salirDisparada(){ 
-		self.orientacion().mover(self)
-	}
-	
-	method move(nuevaPosicion) {
-		if (self.puedeMover(nuevaPosicion)) {
-			self.position(nuevaPosicion)
-		} else {
-			game.removeTickEvent(self.nombreTick())
-			game.removeVisual(self)
-		}
-	}
-	
-	method puedeMover(hacia){
-		return self.orientacion().puedeMover(hacia)
-	}
-	
-	method ocasionarDanio(){
-		game.removeTickEvent(self.nombreTick())
-		game.uniqueCollider(self).recibirImpactoDe(self)		
-	}
-	
-	method recibirImpactoDe(objeto){
-		if (game.hasVisual(objeto)) {
-			game.removeVisual(objeto)
-		}
-		if (game.hasVisual(self)) {
-			game.removeTickEvent(self.nombreTick())
-			game.removeVisual(self)
-		}
-	}
-}
-
-object balaComunEnemigo {
-	const property danio = 20
-	var property position = null
-	var property orientacion = norte
-	const property nombreTick = "balaEnemigo" 
-	
-	method image(){
-		return "Disparos/normal-" + orientacion.imagen()
-	}
-	method salirDisparada(){ 
-		self.orientacion().mover(self)
-	}
-	
-	method move(nuevaPosicion) {
-		if (self.puedeMover(nuevaPosicion)) {
-			self.position(nuevaPosicion)
-		} else {
-			game.removeTickEvent(self.nombreTick())
-			game.removeVisual(self)
-		}
-	}
-	
-	method puedeMover(hacia){
-		return self.orientacion().puedeMover(hacia)
-	}
-	
-	method ocasionarDanio(){
-		game.removeTickEvent(self.nombreTick())
-		game.uniqueCollider(self).recibirImpactoDe(self)		
-	}
-	
-	method recibirImpactoDe(objeto){
-		if (game.hasVisual(objeto)) {
-			game.removeVisual(objeto)
-		}
-		if (game.hasVisual(self)) {
-			game.removeTickEvent(self.nombreTick())
-			game.removeVisual(self)
-		}
-	}
-}
+import base.*
+import orientaciones.*
+import powerUps.*
+import randomizer.*
+import bala.*
 
 object tanque{
 	var property vida = 100
@@ -92,11 +13,20 @@ object tanque{
 	var property bala = balaComun
 	var modoAutomatico = false
 	var property nivel = 2
+	const property tipo = "player"
+	
+	method tomarPowerUps(upgrade){
+		upgrade.aplicar()
+	}
 	
 	method move(nuevaPosicion) {
-		if (self.puedeMover(nuevaPosicion)) {
+		if (self.puedeMover(nuevaPosicion) ) {
 			self.position(nuevaPosicion)
 		}
+	}
+	
+	method hayPowerUpsEn(posicion){
+		return game.getObjectsIn(posicion).contains({elemento=>elemento.tipo() == "powerUp"})
 	}
 	
 	method image(){
@@ -131,7 +61,7 @@ object tanque{
 	}
 	
 	method puedeMover(hacia){
-		return game.getObjectsIn(hacia).isEmpty() and self.orientacion().puedeMover(hacia)
+		return (game.getObjectsIn(hacia).isEmpty() and self.orientacion().puedeMover(hacia))
 	}
 	
 	method ataque(enemigo){
@@ -192,71 +122,9 @@ object tanque{
 
 
 
-/*
- * Orientaciones
- */
-object norte{
-	method imagen(){
-		return "norte.png"
-	}
-	method mover(objeto){
-		objeto.orientacion(self)
-		objeto.move(objeto.position().up(1))
-	}
-	method puedeMover(hacia){
-		return game.height() > hacia.y() 
-	}
-}
-object este{
-	method imagen(){
-		return "este.png"
-	}
-	method mover(objeto){
-		objeto.orientacion(self)
-		objeto.move(objeto.position().right(1))
-	}
-	method puedeMover(hacia){
-		return game.width() > hacia.x() 
-	}
-}
-object oeste{
-	method imagen(){
-		return "oeste.png"
-	}
-	method mover(objeto){
-		objeto.orientacion(self)
-		objeto.move(objeto.position().left(1))
-	}
-	method puedeMover(hacia){
-		return hacia.x() >= 0 
-	}
-}
-object sur{
-	method imagen(){
-		return "sur.png"
-	}
-	method mover(objeto){
-		objeto.orientacion(self)
-		objeto.move(objeto.position().down(1))
-	}
-	method puedeMover(hacia){
-		return hacia.y() >= 0 
-	}
-}
 
 
-
-object pared1{
-	var property position = game.at(3,3)
-	method image(){
-		return "Paredes/ParedGrande.png"
-		
-	}
-	method recibirImpactoDe(unaBala){
-		game.removeVisual(unaBala)
-	}
-}
-
+	
 
 
 
