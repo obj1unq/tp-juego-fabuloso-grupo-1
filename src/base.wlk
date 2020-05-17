@@ -1,8 +1,13 @@
 import wollok.game.*
+import enemigo.*
+import base.*
+import orientaciones.*
+import powerUps.*
+import randomizer.*
+import tanque.*
 
 object base {
 	var property nivel = 1
-	// var property position = game.at(10,15)
 	var property position = game.at(game.center().x(),game.center().y() )
 	method image(){
 		return "Bases/base.png"
@@ -47,7 +52,6 @@ object base {
 }
 
 object pared1 {
-	const property tipo = "pared"
 	method image(){	return "Paredes/pared-" + base.nivel().toString() + ".png"}
 }
 
