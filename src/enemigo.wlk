@@ -6,7 +6,7 @@ import bala.*
 object tanqueEnemigo{
 	const property tipo = "enemigo"
 	var property vida = 100
-	var property position = game.at(25,25)
+	var property position = game.at(10,10)
 	var property orientacion = norte
 	var property bala = balaEnemigo
 	var property nivel = 1

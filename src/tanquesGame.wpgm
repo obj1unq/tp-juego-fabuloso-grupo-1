@@ -8,6 +8,7 @@ import tanque.*
 import bala.*
 import managerpowerup.*
 
+
 program TanquesGame {
 	
 //	CONFIG	
@@ -16,18 +17,21 @@ program TanquesGame {
 	game.width(25)
 	game.cellSize(40)
 	game.ground("Fondos/Fondo-1.png")
-	
 
+  
+ 
+  
 //	VISUALES
     base.dibujarParedes()	
     game.addVisual(base)
 	game.addVisual(tanque)
 	game.addVisual(pared1)
 	// creo el tanque enemigo y lo pongo  a mover
+	game.addVisual(tanqueEnemigo)
 	
 	
 	game.onTick(1000, "tanqueEnemigo", {tanqueEnemigo.ataque(tanque)})
-	game.onTick(7000, "managerPowerUp",{managerPowerUp.agregarPower(managerPowerUp.powerUps().anyOne())})
+	game.onTick(8000, "managerPowerUp", { managerPowerUp.agregarPower(managerPowerUp.powerRandom()) })
 //	TECLADO
 	keyboard.space().onPressDo { tanque.disparar() }
 	keyboard.up().onPressDo { norte.mover(tanque) }
