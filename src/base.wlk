@@ -7,6 +7,7 @@ import tanque.*
 
 object base {
 	var property nivel = 1
+	var property vida = 1
 	var property position = game.at(game.center().x(),game.center().y() )
 	method image(){
 		return "Bases/base.png"
@@ -51,6 +52,20 @@ object base {
 		return false
 	}
 	
+	method recibirImpactoDe(unaBala){
+		vida -= unaBala.danio()
+		game.removeVisual(unaBala)
+		self.destruirSiEstoySinVida()
+	}
+	method destruirSiEstoySinVida(){
+		if (self.vida() <= 0){
+			self.destruir()
+		}
+	}
+	method destruir(){
+	game.removeVisual(self)
+	}
+	
 }
 
 object pared1 {
@@ -63,7 +78,19 @@ object pared1 {
 	method curarVida(cantidad){
 		vida = cantidad + vida
 	}
-	
+	method recibirImpactoDe(unaBala){
+		vida -= unaBala.danio()
+		game.removeVisual(unaBala)
+		self.destruirSiEstoySinVida()
+	}
+	method destruirSiEstoySinVida(){
+		if (self.vida() <= 0){
+			self.destruir()
+		}
+	}
+	method destruir(){
+	game.removeVisual(self)
+	}
 }
 
 object pared2 {
@@ -74,6 +101,19 @@ object pared2 {
 	}
 	method curarVida(cantidad){
 		vida = cantidad + vida
+	}
+	method recibirImpactoDe(unaBala){
+		vida -= unaBala.danio()
+		game.removeVisual(unaBala)
+		self.destruirSiEstoySinVida()
+	}
+	method destruirSiEstoySinVida(){
+		if (self.vida() <= 0){
+			self.destruir()
+		}
+	}
+	method destruir(){
+	game.removeVisual(self)
 	}
 }
 object pared3 {
@@ -95,6 +135,19 @@ object pared4{
 	method curarVida(cantidad){
 		vida = cantidad + vida
 	}
+	method recibirImpactoDe(unaBala){
+		vida -= unaBala.danio()
+		game.removeVisual(unaBala)
+		self.destruirSiEstoySinVida()
+	}
+	method destruirSiEstoySinVida(){
+		if (self.vida() <= 0){
+			self.destruir()
+		}
+	}
+	method destruir(){
+	game.removeVisual(self)
+	}
 }
 object pared5{
 	var property vida = 50
@@ -104,6 +157,19 @@ object pared5{
 	}
 	method curarVida(cantidad){
 		vida = cantidad + vida
+	}
+	method recibirImpactoDe(unaBala){
+		vida -= unaBala.danio()
+		game.removeVisual(unaBala)
+		self.destruirSiEstoySinVida()
+	}
+	method destruirSiEstoySinVida(){
+		if (self.vida() <= 0){
+			self.destruir()
+		}
+	}
+	method destruir(){
+	game.removeVisual(self)
 	}
 }
 
@@ -126,6 +192,19 @@ object pared7{
 	method curarVida(cantidad){
 		vida = cantidad + vida
 	}
+	method recibirImpactoDe(unaBala){
+		vida -= unaBala.danio()
+		game.removeVisual(unaBala)
+		self.destruirSiEstoySinVida()
+	}
+	method destruirSiEstoySinVida(){
+		if (self.vida() <= 0){
+			self.destruir()
+		}
+	}
+	method destruir(){
+	game.removeVisual(self)
+	}
 }
 object pared8{
 	var property vida = 50
@@ -135,5 +214,18 @@ object pared8{
 	}
 	method curarVida(cantidad){
 		vida = cantidad + vida
+	}
+	method recibirImpactoDe(unaBala){
+		vida -= unaBala.danio()
+		game.removeVisual(unaBala)
+		self.destruirSiEstoySinVida()
+	}
+	method destruirSiEstoySinVida(){
+		if (self.vida() <= 0){
+			self.destruir()
+		}
+	}
+	method destruir(){
+	game.removeVisual(self)
 	}
 }
