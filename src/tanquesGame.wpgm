@@ -6,7 +6,6 @@ import powerUps.*
 import randomizer.*
 import tanque.*
 import bala.*
-
 import managerpowerup.*
 
 program TanquesGame {
