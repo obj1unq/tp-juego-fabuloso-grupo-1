@@ -15,7 +15,7 @@ program TanquesGame {
 	game.title("Tanques")
 	game.height(25)
 	game.width(25)
-	game.cellSize(40)
+	game.cellSize(41)
 	game.ground("Fondos/Fondo-1.png")
 
   
