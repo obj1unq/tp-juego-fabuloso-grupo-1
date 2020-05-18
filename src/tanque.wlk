@@ -15,8 +15,12 @@ object tanque{
 	var property nivel = 2
 	const property tipo = "player"
 	
+	method sumarVida(cantidad){
+		vida = cantidad + vida
+	}
+	
 	method tomarPowerUps(upgrade){
-		upgrade.aplicar()
+		upgrade.aplicar(self)
 	}
 	
 	method move(nuevaPosicion) {
@@ -25,9 +29,7 @@ object tanque{
 		}
 	}
 	
-	method hayPowerUpsEn(posicion){
-		return game.getObjectsIn(posicion).contains({elemento=>elemento.tipo() == "powerUp"})
-	}
+	
 	
 	method image(){
 		return "Players/Tanque-2-" + orientacion.imagen()
@@ -61,7 +63,7 @@ object tanque{
 	}
 	
 	method puedeMover(hacia){
-		return (game.getObjectsIn(hacia).isEmpty() and self.orientacion().puedeMover(hacia))
+		return (game.getObjectsIn(hacia).all({ cosa => cosa.esAtravezable()}) and self.orientacion().puedeMover(hacia))
 	}
 	
 	method ataque(enemigo){
@@ -117,6 +119,9 @@ object tanque{
 			self.orientacion(oeste)
 			self.orientacion().mover(self)
 		}
+	}
+	method esAtravezable(){
+		return false
 	}
 }
 

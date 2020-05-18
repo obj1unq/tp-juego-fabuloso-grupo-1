@@ -1,6 +1,5 @@
 import wollok.game.*
 import enemigo.*
-import base.*
 import orientaciones.*
 import powerUps.*
 import randomizer.*
@@ -48,32 +47,93 @@ object base {
 		game.addVisualIn(pared8, game.at(self.position().x() + 1,self.position().y()))
 		
 	}
+	method esAtravezable(){
+		return false
+	}
 	
 }
 
 object pared1 {
+	var property vida = 50
 	method image(){	return "Paredes/pared-" + base.nivel().toString() + ".png"}
+	method esAtravezable(){
+		return false
+	}
+	
+	method curarVida(cantidad){
+		vida = cantidad + vida
+	}
+	
 }
 
 object pared2 {
+	var property vida = 50
 	method image(){	return "Paredes/pared-" + base.nivel().toString() + ".png"}
+	method esAtravezable(){
+		return false
+	}
+	method curarVida(cantidad){
+		vida = cantidad + vida
+	}
 }
 object pared3 {
+	var property vida = 50
 	method image(){	return "Paredes/pared-" + base.nivel().toString() + ".png"}
+	method esAtravezable(){
+		return false
+	}
+	method curarVida(cantidad){
+		vida = cantidad + vida
+	}
 }
 object pared4{
+	var property vida = 50
 	method image(){	return "Paredes/pared-" + base.nivel().toString() + ".png"}
+	method esAtravezable(){
+		return false
+	}
+	method curarVida(cantidad){
+		vida = cantidad + vida
+	}
 }
 object pared5{
+	var property vida = 50
 		method image(){	return "Paredes/pared-" + base.nivel().toString() + ".png"}
+		method esAtravezable(){
+		return false
+	}
+	method curarVida(cantidad){
+		vida = cantidad + vida
+	}
 }
 
 object pared6{
+	var property vida = 50
 	method image(){	return "Paredes/pared-" + base.nivel().toString() + ".png"}
+	method esAtravezable(){
+		return false
+	}
+	method curarVida(cantidad){
+		vida = cantidad + vida
+	}
 }
 object pared7{
+	var property vida = 50
 	method image(){	return "Paredes/pared-" + base.nivel().toString() + ".png"}
+	method esAtravezable(){
+		return false
+	}
+	method curarVida(cantidad){
+		vida = cantidad + vida
+	}
 }
 object pared8{
+	var property vida = 50
 	method image(){	return "Paredes/pared-" + base.nivel().toString() + ".png"}
+	method esAtravezable(){
+		return false
+	}
+	method curarVida(cantidad){
+		vida = cantidad + vida
+	}
 }

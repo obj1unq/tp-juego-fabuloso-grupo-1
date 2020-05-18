@@ -8,7 +8,7 @@ import tanque.*
 
 
 object balaComun {
-	const property danio = 20
+	var property danio = 20
 	var property position = null
 	var property orientacion = norte 
 	const property nombreTick = "bala" 
@@ -19,6 +19,9 @@ object balaComun {
 	method salirDisparada(){ 
 		self.orientacion().mover(self)
 	}
+	method aumentarDanio(cantidad){
+		danio = danio + cantidad
+	}
 	
 	method move(nuevaPosicion) {
 		if (self.puedeMover(nuevaPosicion)) {
@@ -47,11 +50,14 @@ object balaComun {
 			game.removeVisual(self)
 		}
 	}
+	method esAtravezable(){
+		return true
+	}
 }
 
 
 object balaEnemigo {
-	const property danio = 20
+	var property danio = 20
 	var property position = null
 	var property orientacion = norte
 	const property nombreTick = "balaEnemigo" 
@@ -62,6 +68,9 @@ object balaEnemigo {
 	method salirDisparada(){ 
 		self.orientacion().mover(self)
 	}
+	method aumentarDanio(cantidad){
+		danio = danio + cantidad
+	}
 	
 	method move(nuevaPosicion) {
 		if (self.puedeMover(nuevaPosicion)) {
@@ -89,5 +98,8 @@ object balaEnemigo {
 			game.removeTickEvent(self.nombreTick())
 			game.removeVisual(self)
 		}
+	}
+	method esAtravezable(){
+		return true
 	}
 }

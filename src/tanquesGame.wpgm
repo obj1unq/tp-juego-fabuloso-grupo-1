@@ -12,8 +12,8 @@ program TanquesGame {
 	
 //	CONFIG	
 	game.title("Tanques")
-	game.height(30)
-	game.width(30)
+	game.height(25)
+	game.width(25)
 	game.cellSize(40)
 	game.ground("Fondos/Fondo-1.png")
 
@@ -21,13 +21,16 @@ program TanquesGame {
  
   
 //	VISUALES
-    game.addVisual(powerUpsAumentoDanio)
-    game.addVisual(powerUpsBase)
     base.dibujarParedes()	
     game.addVisual(base)
 	game.addVisual(tanque)
 	// creo el tanque enemigo y lo pongo  a mover
 	game.addVisual(tanqueEnemigo)
+	game.addVisual(powerUpCuracion)
+	game.addVisual(powerUpBase)
+	game.addVisual(powerUpAumentoDanio)
+	game.addVisual(powerUpDestruccion)
+	game.addVisual(powerUpCuracionBase)
 	
 	game.onTick(1000, "tanqueEnemigo", {tanqueEnemigo.ataque(tanque)})
 //	TECLADO
@@ -38,10 +41,14 @@ program TanquesGame {
 	keyboard.right().onPressDo { este.mover(tanque) }
 	keyboard.a().onPressDo { tanque.autoAtaque() }
 	keyboard.x().onPressDo { base.subirNivel()}
+	keyboard.h().onPressDo {game.say(tanque, (" " + tanque.vida() + "HP"))} // testeo
+	keyboard.p().onPressDo {game.say(base, (" " + base.nivel()))} // testeo
+	keyboard.b().onPressDo {game.say(pared1, (" "+pared1.vida()))} //testeo
+	
 	
 	//Colisiones
 	
-//	 game.whenCollideDo(tanque, {powerUpsBase.tomarPowerUp()})	
+	 game.whenCollideDo(tanque, {powerUps => tanque.tomarPowerUps(powerUps)})	
      
   
 			

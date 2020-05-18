@@ -16,6 +16,10 @@ object tanqueEnemigo{
 			self.position(nuevaPosicion)
 		}
 	}
+	
+	method sumarVida(cantidad){
+		vida = vida + cantidad
+	}
 	method image(){
 		return   "Enemigos/tanqueEnemigo-" + self.nivel() + "-" + orientacion.imagen()
 		//TODO: self + ""-" +
@@ -95,6 +99,9 @@ object tanqueEnemigo{
 			self.orientacion(oeste)
 			self.orientacion().mover(self)
 		}
+	}
+	method esAtravezable(){
+		return false
 	}
 	
 	
