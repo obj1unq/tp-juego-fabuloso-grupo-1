@@ -1,14 +1,20 @@
 import wollok.game.*
-import tanque.*
-import base.*
 import enemigo.*
+import base.*
+import orientaciones.*
+import powerUps.*
+import randomizer.*
+import tanque.*
+import bala.*
+
 import managerpowerup.*
+
 program TanquesGame {
 	
 //	CONFIG	
 	game.title("Tanques")
-	game.height(30)
-	game.width(30)
+	game.height(25)
+	game.width(25)
 	game.cellSize(40)
 	game.ground("Fondos/Fondo-1.png")
 	
@@ -19,10 +25,10 @@ program TanquesGame {
 	game.addVisual(tanque)
 	game.addVisual(pared1)
 	// creo el tanque enemigo y lo pongo  a mover
-	game.addVisual(tanqueEnemigo)
-	game.onTick(500, "tanqueEnemigo", {tanqueEnemigo.ataque(tanque)})
+	
+	
+	game.onTick(1000, "tanqueEnemigo", {tanqueEnemigo.ataque(tanque)})
 	game.onTick(7000, "managerPowerUp",{managerPowerUp.agregarPower(managerPowerUp.powerUps().anyOne())})
-
 //	TECLADO
 	keyboard.space().onPressDo { tanque.disparar() }
 	keyboard.up().onPressDo { norte.mover(tanque) }
@@ -30,7 +36,17 @@ program TanquesGame {
 	keyboard.left().onPressDo { oeste.mover(tanque) }
 	keyboard.right().onPressDo { este.mover(tanque) }
 	keyboard.a().onPressDo { tanque.autoAtaque() }
+	keyboard.x().onPressDo { base.subirNivel()}
+	keyboard.h().onPressDo {game.say(tanque, (" " + tanque.vida() + "HP"))} // testeo
+	keyboard.p().onPressDo {game.say(base, (" " + base.nivel()))} // testeo
+	keyboard.b().onPressDo {game.say(pared1, (" "+pared1.vida()))} //testeo
 	
+	
+	//Colisiones
+	
+	 game.whenCollideDo(tanque, {powerUps => tanque.tomarPowerUps(powerUps)})	
+     
+  
 			
 //	START
 	game.start()

@@ -1,17 +1,24 @@
 import wollok.game.*
 import tanque.*
+import orientaciones.*
+import bala.*
 
 object tanqueEnemigo{
+	const property tipo = "enemigo"
 	var property vida = 100
 	var property position = game.at(25,25)
 	var property orientacion = norte
-	var property bala = balaComunEnemigo
+	var property bala = balaEnemigo
 	var property nivel = 1
 	
 	method move(nuevaPosicion) {
 		if (self.puedeMover(nuevaPosicion)) {
 			self.position(nuevaPosicion)
 		}
+	}
+	
+	method sumarVida(cantidad){
+		vida = vida + cantidad
 	}
 	method image(){
 		return   "Enemigos/tanqueEnemigo-" + self.nivel() + "-" + orientacion.imagen()
@@ -92,6 +99,9 @@ object tanqueEnemigo{
 			self.orientacion(oeste)
 			self.orientacion().mover(self)
 		}
+	}
+	method esAtravezable(){
+		return false
 	}
 	
 	
