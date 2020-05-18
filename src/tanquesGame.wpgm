@@ -6,6 +6,7 @@ import powerUps.*
 import randomizer.*
 import tanque.*
 import bala.*
+import managerpowerup.*
 
 
 program TanquesGame {
@@ -24,15 +25,13 @@ program TanquesGame {
     base.dibujarParedes()	
     game.addVisual(base)
 	game.addVisual(tanque)
+	game.addVisual(pared1)
 	// creo el tanque enemigo y lo pongo  a mover
 	game.addVisual(tanqueEnemigo)
-	game.addVisual(powerUpCuracion)
-	game.addVisual(powerUpBase)
-	game.addVisual(powerUpAumentoDanio)
-	game.addVisual(powerUpDestruccion)
-	game.addVisual(powerUpCuracionBase)
+	
 	
 	game.onTick(1000, "tanqueEnemigo", {tanqueEnemigo.ataque(tanque)})
+	game.onTick(8000, "managerPowerUp", { managerPowerUp.agregarPower(managerPowerUp.powerRandom()) })
 //	TECLADO
 	keyboard.space().onPressDo { tanque.disparar() }
 	keyboard.up().onPressDo { norte.mover(tanque) }

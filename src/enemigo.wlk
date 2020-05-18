@@ -6,7 +6,7 @@ import bala.*
 object tanqueEnemigo{
 	const property tipo = "enemigo"
 	var property vida = 100
-	var property position = game.at(6,6)
+	var property position = game.at(10,10)
 	var property orientacion = norte
 	var property bala = balaEnemigo
 	var property nivel = 1
@@ -31,7 +31,7 @@ object tanqueEnemigo{
 			self.bala().orientacion(self.orientacion())
 			game.addVisual(self.bala())
 			self.bala().salirDisparada()
-			game.onTick(500, self.bala().nombreTick(), { self.bala().salirDisparada() })
+			game.onTick(100, self.bala().nombreTick(), { self.bala().salirDisparada() })
 			game.whenCollideDo(self.bala(), { elemento => self.bala().ocasionarDanio() })
 		}
 	}

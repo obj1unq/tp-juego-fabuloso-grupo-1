@@ -5,7 +5,11 @@ import randomizer.*
 
 
 object powerUpCuracion{
-	var property position = randomizer.emptyPosition()
+	var property position = self.posicionNueva()
+	method posicionNueva(){
+		return randomizer.emptyPosition()
+	}
+	
 	method image(){
 		return "powerups/BaseHeal.png"
 	}
@@ -28,7 +32,11 @@ object powerUpCuracion{
 
 object powerUpBase{
 	
-	var property position = randomizer.emptyPosition()
+	var property position = self.posicionNueva()
+	method posicionNueva(){
+		return randomizer.emptyPosition()
+	}
+	
     method  image (){
     	return "powerups/BaseUp.png"
     }
@@ -48,7 +56,11 @@ object powerUpBase{
 
 
   object powerUpAumentoDanio{
-  	var property position = randomizer.emptyPosition()
+  	var property position = self.posicionNueva()
+	method posicionNueva(){
+		return randomizer.emptyPosition()
+	}
+	
   	method image(){
   		return "powerups/Shot1.png"
   	}
@@ -68,7 +80,11 @@ object powerUpBase{
 
 object powerUpCuracionBase{
 	const paredes = #{pared1,pared2,pared3,pared4,pared5,pared6,pared7,pared8}
-	var property position = randomizer.emptyPosition()
+	var property position = self.posicionNueva()
+	method posicionNueva(){
+		return randomizer.emptyPosition()
+	}
+	
 	method esAtravezable(){
 		return true
 	}
@@ -90,7 +106,11 @@ object powerUpCuracionBase{
 
 
 object powerUpDestruccion{
-	var property position = randomizer.emptyPosition()
+	var property position = self.posicionNueva()
+	method posicionNueva(){
+		return randomizer.emptyPosition()
+	}
+	
 	method esAtravezable(){
 		return true
 	}
