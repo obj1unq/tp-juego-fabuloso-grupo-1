@@ -110,7 +110,7 @@ object tanque{
 			self.bala().orientacion(self.orientacion())
 			game.addVisual(self.bala())
 			self.bala().salirDisparada()
-			game.onTick(500, self.bala().nombreTick(), { self.bala().salirDisparada() })
+			game.onTick(100, self.bala().nombreTick(), { self.bala().salirDisparada() })
 			game.whenCollideDo(self.bala(), { elemento => self.bala().ocasionarDanio() })
 		}
 	}

@@ -2,7 +2,7 @@ import wollok.game.*
 import tanque.*
 import base.*
 import enemigo.*
-
+import managerpowerup.*
 program TanquesGame {
 	
 //	CONFIG	
@@ -20,7 +20,8 @@ program TanquesGame {
 	game.addVisual(pared1)
 	// creo el tanque enemigo y lo pongo  a mover
 	game.addVisual(tanqueEnemigo)
-	game.onTick(1000, "tanqueEnemigo", {tanqueEnemigo.ataque(tanque)})
+	game.onTick(500, "tanqueEnemigo", {tanqueEnemigo.ataque(tanque)})
+	game.onTick(7000, "managerPowerUp",{managerPowerUp.agregarPower(managerPowerUp.powerUps().anyOne())})
 
 //	TECLADO
 	keyboard.space().onPressDo { tanque.disparar() }
