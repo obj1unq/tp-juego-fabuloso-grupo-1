@@ -7,7 +7,7 @@ import tanque.*
 
 object base {
 	var property nivel = 1
-	var property vida = 1
+	var property vida = 500
 	var property position = game.at(game.center().x(),game.center().y() )
 	method image(){
 		return "Bases/base.png"

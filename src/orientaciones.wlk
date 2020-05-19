@@ -14,6 +14,9 @@ object norte{
 	method puedeMover(hacia){
 		return game.height() > hacia.y() 
 	}
+	method siguienteOrientacion(){
+		return este
+	}
 }
 object este{
 	method imagen(){
@@ -25,6 +28,9 @@ object este{
 	}
 	method puedeMover(hacia){
 		return game.width() > hacia.x() 
+	}
+	method siguienteOrientacion(){
+		return sur
 	}
 }
 object oeste{
@@ -38,6 +44,9 @@ object oeste{
 	method puedeMover(hacia){
 		return hacia.x() >= 0 
 	}
+	method siguienteOrientacion(){
+		return norte
+	}
 }
 object sur{
 	method imagen(){
@@ -49,5 +58,8 @@ object sur{
 	}
 	method puedeMover(hacia){
 		return hacia.y() >= 0 
+	}
+	method siguienteOrientacion(){
+		return oeste
 	}
 }
