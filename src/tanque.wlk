@@ -1,39 +1,39 @@
 import wollok.game.*
-import enemigo.*
 import base.*
 import orientaciones.*
 import powerUps.*
 import randomizer.*
 import bala.*
+import enemigo.*
 
-object tanque{
+class Tanque{
 	var property vida = 100
-	var property position = game.at(5,5)
-	var property orientacion = este
-	var property bala = balaComun
-	var modoAutomatico = false
-	var property nivel = 2
-	const property tipo = "player"
-	
-	method sumarVida(cantidad){
-		vida = cantidad + vida
-	}
-	
-	method tomarPowerUps(upgrade){
-		upgrade.aplicar(self)
-	}
+	var property position = null
+	var property orientacion = null
+	var property bala = null
+	var property nivel = 1
+	var property target = null
+	var property nombreTick = ""
+	var imagen = ""
 	
 	method move(nuevaPosicion) {
-		if (self.puedeMover(nuevaPosicion) ) {
+		if (self.puedeMover(nuevaPosicion)) {
 			self.position(nuevaPosicion)
+		} else if (self.nombreTick() != ""){
+			self.orientacion(self.orientacion().siguienteOrientacion())
+			self.orientacion().mover(self)
 		}
 	}
 	
-	
-	
+	method sumarVida(cantidad){
+		vida = vida + cantidad
+	}
+	method imagen(path){
+		imagen = path
+	}
 	method image(){
-		return "Players/Tanque-2-" + orientacion.imagen()
-		//TODO SELF + NIVEL + ORIENTACION
+		return   imagen + self.nivel() + "-" + orientacion.imagen()
+		//TODO: self + ""-" +
 	}
 	
 	method disparar(){
@@ -59,78 +59,75 @@ object tanque{
 	}
 	
 	method destruir(){
+		if (self.nombreTick() != ""){
+			game.removeTickEvent(self.nombreTick())
+		}
 		game.removeVisual(self)
 	}
 	
 	method puedeMover(hacia){
-		return (game.getObjectsIn(hacia).all({ cosa => cosa.esAtravezable()}) and self.orientacion().puedeMover(hacia))
+		return game.getObjectsIn(hacia).isEmpty() and self.orientacion().puedeMover(hacia)
 	}
 	
-	method ataque(enemigo){
-		self.dispararSiPuede(enemigo)
-		self.perseguir(enemigo)
-	}
-	method autoAtaque(){
-		if ( not modoAutomatico){
-			modoAutomatico = true
-			game.onTick(1000, "tanque", {self.ataque(tanqueEnemigo)})
-		} else {
-			modoAutomatico = false
-			game.removeTickEvent("tanque")
-		}
-	}
-	
-	method estoyAlineadoCon(enemigo){
-		 return self.estoyAlinadoEnX(enemigo) or self.estoyAlinadoEnY(enemigo)
-	}
-	
-	method estoyAlinadoEnX(enemigo){
-		return   enemigo.position().y() == self.position().y() and
-				(   enemigo.position().x() < self.position().x() and self.orientacion() == (oeste) 
-				 or enemigo.position().x() > self.position().x() and self.orientacion() == (este))
-	}
-	
-	method estoyAlinadoEnY(enemigo){
-		return   enemigo.position().x() == self.position().x() and
-				(   enemigo.position().y() < self.position().y() and self.orientacion() == (sur) 
-				 or enemigo.position().y() > self.position().y() and self.orientacion() == (norte))
-	}
-	
-	method dispararSiPuede(enemigo){
-		if (self.estoyAlineadoCon(enemigo)) {
+	method ataque(){
+		if (self.puedeDisparar()) {
 			self.disparar()
+		}  else {
+			self.perseguir()
 		}
 	}
 	
-	method perseguir(enemigo){
-		if (enemigo.position().y() > self.position().y()) {
+	method estoyAlineadoCon(){
+		 return self.estoyAlinadoEnX() or self.estoyAlinadoEnY()
+	}
+	
+	method estoyAlinadoEnX(){
+		return   target.position().y() == self.position().y() and
+				(   target.position().x() < self.position().x() and self.orientacion() == (oeste) 
+				 or target.position().x() > self.position().x() and self.orientacion() == (este))
+	}
+	
+	method estoyAlinadoEnY(){
+		return   target.position().x() == self.position().x() and
+				(   target.position().y() < self.position().y() and self.orientacion() == (sur) 
+				 or target.position().y() > self.position().y() and self.orientacion() == (norte))
+	}
+	
+	method puedeDisparar(){
+		return self.estoyAlineadoCon() and self.tiroLimpio()
+	}
+	method tiroLimpio(){
+		return    self.tiroLimpioEnX() and (self.orientacion() == este or self.orientacion() == oeste)   
+		       or self.tiroLimpioEnY() and (self.orientacion() == norte or self.orientacion() == sur)
+	}
+	
+	method tiroLimpioEnX(){
+		return not tanqueEnemigoManagwer.tanques().any({tank => tank != self and tank.position().x().between(target.position().x().min(self.position().x()), target.position().x().max(self.position().x()))})
+	}
+	
+	method tiroLimpioEnY(){
+		return not tanqueEnemigoManagwer.tanques().any({tank => tank != self and tank.position().y().between(target.position().y().min(self.position().y()), target.position().y().max(self.position().y()))})
+	}
+	
+	method perseguir(){
+		if (target.position().y() > self.position().y()) {
 			self.orientacion(norte)
 			self.orientacion().mover(self)
 		} 
-		else if (enemigo.position().y() < self.position().y()) {
+		else if (target.position().y() < self.position().y()) {
 			self.orientacion(sur)
 			self.orientacion().mover(self)
 		} 
-		else if (enemigo.position().x() > self.position().x()) {
+		else if (target.position().x() > self.position().x()) {
 			self.orientacion(este)
 			self.orientacion().mover(self)
 		}
-		else {
+		else if (target.position().x() < self.position().x()) {
 			self.orientacion(oeste)
 			self.orientacion().mover(self)
 		}
 	}
 	method esAtravezable(){
 		return false
-	}
+	}	
 }
-
-
-
-
-
-	
-
-
-
-

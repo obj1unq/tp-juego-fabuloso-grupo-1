@@ -10,6 +10,7 @@ import managerpowerup.*
 
 
 program TanquesGame {
+	var tanquePlayer = new Tanque()
 	
 //	CONFIG	
 	game.title("Tanques")
@@ -17,36 +18,39 @@ program TanquesGame {
 	game.width(25)
 	game.cellSize(41)
 	game.ground("Fondos/Fondo-1.png")
+  
+ // Tanque player
+ 	tanquePlayer.position(game.at(5,5))
+	tanquePlayer.orientacion(este)
+	tanquePlayer.bala(balaComun)
+	tanquePlayer.imagen("Enemigos/tanqueEnemigo-")
 
   
- 
-  
 //	VISUALES
-    base.dibujarParedes()	
+    //base.dibujarParedes()	
     game.addVisual(base)
-	game.addVisual(tanque)
-	// creo el tanque enemigo y lo pongo  a mover
-	game.addVisual(tanqueEnemigo)
+	game.addVisual(tanquePlayer)
+	game.say(tanquePlayer, "A jugar !!")
 	
+	/* inicializo el manager de tanques enemigos */
+	tanqueEnemigoManagwer.maxTanques(5)
+	tanqueEnemigoManagwer.target(tanquePlayer)
+	game.onTick(8000, "tankManager", {tanqueEnemigoManagwer.start()})
+	/*********************************************/
 	
-	game.onTick(1000, "tanqueEnemigo", {tanqueEnemigo.ataque(tanque)})
-	game.onTick(8000, "managerPowerUp", { managerPowerUp.agregarPower(managerPowerUp.powerRandom()) })
+//	game.onTick(8000, "managerPowerUp", { managerPowerUp.agregarPower(managerPowerUp.powerRandom()) })
 //	TECLADO
-	keyboard.space().onPressDo { tanque.disparar() }
-	keyboard.up().onPressDo { norte.mover(tanque) }
-	keyboard.down().onPressDo { sur.mover(tanque) }
-	keyboard.left().onPressDo { oeste.mover(tanque) }
-	keyboard.right().onPressDo { este.mover(tanque) }
-	keyboard.a().onPressDo { tanque.autoAtaque() }
-	keyboard.x().onPressDo { base.subirNivel()}
-	keyboard.h().onPressDo {game.say(tanque, (" " + tanque.vida() + "HP"))} // testeo
-	keyboard.p().onPressDo {game.say(base, (" " + base.nivel()))} // testeo
-	keyboard.b().onPressDo {game.say(pared1, (" "+pared1.vida()))} //testeo
+	keyboard.space().onPressDo { tanquePlayer.disparar() }
+	keyboard.up().onPressDo { norte.mover(tanquePlayer) }
+	keyboard.down().onPressDo { sur.mover(tanquePlayer) }
+	keyboard.left().onPressDo { oeste.mover(tanquePlayer) }
+	keyboard.right().onPressDo { este.mover(tanquePlayer) }
+
 	
 	
 	//Colisiones
 	
-	 game.whenCollideDo(tanque, {powerUps => tanque.tomarPowerUps(powerUps)})	
+	// game.whenCollideDo(tanque, {powerUps => tanque.tomarPowerUps(powerUps)})	
      
   
 			

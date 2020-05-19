@@ -2,107 +2,59 @@ import wollok.game.*
 import tanque.*
 import orientaciones.*
 import bala.*
+import base.*
+import randomizer.*
 
-object tanqueEnemigo{
-	const property tipo = "enemigo"
-	var property vida = 100
-	var property position = game.at(10,10)
-	var property orientacion = norte
-	var property bala = balaEnemigo
-	var property nivel = 1
+/* manager de tanques enemigos */
+object tanqueEnemigoManagwer{
+	const property tanques = []
+	const tankOnTickSpeed = 500
+	var target = base    // la base o el tanque
+	var targetAux = base // la base o el tanque 
+	var orientacion = norte
+	var property maxTanques = 0
+	var numeroDeTanque = 1
+	var imagen = "Enemigos/tanqueEnemigo-"
 	
-	method move(nuevaPosicion) {
-		if (self.puedeMover(nuevaPosicion)) {
-			self.position(nuevaPosicion)
+	method target(atacar){
+		target = base
+		targetAux = atacar
+	}
+	method target(){
+		if ( target.equals(base) ) {
+			target = targetAux
+		} else {
+			target = base
 		}
+		return target
+	} 
+	
+	method orientacion(){
+		orientacion = orientacion.siguienteOrientacion()
+		return orientacion
 	}
 	
-	method sumarVida(cantidad){
-		vida = vida + cantidad
-	}
-	method image(){
-		return   "Enemigos/tanqueEnemigo-" + self.nivel() + "-" + orientacion.imagen()
-		//TODO: self + ""-" +
+	method crearTanque(){
+		const tank = new Tanque()
+		
+		tank.position(randomizer.emptyPosition())
+		tank.orientacion(self.orientacion())
+		tank.bala(balaEnemigo)
+		tank.imagen(imagen)
+		tank.target(self.target())
+		tank.nombreTick("tanqueEnemigo" + numeroDeTanque.toString() )
+		self.tanques().add(tank)
+		game.addVisual(tank)
+		game.onTick(tankOnTickSpeed, tank.nombreTick(), {tank.ataque()})
+		game.say(tank, "Moriras !!")
+		numeroDeTanque ++		
 	}
 	
-	method disparar(){
-		if (not game.hasVisual(self.bala()) ) {
-			self.bala().position(self.position())
-			self.bala().orientacion(self.orientacion())
-			game.addVisual(self.bala())
-			self.bala().salirDisparada()
-			game.onTick(100, self.bala().nombreTick(), { self.bala().salirDisparada() })
-			game.whenCollideDo(self.bala(), { elemento => self.bala().ocasionarDanio() })
+	method start(){
+		if (self.tanques().size() < self.maxTanques()) {
+			self.crearTanque()
 		}
+		self.tanques().removeAllSuchThat( {tank => not game.hasVisual(tank)} )
 	}
-	
-	method recibirImpactoDe(unaBala){
-		vida -= unaBala.danio()
-		game.removeVisual(unaBala)
-		self.destruirSiEstoySinVida()
-	}
-	method destruirSiEstoySinVida(){
-		if (self.vida() <= 0){
-			self.destruir()
-		}
-	}
-	
-	method destruir(){
-		game.removeVisual(self)
-	}
-	
-	method puedeMover(hacia){
-		return game.getObjectsIn(hacia).isEmpty() and self.orientacion().puedeMover(hacia)
-	}
-	
-	method ataque(enemigo){
-		self.dispararSiPuede(enemigo)
-		self.perseguir(enemigo)
-	}
-	
-	method estoyAlineadoCon(enemigo){
-		 return self.estoyAlinadoEnX(enemigo) or self.estoyAlinadoEnY(enemigo)
-	}
-	
-	method estoyAlinadoEnX(enemigo){
-		return   enemigo.position().y() == self.position().y() and
-				(   enemigo.position().x() < self.position().x() and self.orientacion() == (oeste) 
-				 or enemigo.position().x() > self.position().x() and self.orientacion() == (este))
-	}
-	
-	method estoyAlinadoEnY(enemigo){
-		return   enemigo.position().x() == self.position().x() and
-				(   enemigo.position().y() < self.position().y() and self.orientacion() == (sur) 
-				 or enemigo.position().y() > self.position().y() and self.orientacion() == (norte))
-	}
-	
-	method dispararSiPuede(enemigo){
-		if (self.estoyAlineadoCon(enemigo)) {
-			self.disparar()
-		}
-	}
-	
-	method perseguir(enemigo){
-		if (enemigo.position().y() > self.position().y()) {
-			self.orientacion(norte)
-			self.orientacion().mover(self)
-		} 
-		else if (enemigo.position().y() < self.position().y()) {
-			self.orientacion(sur)
-			self.orientacion().mover(self)
-		} 
-		else if (enemigo.position().x() > self.position().x()) {
-			self.orientacion(este)
-			self.orientacion().mover(self)
-		}
-		else {
-			self.orientacion(oeste)
-			self.orientacion().mover(self)
-		}
-	}
-	method esAtravezable(){
-		return false
-	}
-	
 	
 }
