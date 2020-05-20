@@ -123,8 +123,11 @@ object powerUpDestruccion{
 	}
 	
 	method aplicar(tanque){
-		game.removeVisual(tanqueEnemigo)
+		if(not tanqueEnemigoManagwer.tanques().isEmpty()){
+			tanqueEnemigoManagwer.destruirTodos()
+		}
 		game.removeVisual(self)
-	}
 	
 }
+}
+

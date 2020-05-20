@@ -27,7 +27,7 @@ program TanquesGame {
 
   
 //	VISUALES
-    //base.dibujarParedes()	
+    base.dibujarParedes()	
     game.addVisual(base)
 	game.addVisual(tanquePlayer)
 	game.say(tanquePlayer, "A jugar !!")
@@ -38,7 +38,7 @@ program TanquesGame {
 	game.onTick(8000, "tankManager", {tanqueEnemigoManagwer.start()})
 	/*********************************************/
 	
-//	game.onTick(8000, "managerPowerUp", { managerPowerUp.agregarPower(managerPowerUp.powerRandom()) })
+	game.onTick(8000, "managerPowerUp", { managerPowerUp.agregarPower(managerPowerUp.powerRandom()) })
 //	TECLADO
 	keyboard.space().onPressDo { tanquePlayer.disparar() }
 	keyboard.up().onPressDo { norte.mover(tanquePlayer) }
@@ -50,7 +50,7 @@ program TanquesGame {
 	
 	//Colisiones
 	
-	// game.whenCollideDo(tanque, {powerUps => tanque.tomarPowerUps(powerUps)})	
+	game.whenCollideDo(tanquePlayer, {powerUps => tanquePlayer.tomarPowerUps(powerUps)})	
      
   
 			

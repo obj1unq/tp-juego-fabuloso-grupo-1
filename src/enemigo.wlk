@@ -57,4 +57,11 @@ object tanqueEnemigoManagwer{
 		self.tanques().removeAllSuchThat( {tank => not game.hasVisual(tank)} )
 	}
 	
+	method destruirTodos(){
+		
+			tanques.forEach({tanque => tanque.destruir()})
+		
+	 }  
+	 
+	
 }
