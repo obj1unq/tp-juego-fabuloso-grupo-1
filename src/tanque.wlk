@@ -4,6 +4,7 @@ import orientaciones.*
 import powerUps.*
 import randomizer.*
 import bala.*
+import nivel.*
 import enemigo.*
 
 class Tanque{
@@ -61,8 +62,10 @@ class Tanque{
 	method destruir(){
 		if (self.nombreTick() != ""){
 			game.removeTickEvent(self.nombreTick())
+			game.removeVisual(self)
+		} else {
+			nivelManager.finalizarNivel()
 		}
-		game.removeVisual(self)
 	}
 	
 	method puedeMover(hacia){
