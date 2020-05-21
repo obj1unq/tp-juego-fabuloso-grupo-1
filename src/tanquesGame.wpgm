@@ -8,6 +8,7 @@ import tanque.*
 import bala.*
 import managerpowerup.*
 
+import nivel.*
 
 program TanquesGame {
 	var tanquePlayer = new Tanque()
@@ -19,24 +20,23 @@ program TanquesGame {
 	game.cellSize(41)
 	game.ground("Fondos/Fondo-1.png")
   
- // Tanque player
- 	tanquePlayer.position(game.at(5,5))
+ //********     TANQUE PALYER   *****************
+ 	tanquePlayer.position(game.at(15,15))
 	tanquePlayer.orientacion(este)
 	tanquePlayer.bala(balaComun)
 	tanquePlayer.imagen("Enemigos/tanqueEnemigo-")
-
+//************************************************
   
 //	VISUALES
-    //base.dibujarParedes()	
-    game.addVisual(base)
-	game.addVisual(tanquePlayer)
-	game.say(tanquePlayer, "A jugar !!")
+    //base.dibujarParedes()
+    	
+//**********  INICIO CON NIVEL 1  ****************
+    nivelManager.nivel(nivel1)
+    nivelManager.jugador(tanquePlayer)
+    nivelManager.base(base)
+	nivelManager.incializarMapa()
+//************************************************
 	
-	/* inicializo el manager de tanques enemigos */
-	tanqueEnemigoManagwer.maxTanques(5)
-	tanqueEnemigoManagwer.target(tanquePlayer)
-	game.onTick(8000, "tankManager", {tanqueEnemigoManagwer.start()})
-	/*********************************************/
 	
 //	game.onTick(8000, "managerPowerUp", { managerPowerUp.agregarPower(managerPowerUp.powerRandom()) })
 //	TECLADO
@@ -45,14 +45,11 @@ program TanquesGame {
 	keyboard.down().onPressDo { sur.mover(tanquePlayer) }
 	keyboard.left().onPressDo { oeste.mover(tanquePlayer) }
 	keyboard.right().onPressDo { este.mover(tanquePlayer) }
-
-	
 	
 	//Colisiones
 	
 	// game.whenCollideDo(tanque, {powerUps => tanque.tomarPowerUps(powerUps)})	
-     
-  
+ 
 			
 //	START
 	game.start()
