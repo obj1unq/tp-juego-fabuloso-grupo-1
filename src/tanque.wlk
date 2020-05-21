@@ -69,7 +69,7 @@ class Tanque{
 	}
 	
 	method puedeMover(hacia){
-		return game.getObjectsIn(hacia).isEmpty() and self.orientacion().puedeMover(hacia)
+		return game.getObjectsIn(hacia).all({cosa => cosa.esAtravezable()}) and self.orientacion().puedeMover(hacia)
 	}
 	
 	method ataque(){
@@ -132,5 +132,8 @@ class Tanque{
 	}
 	method esAtravezable(){
 		return false
+	}
+	method tomarPowerUps(powerUp){
+		powerUp.aplicar(self)
 	}	
 }
