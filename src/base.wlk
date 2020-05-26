@@ -283,7 +283,7 @@ object listaDeCoordenadas {
 	var property fin
 	var actual = 0
 	
-	method coordenadasDeADos_hacer(lista){
+	method coordenadasDeADos(lista){
 		self.asignarLista(lista)
 		fin= lista.size()
 		self.deAPares(lista)
