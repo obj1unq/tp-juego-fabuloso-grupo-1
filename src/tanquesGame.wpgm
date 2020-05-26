@@ -21,7 +21,7 @@ program TanquesGame {
 	game.ground("Fondos/Fondo-1.png")
   
  //********     TANQUE PALYER   *****************
- 	tanquePlayer.position(game.at(15,15))
+ 	tanquePlayer.position(game.at(base.position().x() -2,base.position().y()))
 	tanquePlayer.orientacion(este)
 	tanquePlayer.bala(balaComun)
 //	tanquePlayer.imagen("Enemigos/tanqueEnemigo-")
