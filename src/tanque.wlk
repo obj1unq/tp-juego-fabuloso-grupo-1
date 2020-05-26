@@ -6,6 +6,7 @@ import randomizer.*
 import bala.*
 import nivel.*
 import enemigo.*
+import efectos.*
 
 class Tanque{
 	var property vida = 100
@@ -34,7 +35,6 @@ class Tanque{
 	}
 	method image(){
 		return   imagen + self.nivel() + "-" + orientacion.imagen()
-		//TODO: self + ""-" +
 	}
 	
 	method disparar(){
@@ -52,6 +52,7 @@ class Tanque{
 		vida -= unaBala.danio()
 		game.removeVisual(unaBala)
 		self.destruirSiEstoySinVida()
+		animacionRecibirDisparo.animar(self.position(), unaBala.orientacion())
 	}
 	method destruirSiEstoySinVida(){
 		if (self.vida() <= 0){
