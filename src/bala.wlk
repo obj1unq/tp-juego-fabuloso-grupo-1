@@ -12,9 +12,17 @@ object balaComun {
 	var property position = null
 	var property orientacion = norte 
 	const property nombreTick = "bala" 
+	var property nivel= 1
+	
+	method subirNivel(){
+		if (nivel < 4 )
+		{  nivel= self.nivel() +1
+			self.aumentarDanio(50)
+		}
+	}
 	
 	method image(){
-		return "Disparos/normal-" + orientacion.imagen()
+		return "Disparos/normal-" + self.nivel() +"-"+ orientacion.imagen()
 	}
 	method salirDisparada(){ 
 		self.orientacion().mover(self)
@@ -53,6 +61,7 @@ object balaComun {
 	method esAtravezable(){
 		return true
 	}
+	method aplicar(){}
 }
 
 
@@ -61,9 +70,13 @@ object balaEnemigo {
 	var property position = null
 	var property orientacion = norte
 	const property nombreTick = "balaEnemigo" 
+	var property nivel= 1
+	
+	method subirNivel(){
+	}
 	
 	method image(){
-		return "Disparos/normal-" + orientacion.imagen()
+		return "Disparos/normal-" + self.nivel() +"-"+ orientacion.imagen()
 	}
 	method salirDisparada(){ 
 		self.orientacion().mover(self)
@@ -102,4 +115,5 @@ object balaEnemigo {
 	method esAtravezable(){
 		return true
 	}
+	method aplicar(){}
 }

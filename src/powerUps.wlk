@@ -26,6 +26,8 @@ object powerUpCuracion{
 		
 		
 	}
+	method ocasionarDanio(){}
+	method recibirImpactoDe(objeto){}
 	
 }
 
@@ -52,6 +54,8 @@ object powerUpBase{
 	method estaActivo(){
 		return game.hasVisual(self)
 	}
+	method ocasionarDanio(){}
+	method recibirImpactoDe(objeto){}
 }
 
 
@@ -72,10 +76,13 @@ object powerUpBase{
 	}
 	
 	method aplicar(tanque){
-		tanque.bala().aumentarDanio(10)
+		tanque.subirNivel()
+//		tanque.bala().aumentarDanio(10)
 		game.removeVisual(self)
 		
 	}
+	method ocasionarDanio(){}
+	method recibirImpactoDe(objeto){}
 }
 
 object powerUpCuracionBase{
@@ -102,6 +109,8 @@ object powerUpCuracionBase{
 		
 		
 	}
+	method ocasionarDanio(){}
+	method recibirImpactoDe(objeto){}
 }
 
 
@@ -126,8 +135,9 @@ object powerUpDestruccion{
 		if(not tanqueEnemigoManagwer.tanques().isEmpty()){
 			tanqueEnemigoManagwer.destruirTodos()
 		}
-		game.removeVisual(self)
-	
-}
+		game.removeVisual(self)}
+		
+		method ocasionarDanio(){}
+		method recibirImpactoDe(objeto){}
 }
 
