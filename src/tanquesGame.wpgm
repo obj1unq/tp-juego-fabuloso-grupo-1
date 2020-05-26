@@ -9,6 +9,7 @@ import bala.*
 import managerpowerup.*
 import paredes.*
 import nivel.*
+import efectos.*
 
 program TanquesGame {
 	var tanquePlayer = new Tanque()
@@ -24,7 +25,7 @@ program TanquesGame {
  	tanquePlayer.position(game.at(base.position().x() -2,base.position().y()))
 	tanquePlayer.orientacion(este)
 	tanquePlayer.bala(balaComun)
-//	tanquePlayer.imagen("Enemigos/tanqueEnemigo-")
+
 //************************************************
   
 //	VISUALES
@@ -49,6 +50,7 @@ program TanquesGame {
 	keyboard.down().onPressDo { sur.mover(tanquePlayer) }
 	keyboard.left().onPressDo { oeste.mover(tanquePlayer) }
 	keyboard.right().onPressDo { este.mover(tanquePlayer) }
+	
 	
 	//Colisiones
 	
