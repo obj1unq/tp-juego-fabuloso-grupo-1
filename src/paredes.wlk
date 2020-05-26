@@ -4,6 +4,7 @@ import bala.*
 import enemigo.*
 import tanque.*
 import orientaciones.*
+import efectos.*
 
 class Pared{
 	var property vida = 500
@@ -32,6 +33,7 @@ class Pared{
 		danioRecibidoTotal = danioRecibidoTotal  + unaBala.danio()
 		vida -= unaBala.danio()
 		game.removeVisual(unaBala)
+		animacionRecibirDisparo.animar(self.position(), unaBala.orientacion())
 		self.destruirSiEstoySinVida()
 	}
 	method destruirSiEstoySinVida(){
@@ -79,6 +81,7 @@ class ParedBase{
 		danioRecibidoTotal = danioRecibidoTotal  + unaBala.danio()
 		vida -= unaBala.danio()
 		game.removeVisual(unaBala)
+		animacionRecibirDisparo.animar(self.position(), unaBala.orientacion())
 		self.destruirSiEstoySinVida()
 	}
 	method destruirSiEstoySinVida(){
