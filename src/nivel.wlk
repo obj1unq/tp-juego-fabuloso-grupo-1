@@ -4,35 +4,7 @@ import bala.*
 import enemigo.*
 import tanque.*
 import orientaciones.*
-
-class Pared{
-	var property vida = 50
-
-	method image(){	
-		return "Paredes/pared-" + base.nivel().toString() + ".png"
-	}
-
-	method esAtravezable(){
-		return false
-	}
-	
-	method curarVida(cantidad){
-		vida = cantidad + vida
-	}
-	method recibirImpactoDe(unaBala){
-		vida -= unaBala.danio()
-		game.removeVisual(unaBala)
-		self.destruirSiEstoySinVida()
-	}
-	method destruirSiEstoySinVida(){
-		if (self.vida() <= 0){
-			self.destruir()
-		}
-	}
-	method destruir(){
-		game.removeVisual(self)
-	}
-}
+import paredes.*
 
 
 object nivelManager{

@@ -4,15 +4,26 @@ import orientaciones.*
 import powerUps.*
 import randomizer.*
 import tanque.*
+import paredes.*
 
 object base {
-	var property nivel = 1
-	var property vida = 500000000000
+	var property vida = 1
 	var property position = game.at(game.center().x(),game.center().y() )
+	var property nivel= 1
+	
+	
+//	var coordenasDeParedes = [(self.position().x() + 1 , self.position().y() + 1),
+//							(self.position().x(),	self.position().y() + 1),
+//							,(self.position().x() - 1, self.position().y() + 1)
+//							,(self.position().x() - 1,self.position().y())
+//							,(self.position().x() - 1,self.position().y() - 1)
+//							,(self.position().x(),self.position().y() - 1)
+//							,(self.position().x() + 1 ,self.position().y() - 1)
+//							,(self.position().x() + 1,self.position().y())]
+	
 	method image(){
 		return "Bases/base.png"
 	}
-	
 	method subirNivel(){
 		if (nivel < 4 ) {
 		nivel= self.nivel() + 1
@@ -23,7 +34,6 @@ object base {
 	method actualizarVistas(){
 		self.removerParedes()
 		self.dibujarParedes()
-	
 	}
 	
 	method removerParedes(){
@@ -38,16 +48,26 @@ object base {
 	}
 	
 	method dibujarParedes (){
-	    game.addVisualIn(pared1, game.at(self.position().x() + 1 ,self.position().y() + 1))
-		game.addVisualIn(pared2, game.at(self.position().x(),self.position().y() + 1))
-		game.addVisualIn(pared3, game.at(self.position().x() - 1, self.position().y() + 1))
-		game.addVisualIn(pared4, game.at(self.position().x() - 1,self.position().y()))
-		game.addVisualIn(pared5, game.at(self.position().x() - 1,self.position().y() - 1))
-		game.addVisualIn(pared6, game.at(self.position().x(),self.position().y() - 1))
-		game.addVisualIn(pared7, game.at(self.position().x() + 1 ,self.position().y() - 1))
-		game.addVisualIn(pared8, game.at(self.position().x() + 1,self.position().y()))
-		
+	   var coordenadasBaseX=  game.center().x()
+	   var coordenadasBaseY= game.center().y()
+	   var coordenadasAlrededorDeBase= [(coordenadasBaseX + 1 ),(coordenadasBaseY + 1),
+	   									(coordenadasBaseX),(coordenadasBaseY + 1),
+	   									(coordenadasBaseX - 1), (coordenadasBaseY + 1),
+	   									(coordenadasBaseX- 1),(coordenadasBaseY),
+	   									(coordenadasBaseX- 1),(coordenadasBaseY - 1),
+	   									(coordenadasBaseX),(coordenadasBaseY - 1),
+	   									(coordenadasBaseX + 1) ,(coordenadasBaseY- 1),
+	   									(coordenadasBaseX + 1),(coordenadasBaseY)]
+//	 coordenadasAlrededorDeBase.({coorX,coorY => self.construirParedBaseEn(coorX, coorY)})				
+	listaDeCoordenadas.coordenadasDeADos(coordenadasAlrededorDeBase)
 	}
+	
+	
+	
+	method construirParedBaseEn(x,y) {
+	var paredBase= new ParedBase()
+	game.addVisualIn(paredBase, game.at(x,y))}
+	
 	method esAtravezable(){
 		return false
 	}
@@ -91,6 +111,9 @@ object pared1 {
 	method destruir(){
 	game.removeVisual(self)
 	}
+	method aplicar(x){
+		
+	}
 }
 
 object pared2 {
@@ -115,6 +138,9 @@ object pared2 {
 	method destruir(){
 	game.removeVisual(self)
 	}
+	method aplicar(x){
+		
+	}
 }
 object pared3 {
 	var property vida = 50
@@ -124,6 +150,9 @@ object pared3 {
 	}
 	method curarVida(cantidad){
 		vida = cantidad + vida
+	}
+	method aplicar(x){
+		
 	}
 }
 object pared4{
@@ -148,6 +177,9 @@ object pared4{
 	method destruir(){
 	game.removeVisual(self)
 	}
+	method aplicar(x){
+		
+	}
 }
 object pared5{
 	var property vida = 50
@@ -171,6 +203,9 @@ object pared5{
 	method destruir(){
 	game.removeVisual(self)
 	}
+	method aplicar(x){
+		
+	}
 }
 
 object pared6{
@@ -181,6 +216,9 @@ object pared6{
 	}
 	method curarVida(cantidad){
 		vida = cantidad + vida
+	}
+	method aplicar(x){
+		
 	}
 }
 object pared7{
@@ -205,6 +243,9 @@ object pared7{
 	method destruir(){
 	game.removeVisual(self)
 	}
+	method aplicar(x){
+		
+	}
 }
 object pared8{
 	var property vida = 50
@@ -228,4 +269,45 @@ object pared8{
 	method destruir(){
 	game.removeVisual(self)
 	}
+	method aplicar(x){
+		
+	}
+}
+
+
+// ########lista de coordenadas.coordenadaDeADos(lista) construye paredes a parte de una lista de coordenadas#####
+
+object listaDeCoordenadas {
+	var property numero
+	var property inicio=0
+	var property fin
+	var actual = 0
+	
+	method coordenadasDeADos_hacer(lista){
+		self.asignarLista(lista)
+		fin= lista.size()
+		self.deAPares(lista)
+	}
+	
+	method asignarLista (lista){
+		numero = lista
+	}
+	
+	method deAPares(lista){
+		if (self.finEsImpar()) {
+			self.arreglarLista()
+		}
+		if  (actual < fin) {
+			base.construirParedBaseEn(numero.get(actual),numero.get(actual+1))
+			actual= actual + 2
+			self.deAPares(lista)
+		}
+	}
+    method arreglarLista(){
+    	numero.add(null)
+    }
+    
+    method finEsImpar (){
+    	return fin%2 != 0
+    }
 }
