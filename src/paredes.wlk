@@ -54,22 +54,14 @@ class Pared{
 
 class ParedBase{
 	var property vida = 500
-	var property nivel = 1
+	var property nivel
 	var danioRecibidoTotal = 0
 	var property position
-	var  positionX
-	var  positionY
-	
-	method aplicar(x){
-		
-	}
-	
-
 
 	method image(){	return "Paredes/pared-" + self.nivel() + "-" + self.nombreDeImagenSegunDanio() + ".png"	}
 	
 	method nombreDeImagenSegunDanio(){
-	if (self.porcetajeDanioRecibido() > 50 && self.porcetajeDanioRecibido() <= 100) 
+		if (self.porcetajeDanioRecibido() > 50 && self.porcetajeDanioRecibido() <= 100) 
 											 { return 100}  // danio entre 50 y 100%
 	 if (self.porcetajeDanioRecibido()  > 10 &&  self.porcetajeDanioRecibido() <= 50)
 			   								{ return 50}  // danio entre 10 y 50%

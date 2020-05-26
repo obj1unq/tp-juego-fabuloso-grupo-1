@@ -2,7 +2,7 @@ import wollok.game.*
 import enemigo.*
 import base.*
 import randomizer.*
-
+import paredes.*
 
 object powerUpCuracion{
 	var property position = self.posicionNueva()
@@ -79,7 +79,7 @@ object powerUpBase{
 }
 
 object powerUpCuracionBase{
-	const paredes = #{pared1,pared2,pared3,pared4,pared5,pared6,pared7,pared8}
+	const paredes = base.paredesDeBase()
 	var property position = self.posicionNueva()
 	method posicionNueva(){
 		return randomizer.emptyPosition()
