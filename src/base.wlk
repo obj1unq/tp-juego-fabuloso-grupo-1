@@ -10,18 +10,20 @@ object base {
 	var property vida = 1
 	var property position = game.at(game.center().x(),game.center().y() )
 	var property nivel= 1
-	var property paredesDeBase=[]
+	var property paredesDeBase=#{}
 	var property paredesCoordenadas
 	
 	method image(){
 		return "Bases/base.png"
 	}
 	method subirNivel(){
-		if (nivel < 4 ) {
-		nivel= self.nivel() + 1
-		paredesDeBase.forEach({unPared=> unaPared.nivel(self.nivel())})
+		if (nivel < 4 )
+		{
+			nivel= self.nivel() + 1
+			paredesDeBase.forEach({unaPared=> unaPared.nivel(self.nivel())})
 		}
 	}
+	
 	method dibujarParedes (){
 	   var coordenadasBaseX=  game.center().x()
 	   var coordenadasBaseY= game.center().y()

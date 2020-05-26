@@ -24,7 +24,7 @@ program TanquesGame {
  	tanquePlayer.position(game.at(15,15))
 	tanquePlayer.orientacion(este)
 	tanquePlayer.bala(balaComun)
-	tanquePlayer.imagen("Enemigos/tanqueEnemigo-")
+//	tanquePlayer.imagen("Enemigos/tanqueEnemigo-")
 //************************************************
   
 //	VISUALES

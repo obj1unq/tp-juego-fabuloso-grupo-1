@@ -15,7 +15,7 @@ class Tanque{
 	var property nivel = 1
 	var property target = null
 	var property nombreTick = ""
-	var imagen = ""
+	var imagen = "Players/Tanque-"
 	
 	method move(nuevaPosicion) {
 		if (self.puedeMover(nuevaPosicion)) {
@@ -136,4 +136,13 @@ class Tanque{
 	method tomarPowerUps(powerUp){
 		powerUp.aplicar(self)
 	}	
+	
+	method subirNivel() {
+		if (nivel < 4 )
+		{  nivel= self.nivel() + 1
+			self.bala().subirNivel()
+		}}
+	
+	
+	
 }
