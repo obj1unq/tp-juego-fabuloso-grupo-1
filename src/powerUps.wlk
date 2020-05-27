@@ -3,6 +3,7 @@ import enemigo.*
 import base.*
 import randomizer.*
 import paredes.*
+import efectos.*
 
 object powerUpCuracion{
 	var property position = self.posicionNueva()
@@ -21,13 +22,13 @@ object powerUpCuracion{
 	}
 	
 	method aplicar(tanque){
+		var animacion = new AnimacionTomarPowerUps()
+	 	animacion.animar(self.position())
 		tanque.sumarVida(50)
 		game.removeVisual(self)
-		
-		
 	}
-	method ocasionarDanio(){}
-	method recibirImpactoDe(objeto){}
+//	method ocasionarDanio(){}
+//	method recibirImpactoDe(objeto){}
 	
 }
 
@@ -44,8 +45,11 @@ object powerUpBase{
     }
     
 	 method aplicar(tanque){
+	 	var animacion = new AnimacionTomarPowerUps()
+	 	animacion.animar(self.position())
 		base.subirNivel()
 		game.removeVisual(self)
+		
 		
 	}
 	method esAtravezable(){
@@ -54,8 +58,8 @@ object powerUpBase{
 	method estaActivo(){
 		return game.hasVisual(self)
 	}
-	method ocasionarDanio(){}
-	method recibirImpactoDe(objeto){}
+//	method ocasionarDanio(){}
+//	method recibirImpactoDe(objeto){}
 }
 
 
@@ -76,13 +80,13 @@ object powerUpBase{
 	}
 	
 	method aplicar(tanque){
+		var animacion = new AnimacionTomarPowerUps()
+	 	animacion.animar(self.position())
 		tanque.subirNivel()
-//		tanque.bala().aumentarDanio(10)
 		game.removeVisual(self)
-		
 	}
-	method ocasionarDanio(){}
-	method recibirImpactoDe(objeto){}
+//	method ocasionarDanio(){}
+//	method recibirImpactoDe(objeto){}
 }
 
 object powerUpCuracionBase{
@@ -104,13 +108,15 @@ object powerUpCuracionBase{
 	}
 	
 	method aplicar(tanque){
+		var animacion = new AnimacionTomarPowerUps()
+	 	animacion.animar(self.position())
 		paredes.forEach({pared => pared.curarVida(20)})
 		game.removeVisual(self)
 		
 		
 	}
-	method ocasionarDanio(){}
-	method recibirImpactoDe(objeto){}
+//	method ocasionarDanio(){}
+//	method recibirImpactoDe(objeto){}
 }
 
 
@@ -135,9 +141,11 @@ object powerUpDestruccion{
 		if(not tanqueEnemigoManagwer.tanques().isEmpty()){
 			tanqueEnemigoManagwer.destruirTodos()
 		}
+		var animacion = new AnimacionTomarPowerUps()
+	 	animacion.animar(self.position())
 		game.removeVisual(self)}
 		
-		method ocasionarDanio(){}
-		method recibirImpactoDe(objeto){}
+//		method ocasionarDanio(){}
+//		method recibirImpactoDe(objeto){}
 }
 

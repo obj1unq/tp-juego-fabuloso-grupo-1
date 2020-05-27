@@ -41,7 +41,6 @@ object tanqueEnemigoManagwer{
 		
 		tank.position(randomizer.emptyPosition())
 		tank.orientacion(self.orientacion())
-//		tank.bala(balaEnemigo)
 		tank.imagen(imagen)
 		tank.target(self.target())
 		tank.nombreTick("tanqueEnemigo" + numeroDeTanque.toString() )
@@ -60,9 +59,7 @@ object tanqueEnemigoManagwer{
 	}
 	
 	method destruirTodos(){
-		
 			tanques.forEach({tanque => tanque.destruir()})
-		
 	 }  
 }
 
@@ -97,14 +94,6 @@ class TanqueEnemigo{
 	}
 	
 	method disparar(){
-//			var balaNueva= new BalaComun(position = self.position(), 
-//										orientacion= self.orientacion(),
-//										nivel= self.nivel() )
-//			balaNueva.nombreTick(randomizer.randomName())
-//			game.addVisual(balaNueva)
-//			balaNueva.salirDisparada()
-//			game.onTick(100,balaNueva.nombreTick(), { balaNueva.salirDisparada() })
-//			game.whenCollideDo(balaNueva, { elemento => balaNueva.ocasionarDanioSiCorresponde(elemento) })
 		var bala = new BalaComun()
 		bala.generarBala(self)
 		}
@@ -115,7 +104,9 @@ class TanqueEnemigo{
 		
 		
 	method destruirSiEstoySinVida(){
+		var animacionDestruir= new AnimacionExplocionTanque()
 		if (self.vida() <= 0){
+			animacionDestruir.animar(self.position())
 			self.destruir()
 		}
 	}
