@@ -11,8 +11,7 @@ import paredes.*
 import nivel.*
 
 
-object animacionRecibirDisparo{
-	
+class AnimacionRecibirDisparo{
 		var numeroAnimacion = 1
 		var disparoRecibidoDe= este
 		
@@ -33,7 +32,7 @@ object animacionRecibirDisparo{
 		method destruirAnimacionAlTerminar(){
 			if (numeroAnimacion == 3) {
 				game.removeTickEvent("AnimacionRecibirImpacto")
-				numeroAnimacion = 1
+				numeroAnimacion = null
 				game.removeVisual(self)
 			}
 		}

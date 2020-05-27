@@ -28,9 +28,7 @@ class BalaComun {
 		if (self.puedeMover(nuevaPosicion)) {
 			self.position(nuevaPosicion)
 		} else {
-			game.removeTickEvent(self.nombreTick())
-			randomizer.liberarNombre(self.nombreTick())
-			game.removeVisual(self)
+			self.destruirObjecto()
 		}
 	}
 	
@@ -39,20 +37,19 @@ class BalaComun {
 	}
 	
 	method ocasionarDanioSiCorresponde(unObjeto){
+		var animacion=  new AnimacionRecibirDisparo()
 		if (!unObjeto.esAtravezable()){
-				game.removeTickEvent(self.nombreTick())
-				randomizer.liberarNombre(self.nombreTick())
 				unObjeto.recibirImpactoDe(self)
-				game.removeVisual(self)
-				animacionRecibirDisparo.animar(self.position(), self.orientacion())
-				unObjeto.recibirImpactoDe(self)
+				self.destruirObjecto()
+				animacion.animar(self.position(), self.orientacion())
 		}
 	}
+	method destruirObjecto(){
+		game.removeTickEvent(self.nombreTick())
+		randomizer.liberarNombre(self.nombreTick())
+		game.removeVisual(self)
 		
-	method esAtravezable(){
-		return true
 	}
-	method aplicar(){}
 	
 	method generarBala(objeto){
 		var balaNueva= new BalaComun(position = objeto.position(), 
@@ -64,6 +61,10 @@ class BalaComun {
 			game.onTick(100,balaNueva.nombreTick(), { balaNueva.salirDisparada() })
 			game.whenCollideDo(balaNueva, { elemento => balaNueva.ocasionarDanioSiCorresponde(elemento) })
 	}
+	method esAtravezable(){
+		return true
+	}
+	method aplicar(){}
 }
 
 
