@@ -22,12 +22,11 @@ object randomizer {
 			self.randomName()
 		}else {
 				ramdomName.add(numeroAleatorio)
-				return numeroAleatorio
+				return numeroAleatorio	}
 		}
+		
 		method liberarNombre(nombre){
 			ramdomName.remove(nombre)
-		}
-	}
-	
+		}	
 }
 

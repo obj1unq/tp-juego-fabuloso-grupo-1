@@ -4,6 +4,8 @@ import orientaciones.*
 import bala.*
 import base.*
 import randomizer.*
+import efectos.*
+import nivel.*
 
 /* manager de tanques enemigos */
 object tanqueEnemigoManagwer{
@@ -39,7 +41,7 @@ object tanqueEnemigoManagwer{
 		
 		tank.position(randomizer.emptyPosition())
 		tank.orientacion(self.orientacion())
-		tank.bala(balaEnemigo)
+//		tank.bala(balaEnemigo)
 		tank.imagen(imagen)
 		tank.target(self.target())
 		tank.nombreTick("tanqueEnemigo" + numeroDeTanque.toString() )
@@ -68,7 +70,7 @@ class TanqueEnemigo{
 	var property vida = 100
 	var property position = null
 	var property orientacion = null
-	var property bala = null
+	var property balasPropias = #{}
 	var property nivel = 1
 	var property target = null
 	var property nombreTick = ""
@@ -95,22 +97,23 @@ class TanqueEnemigo{
 	}
 	
 	method disparar(){
-		if (not game.hasVisual(self.bala()) ) {
-			self.bala().position(self.position())
-			self.bala().orientacion(self.orientacion())
-			game.addVisual(self.bala())
-			self.bala().salirDisparada()
-			game.onTick(100, self.bala().nombreTick(), { self.bala().salirDisparada() })
-			game.whenCollideDo(self.bala(), { elemento => self.bala().ocasionarDanio() })
+//			var balaNueva= new BalaComun(position = self.position(), 
+//										orientacion= self.orientacion(),
+//										nivel= self.nivel() )
+//			balaNueva.nombreTick(randomizer.randomName())
+//			game.addVisual(balaNueva)
+//			balaNueva.salirDisparada()
+//			game.onTick(100,balaNueva.nombreTick(), { balaNueva.salirDisparada() })
+//			game.whenCollideDo(balaNueva, { elemento => balaNueva.ocasionarDanioSiCorresponde(elemento) })
+		var bala = new BalaComun()
+		bala.generarBala(self)
 		}
-	}
 	
 	method recibirImpactoDe(unaBala){
 		vida -= unaBala.danio()
-		game.removeVisual(unaBala)
-		self.destruirSiEstoySinVida()
-		animacionRecibirDisparo.animar(self.position(),self.bala().orientacion())
-	}
+		self.destruirSiEstoySinVida()	}
+		
+		
 	method destruirSiEstoySinVida(){
 		if (self.vida() <= 0){
 			self.destruir()

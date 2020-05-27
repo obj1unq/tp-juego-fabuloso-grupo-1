@@ -15,37 +15,40 @@ class Tanque{
 	var property nivel = 1
 	var property target = null
 	var imagen = "Players/Tanque-"
-	var balasDisparadas=#{}
+	var balasPropias=#{}
+	
 	
 	method move(nuevaPosicion) {
 		if (self.puedeMover(nuevaPosicion)) { self.position(nuevaPosicion)}}
+		
 	method sumarVida(cantidad){
 		vida = vida + cantidad
 	}
+	
 	method imagen(path){
-		imagen = path
-	}
+		imagen = path}
+		
 	method image(){
-		return   imagen + self.nivel() + "-" + orientacion.imagen()
-	}
+		return   imagen + self.nivel() + "-" + orientacion.imagen()	}
+		
 	method disparar(){
-		var balaNueva= new BalaComun(position = self.position(), 
-									orientacion= self.orientacion(),
-									nivel= self.nivel() )
-			balaNueva.nombreTick(randomizer.randomName())
-			game.addVisual(balaNueva)
-			balaNueva.salirDisparada()
-			game.onTick(100,balaNueva.nombreTick(), { balaNueva.salirDisparada() })
-			game.whenCollideDo(balaNueva, { elemento => balaNueva.ocasionarDanio() })
+		var bala = new BalaComun()
+		bala.generarBala(self)
+//		var balaNueva= new BalaComun(position = self.position(), 
+//									orientacion= self.orientacion(),
+//									nivel= self.nivel() )
+//			balaNueva.nombreTick(randomizer.randomName())
+//			balaNueva.salirDisparada()
+//			game.addVisual(balaNueva)
+//			game.onTick(100,balaNueva.nombreTick(), { balaNueva.salirDisparada() })
+//			game.whenCollideDo(balaNueva, { elemento => balaNueva.ocasionarDanioSiCorresponde(elemento) })
+//			game.uniqueCollider(balaNueva).recibirImpactoDe(balaNueva)
 		}
 	
 	method recibirImpactoDe(unaBala){
 		vida -= unaBala.danio()
-		game.removeVisual(unaBala)
-		randomizer.liberarNombre(unaBala.nombreTick())
-		self.destruirSiEstoySinVida()
-		animacionRecibirDisparo.animar(self.position(), unaBala.orientacion())
-	}
+		self.destruirSiEstoySinVida()}
+	
 	method destruirSiEstoySinVida(){
 		if (self.vida() <= 0){
 			self.destruir()
@@ -53,24 +56,24 @@ class Tanque{
 	}
 	
 	method destruir(){
-//			game.removeTickEvent(self.nombreTick())
 			game.removeVisual(self)
 			nivelManager.finalizarNivel()
 	}
 	
 	method puedeMover(hacia){
 		return game.getObjectsIn(hacia).all({cosa => cosa.esAtravezable()})
-				 and self.orientacion().puedeMover(hacia)
-	}
+				 and self.orientacion().puedeMover(hacia)}
+				 
 	method esAtravezable(){
 		return false
 	}
+	
 	method tomarPowerUps(powerUp){
 		powerUp.aplicar(self)
 	}	
+	
 	method subirNivel() {
 		if (nivel < 4 )
 		{  nivel= self.nivel() + 1
-			self.bala().subirNivel()
 		}}
 }

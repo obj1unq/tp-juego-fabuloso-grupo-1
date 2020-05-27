@@ -5,6 +5,7 @@ import orientaciones.*
 import powerUps.*
 import randomizer.*
 import tanque.*
+import efectos.* 
 
 
 class BalaComun {
@@ -13,32 +14,14 @@ class BalaComun {
 	var property nombreTick=null
 	var property nivel= 1
 	
-//	method nombreTick(){
-//		return nombreTick
-//	}
-//	method nombreTick(_nombreTick){
-//		nombreTick=_nombreTick
-//	}
-//	
 	method danio(){
 	 return self.nivel() * 15	
 	}
-	
-	method subirNivel(){
-		if (nivel < 4 )
-		{  nivel= self.nivel() +1
-			self.aumentarDanio(50)
-		}
-	}
-	
 	method image(){
 		return "Disparos/normal-" + self.nivel() +"-"+ orientacion.imagen()
 	}
 	method salirDisparada(){ 
 		self.orientacion().mover(self)
-	}
-	method aumentarDanio(cantidad){
-		danio = danio + cantidad
 	}
 	
 	method move(nuevaPosicion) {
@@ -55,24 +38,35 @@ class BalaComun {
 		return self.orientacion().puedeMover(hacia)
 	}
 	
-	method ocasionarDanio(){
-		game.removeTickEvent(self.nombreTick())
-		randomizer.liberarNombre(self.nombreTick())
-		game.uniqueCollider(self).recibirImpactoDe(self)	
-		return self.danio()	
-	}
-	
-	method recibirImpactoDe(objeto){
-			game.removeTickEvent(self.nombreTick())
-			randomizer.liberarNombre(self.nombreTick())
-			game.removeVisual(self)
+	method ocasionarDanioSiCorresponde(unObjeto){
+		if (!unObjeto.esAtravezable()){
+				game.removeTickEvent(self.nombreTick())
+				randomizer.liberarNombre(self.nombreTick())
+				unObjeto.recibirImpactoDe(self)
+				game.removeVisual(self)
+				animacionRecibirDisparo.animar(self.position(), self.orientacion())
+				unObjeto.recibirImpactoDe(self)
 		}
+	}
 		
 	method esAtravezable(){
 		return true
 	}
 	method aplicar(){}
+	
+	method generarBala(objeto){
+		var balaNueva= new BalaComun(position = objeto.position(), 
+									orientacion= objeto.orientacion(),
+									nivel= objeto.nivel() )
+			balaNueva.nombreTick(randomizer.randomName())
+			balaNueva.salirDisparada()
+			game.addVisual(balaNueva)
+			game.onTick(100,balaNueva.nombreTick(), { balaNueva.salirDisparada() })
+			game.whenCollideDo(balaNueva, { elemento => balaNueva.ocasionarDanioSiCorresponde(elemento) })
+	}
 }
+
+
 
 
 object balaEnemigo {

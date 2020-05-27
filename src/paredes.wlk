@@ -29,13 +29,13 @@ class Pared{
 	method curarVida(cantidad){
 		vida = cantidad + vida
 	}
+	
 	method recibirImpactoDe(unaBala){
 		danioRecibidoTotal = danioRecibidoTotal  + unaBala.danio()
 		vida -= unaBala.danio()
-		game.removeVisual(unaBala)
-		animacionRecibirDisparo.animar(self.position(), unaBala.orientacion())
 		self.destruirSiEstoySinVida()
 	}
+	
 	method destruirSiEstoySinVida(){
 		if (self.vida() <= 0){
 			self.destruir()}
@@ -80,10 +80,8 @@ class ParedBase{
 	method recibirImpactoDe(unaBala){
 		danioRecibidoTotal = danioRecibidoTotal  + unaBala.danio()
 		vida -= unaBala.danio()
-		game.removeVisual(unaBala)
-		animacionRecibirDisparo.animar(self.position(), unaBala.orientacion())
-		self.destruirSiEstoySinVida()
-	}
+		self.destruirSiEstoySinVida()	}
+	
 	method destruirSiEstoySinVida(){
 		if (self.vida() <= 0){
 			self.destruir()}
