@@ -30,7 +30,7 @@ class AnimacionRecibirDisparo{
 			self.destruirAnimacionAlTerminar()
 		}
 		method destruirAnimacionAlTerminar(){
-			if (numeroAnimacion == 3) {
+			if (numeroAnimacion >=3) {
 				game.removeTickEvent("AnimacionRecibirImpacto")
 				numeroAnimacion = null
 				game.removeVisual(self)
@@ -40,24 +40,45 @@ class AnimacionRecibirDisparo{
 			numeroAnimacion++
 			self.destruirAnimacionAlTerminar()
 		}
-		method aplicar(param1){}
+		method aplicar(){}
+		method aplicar(algo){}
 }
 
-object animacionExplocionTanque{
+class AnimacionExplocionTanque{
 	var numeroAnimacion = 1
-		var disparoRecibidoDe= este
-		
-		method image(){	
-			return "efectos/recibirDisparoDel-" + numeroAnimacion + "-" + disparoRecibidoDe + ".png"
-		}
+		method esAtravezable(){	return true	}
+		method image(){	 return "efectos/explosion-" + numeroAnimacion + ".png"	}
 	
-		method esAtravezable(){
-		return true
-		}
-		method animar(unaCoordenada, orientacionBala) {
-   			disparoRecibidoDe = orientacionBala
+		
+		method animar(unaCoordenada) {
 			game.addVisualIn ( self, game.at(unaCoordenada.x(), unaCoordenada.y()))
-			game.onTick(50, "destruccionTanque",{self.siguienteAnimacion()})
+			game.onTick(10, "destruccionTanque",{self.siguienteAnimacion()})
+			self.destruirAnimacionAlTerminar()
+		}
+		method destruirAnimacionAlTerminar(){
+			if (numeroAnimacion == 5) {
+				game.removeTickEvent("destruccionTanque")
+				numeroAnimacion = 1
+				game.removeVisual(self)
+			}
+		}
+		method siguienteAnimacion (){
+			numeroAnimacion++
+			self.destruirAnimacionAlTerminar()
+		}
+		method aplicar(param1){}
+		method aplicar(){}
+}
+
+class AnimacionTomarPowerUps{
+	var numeroAnimacion = 1
+		method esAtravezable(){	return true	}
+		method image(){	 return "efectos/upgrade-" + numeroAnimacion + ".png"	}
+	
+		
+		method animar(unaCoordenada) {
+			game.addVisualIn ( self, game.at(unaCoordenada.x(), unaCoordenada.y()))
+			game.onTick(10, "destruccionTanque",{self.siguienteAnimacion()})
 			self.destruirAnimacionAlTerminar()
 		}
 		method destruirAnimacionAlTerminar(){
@@ -72,5 +93,5 @@ object animacionExplocionTanque{
 			self.destruirAnimacionAlTerminar()
 		}
 		method aplicar(param1){}
-	
+		method aplicar(){}
 }

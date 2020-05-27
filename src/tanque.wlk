@@ -15,8 +15,7 @@ class Tanque{
 	var property nivel = 1
 	var property target = null
 	var imagen = "Players/Tanque-"
-	var balasPropias=#{}
-	
+//	var balasPropias=#{}
 	
 	method move(nuevaPosicion) {
 		if (self.puedeMover(nuevaPosicion)) { self.position(nuevaPosicion)}}
@@ -33,17 +32,7 @@ class Tanque{
 		
 	method disparar(){
 		var bala = new BalaComun()
-		bala.generarBala(self)
-//		var balaNueva= new BalaComun(position = self.position(), 
-//									orientacion= self.orientacion(),
-//									nivel= self.nivel() )
-//			balaNueva.nombreTick(randomizer.randomName())
-//			balaNueva.salirDisparada()
-//			game.addVisual(balaNueva)
-//			game.onTick(100,balaNueva.nombreTick(), { balaNueva.salirDisparada() })
-//			game.whenCollideDo(balaNueva, { elemento => balaNueva.ocasionarDanioSiCorresponde(elemento) })
-//			game.uniqueCollider(balaNueva).recibirImpactoDe(balaNueva)
-		}
+		bala.generarBala(self)}
 	
 	method recibirImpactoDe(unaBala){
 		vida -= unaBala.danio()

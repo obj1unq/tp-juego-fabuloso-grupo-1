@@ -55,7 +55,7 @@ object base {
 	}
 	
 	method recibirImpactoDe(unaBala){
-		danioRecibidoTotal = danioRecibidoTotal  + unaBala.danio()
+//		danioRecibidoTotal = danioRecibidoTotal  + unaBala.danio()
 		vida -= unaBala.danio()
 		self.destruirSiEstoySinVida()	
 		}
