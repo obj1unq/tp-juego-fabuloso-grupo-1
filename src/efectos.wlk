@@ -19,10 +19,11 @@ object animacionRecibirDisparo{
 		method image(){	
 			return "efectos/recibirDisparoDel-" + numeroAnimacion + "-" + disparoRecibidoDe + ".png"
 		}
-	
+		
 		method esAtravezable(){
 		return true
 		}
+		
 		method animar(unaCoordenada, orientacionBala) {
    			disparoRecibidoDe = orientacionBala
 			game.addVisualIn ( self, game.at(unaCoordenada.x(), unaCoordenada.y()))

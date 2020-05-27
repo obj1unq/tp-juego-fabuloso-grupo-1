@@ -7,12 +7,22 @@ import randomizer.*
 import tanque.*
 
 
-object balaComun {
-	var property danio = 20
+class BalaComun {
 	var property position = null
 	var property orientacion = norte 
-	const property nombreTick = "bala" 
+	var property nombreTick=null
 	var property nivel= 1
+	
+//	method nombreTick(){
+//		return nombreTick
+//	}
+//	method nombreTick(_nombreTick){
+//		nombreTick=_nombreTick
+//	}
+//	
+	method danio(){
+	 return self.nivel() * 15	
+	}
 	
 	method subirNivel(){
 		if (nivel < 4 )
@@ -36,6 +46,7 @@ object balaComun {
 			self.position(nuevaPosicion)
 		} else {
 			game.removeTickEvent(self.nombreTick())
+			randomizer.liberarNombre(self.nombreTick())
 			game.removeVisual(self)
 		}
 	}
@@ -46,18 +57,17 @@ object balaComun {
 	
 	method ocasionarDanio(){
 		game.removeTickEvent(self.nombreTick())
-		game.uniqueCollider(self).recibirImpactoDe(self)		
+		randomizer.liberarNombre(self.nombreTick())
+		game.uniqueCollider(self).recibirImpactoDe(self)	
+		return self.danio()	
 	}
 	
 	method recibirImpactoDe(objeto){
-		if (game.hasVisual(objeto)) {
-			game.removeVisual(objeto)
-		}
-		if (game.hasVisual(self)) {
 			game.removeTickEvent(self.nombreTick())
+			randomizer.liberarNombre(self.nombreTick())
 			game.removeVisual(self)
 		}
-	}
+		
 	method esAtravezable(){
 		return true
 	}
