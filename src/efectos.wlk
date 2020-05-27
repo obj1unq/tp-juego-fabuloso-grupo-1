@@ -11,18 +11,18 @@ import paredes.*
 import nivel.*
 
 
-object animacionRecibirDisparo{
-	
+class AnimacionRecibirDisparo{
 		var numeroAnimacion = 1
 		var disparoRecibidoDe= este
 		
 		method image(){	
 			return "efectos/recibirDisparoDel-" + numeroAnimacion + "-" + disparoRecibidoDe + ".png"
 		}
-	
+		
 		method esAtravezable(){
 		return true
 		}
+		
 		method animar(unaCoordenada, orientacionBala) {
    			disparoRecibidoDe = orientacionBala
 			game.addVisualIn ( self, game.at(unaCoordenada.x(), unaCoordenada.y()))
@@ -32,7 +32,7 @@ object animacionRecibirDisparo{
 		method destruirAnimacionAlTerminar(){
 			if (numeroAnimacion == 3) {
 				game.removeTickEvent("AnimacionRecibirImpacto")
-				numeroAnimacion = 1
+				numeroAnimacion = null
 				game.removeVisual(self)
 			}
 		}

@@ -30,7 +30,7 @@ object nivelManager{
 	}
 	
 	method dibujarPaded(x,y){
-		game.addVisualIn(new Pared(), game.at(x, y) )
+		game.addVisual(new Pared(position=game.at(x, y) ))
 	}
 	
 	method pasarDeNivel(){

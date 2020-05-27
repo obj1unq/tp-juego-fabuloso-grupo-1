@@ -12,19 +12,22 @@ import nivel.*
 import efectos.*
 
 program TanquesGame {
-	var tanquePlayer = new Tanque()
+	
 	
 //	CONFIG	
 	game.title("Tanques")
-	game.height(25)
-	game.width(25)
+	game.height(20)
+	game.width(20)
 	game.cellSize(41)
 	game.ground("Fondos/Fondo-1.png")
   
  //********     TANQUE PALYER   *****************
- 	tanquePlayer.position(game.at(base.position().x() -2,base.position().y()))
-	tanquePlayer.orientacion(este)
-	tanquePlayer.bala(balaComun)
+// 	tanquePlayer.position(game.at(base.position().x() -2,base.position().y()))
+//	tanquePlayer.orientacion(este)
+//	tanquePlayer.bala(balaComun)
+var tanquePlayer = new Tanque(orientacion=este,
+							  position=game.at(base.position().x() -2,base.position().y())
+							  )
 
 //************************************************
   
@@ -38,11 +41,6 @@ program TanquesGame {
     nivelManager.base(base)
 	nivelManager.incializarMapa()
 //************************************************
-
-   
-
-	
-	
 	game.onTick(8000, "managerPowerUp", { managerPowerUp.agregarPower(managerPowerUp.powerRandom()) })
 //	TECLADO
 	keyboard.space().onPressDo { tanquePlayer.disparar() }
@@ -50,11 +48,7 @@ program TanquesGame {
 	keyboard.down().onPressDo { sur.mover(tanquePlayer) }
 	keyboard.left().onPressDo { oeste.mover(tanquePlayer) }
 	keyboard.right().onPressDo { este.mover(tanquePlayer) }
-	
-	
 	//Colisiones
-	
-
 	
 	game.whenCollideDo(tanquePlayer, {powerUps => tanquePlayer.tomarPowerUps(powerUps)})	
      

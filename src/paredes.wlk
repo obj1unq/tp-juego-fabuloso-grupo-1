@@ -29,13 +29,13 @@ class Pared{
 	method curarVida(cantidad){
 		vida = cantidad + vida
 	}
+	
 	method recibirImpactoDe(unaBala){
 		danioRecibidoTotal = danioRecibidoTotal  + unaBala.danio()
 		vida -= unaBala.danio()
-		game.removeVisual(unaBala)
-		animacionRecibirDisparo.animar(self.position(), unaBala.orientacion())
 		self.destruirSiEstoySinVida()
 	}
+	
 	method destruirSiEstoySinVida(){
 		if (self.vida() <= 0){
 			self.destruir()}
@@ -80,17 +80,47 @@ class ParedBase{
 	method recibirImpactoDe(unaBala){
 		danioRecibidoTotal = danioRecibidoTotal  + unaBala.danio()
 		vida -= unaBala.danio()
-		game.removeVisual(unaBala)
-		animacionRecibirDisparo.animar(self.position(), unaBala.orientacion())
-		self.destruirSiEstoySinVida()
-	}
+		self.destruirSiEstoySinVida()	}
+	
 	method destruirSiEstoySinVida(){
 		if (self.vida() <= 0){
 			self.destruir()}
 	}
 	
 	method destruir(){
-		game.removeVisual(self)
+		base.quitarPared(self)
 	}
+}
+
+object listaDeCoordenadas {
+	var property numero
+	var property inicio=0
+	var property fin
+	var actual = 0
+	
+	method construirParedesEn_(lista){
+		self.asignarLista(lista)
+		fin= lista.size()
+		self.deAPares(lista)
+	}
+	
+	method asignarLista (lista){
+		numero = lista
+	}
+	
+	method deAPares(lista){
+		if (self.finEsImpar()) {
+			self.error("falta una coordenada")
+		}
+		if  (actual < fin) {
+			base.construirParedBaseEn(numero.get(actual),numero.get(actual+1))
+			actual= actual + 2
+			self.deAPares(lista)
+		}else { actual= 0}
+	}
+	
+    method finEsImpar (){
+    	return fin%2 != 0
+    }
 }
 
