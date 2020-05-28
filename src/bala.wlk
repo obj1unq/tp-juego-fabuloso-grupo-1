@@ -65,6 +65,7 @@ class BalaComun {
 		return true
 	}
 	method aplicar(){}
+	method aplicar(parametro){}
 }
 
 
