@@ -32,7 +32,7 @@ class AnimacionRecibirDisparo{
 		method destruirAnimacionAlTerminar(){
 			if (numeroAnimacion >=3) {
 				game.removeTickEvent("AnimacionRecibirImpacto")
-				numeroAnimacion = null
+				numeroAnimacion = 1
 				game.removeVisual(self)
 			}
 		}
@@ -56,7 +56,7 @@ class AnimacionExplocionTanque{
 			self.destruirAnimacionAlTerminar()
 		}
 		method destruirAnimacionAlTerminar(){
-			if (numeroAnimacion == 5) {
+			if (numeroAnimacion >= 5) {
 				game.removeTickEvent("destruccionTanque")
 				numeroAnimacion = 1
 				game.removeVisual(self)
@@ -78,12 +78,12 @@ class AnimacionTomarPowerUps{
 		
 		method animar(unaCoordenada) {
 			game.addVisualIn ( self, game.at(unaCoordenada.x(), unaCoordenada.y()))
-			game.onTick(10, "destruccionTanque",{self.siguienteAnimacion()})
+			game.onTick(50, "tomaPowerUps",{self.siguienteAnimacion()})
 			self.destruirAnimacionAlTerminar()
 		}
 		method destruirAnimacionAlTerminar(){
-			if (numeroAnimacion == 3) {
-				game.removeTickEvent("destruccionTanque")
+			if (numeroAnimacion >= 3) {
+				game.removeTickEvent("tomaPowerUps")
 				numeroAnimacion = 1
 				game.removeVisual(self)
 			}

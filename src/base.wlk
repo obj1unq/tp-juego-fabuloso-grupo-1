@@ -5,6 +5,7 @@ import powerUps.*
 import randomizer.*
 import tanque.*
 import paredes.*
+import nivel.*
 
 object base {
 	var property vida = 1
@@ -68,7 +69,7 @@ object base {
 	
 	method destruir(){
 	game.removeVisual(self)
-	
+	nivelManager.finalizarNivel()
 	}
 	
 }
