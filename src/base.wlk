@@ -28,6 +28,7 @@ object base {
 		{
 			nivel= self.nivel() + 1
 			paredesDeBase.forEach({unaPared=> unaPared.nivel(self.nivel())})
+			paredesDeBase.forEach({unaPared=> unaPared.vida(unaPared.vida() + (200*self.nivel()))})
 		}
 	}
 	
@@ -69,7 +70,7 @@ object base {
 	
 	method destruir(){
 	game.removeVisual(self)
-	nivelManager.finalizarNivel()
+	nivelManager.mapaGameOver()
 	}
 	
 }

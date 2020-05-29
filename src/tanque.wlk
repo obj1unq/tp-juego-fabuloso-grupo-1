@@ -9,11 +9,12 @@ import enemigo.*
 import efectos.*
 
 class Tanque{
-	var property vida = 100
+	var vida = 100
 	var property position = null
 	var property orientacion = null
 	var property nivel = 1
 	var property target = null
+	var property danioRecibido=0
 	var imagen = "Players/Tanque-"
 //	var balasPropias=#{}
 	
@@ -21,7 +22,11 @@ class Tanque{
 		if (self.puedeMover(nuevaPosicion)) { self.position(nuevaPosicion)}}
 		
 	method sumarVida(cantidad){
-		vida = vida + cantidad
+		danioRecibido = (self.danioRecibido() - cantidad).max(0)
+	}
+	
+	method vida(){
+		return vida - self.danioRecibido()
 	}
 	
 	method imagen(path){
@@ -35,7 +40,9 @@ class Tanque{
 		bala.generarBala(self)}
 	
 	method recibirImpactoDe(unaBala){
-		vida -= unaBala.danio()
+		danioRecibido = danioRecibido + unaBala.danio()
+//		vida -= unaBala.danio()
+		game.say(self, "vida:" + self.vida())
 		self.destruirSiEstoySinVida()}
 	
 	method destruirSiEstoySinVida(){
@@ -64,5 +71,7 @@ class Tanque{
 	method subirNivel() {
 		if (nivel < 4 )
 		{  nivel= self.nivel() + 1
+			vida = vida + 100 
+			self.danioRecibido(0)
 		}}
 }

@@ -100,6 +100,7 @@ class TanqueEnemigo{
 	
 	method recibirImpactoDe(unaBala){
 		vida -= unaBala.danio()
+		game.say(self, "vida" + self.vida())
 		self.destruirSiEstoySinVida()	}
 		
 		

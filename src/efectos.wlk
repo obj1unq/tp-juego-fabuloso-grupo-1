@@ -95,3 +95,26 @@ class AnimacionTomarPowerUps{
 		method aplicar(param1){}
 		method aplicar(){}
 }
+
+class BalaNivel4 {
+	var numeroAnimacion = 1
+	
+		method animar(bala) {
+			game.onTick(50, "animacionBala",{self.siguienteAnimacion()})
+			return "Disparos/normal-" + bala.nivel()  +"-"+ numeroAnimacion + "-" + bala.orientacion().imagen()
+		}
+		
+		method destruirAnimacionAlTerminar(){
+			if (numeroAnimacion >= 3) {
+				game.removeTickEvent("tomaPowerUps")
+				numeroAnimacion = 1
+				game.removeVisual(self)
+			}
+		}
+		method siguienteAnimacion (){
+			numeroAnimacion++
+			self.destruirAnimacionAlTerminar()
+		}
+		method aplicar(param1){}
+		method aplicar(){}
+}
