@@ -20,14 +20,22 @@ object nivelManager{
     }
     
 	method inicializarParedes(){
-		(0..nivel.fila()-1).forEach( {i => 
-            (0..nivel.col()-1).forEach({ j =>	
-            	if (nivel.mapa().asList().get(i).asList().get(j) == 1) {
-            		self.dibujarPaded(i, j)
-            	}    
+		(0..nivel.col()-1).forEach( {i => 
+            (0..nivel.fila()-1).forEach({ j =>	
+            	if (nivel.mapa().asList().get(j).asList().get(i) == 1) {
+            		self.dibujarPaded(i, j)          	}    
             })
         })
 	}
+	
+	method mapaGameOver(){
+		self.nivel(gameOver)
+		game.clear()
+		self.inicializarParedes()
+		
+		
+	}
+
 	
 	method dibujarPaded(x,y){
 		game.addVisual(new Pared(position=game.at(x, y) ))
@@ -47,7 +55,12 @@ object nivelManager{
 	
 	method finalizarNivel(){
 		game.clear()
+		game.ground("Fondos/Fondo-1.png")
 		self.nivel().ubicarPlayer(self.jugador())
+	}
+	method finalizarNivelBaseRota(){
+		game.clear()
+		game.ground("Fondos/gameOver.png")
 	}
 }
 
@@ -77,8 +90,11 @@ object nivel1{
 	const fila18 = [0,0,0,0,1,0,0,0,0,0, 0,1,0,0,0,0,0,1,0,0]
 	const fila19 = [0,0,1,0,0,0,0,0,1,1, 1,1,0,0,0,0,0,1,0,0]
 	const fila20 = [0,0,1,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const mapa = [fila1,fila2,fila3,fila4,fila5,fila6,fila7,fila8,fila9,fila10,
-		          fila11,fila12,fila13,fila14,fila15,fila16,fila17,fila18,fila19,fila20]
+	const mapa = [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
+		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
+//		           [fila1,fila2,fila3,fila4,fila5,fila6,fila7,fila8,fila9,fila10,
+//		          fila11,fila12,fila13,fila14,fila15,fila16,fila17,fila18,fila19,fila20]
+		          
     const maxTanques = 5
   
 	
@@ -106,4 +122,61 @@ object nivel1{
 		game.say(jugador, "A jugar !!")
 	}
 }
+
+object gameOver{
+	/**********************************
+	 * 20 x 20 
+	 * O = no hay pared
+	 * 1 = hay pared
+	 * ********************************/
+	const fila1  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila2  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila3  = [0,1,1,0,0,0,1,1,0,0, 1,0,0,0,1,0,1,1,1,1]
+	const fila4  = [1,0,0,1,0,1,0,0,1,0, 1,1,0,1,1,0,1,0,0,0]
+	const fila5  = [1,0,0,0,0,1,1,1,1,0, 1,0,1,0,1,0,1,1,1,0]
+	const fila6  = [1,0,1,1,0,1,0,0,1,0, 1,0,0,0,1,0,1,0,0,0]
+	const fila7  = [1,0,0,1,0,1,0,0,1,0, 1,0,0,0,1,0,1,0,0,0]
+	const fila8  = [0,1,1,0,0,1,0,0,1,0, 1,0,0,0,1,0,1,1,1,1]
+	const fila9  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila10 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila11 = [0,1,1,0,0,1,0,0,0,1, 0,1,1,1,1,0,1,1,1,1]
+	const fila12 = [1,0,0,1,0,1,0,0,0,1, 0,1,0,0,0,0,1,0,0,1]
+	const fila13 = [1,0,0,1,0,1,0,0,0,1, 0,1,1,1,0,0,1,1,1,0]
+	const fila14 = [1,0,0,1,0,0,1,0,1,0, 0,1,0,0,0,0,1,0,0,1]
+	const fila15 = [1,0,0,1,0,0,1,0,1,0, 0,1,0,0,0,0,1,0,0,1]
+	const fila16 = [0,1,1,0,0,0,0,1,0,0, 0,1,1,1,1,0,1,0,0,1]
+	const fila17 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila18 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila19 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila20 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const mapa =  [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
+		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
+    const maxTanques = 5
+  
+	
+	method mapa(){
+		return mapa
+	}
+	method fila(){
+		return 20 //game.height()
+	}
+	method col(){
+		return 20 //game.width()
+	}
+//	method maxTanques(){
+//		return maxTanques
+//	}
+//	method siguienteNiel(){
+//		return self // aca va nivel2 cuando exista
+//	}
+//	method ubicarBase(base){
+//		game.addVisual(base)
+//	}
+	
+//	method ubicarPlayer(jugador){
+//		game.addVisual(jugador)
+//		game.say(jugador, "A jugar !!")
+//	}
+}
+
 

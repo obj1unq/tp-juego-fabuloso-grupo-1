@@ -32,6 +32,7 @@ class Pared{
 	
 	method recibirImpactoDe(unaBala){
 		danioRecibidoTotal = danioRecibidoTotal  + unaBala.danio()
+		game.say(self, "vida" + self.vida())
 		vida -= unaBala.danio()
 		self.destruirSiEstoySinVida()
 	}
@@ -80,6 +81,7 @@ class ParedBase{
 	method recibirImpactoDe(unaBala){
 		danioRecibidoTotal = danioRecibidoTotal  + unaBala.danio()
 		vida -= unaBala.danio()
+		game.say(self, "vida" + self.vida())
 		self.destruirSiEstoySinVida()	}
 	
 	method destruirSiEstoySinVida(){
