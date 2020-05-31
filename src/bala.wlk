@@ -67,9 +67,11 @@ object managerBala{
 											orientacion= objeto.orientacion(),
 											nivel= objeto.nivel() )
 			balaNueva.nombreTick("balaN°" + numeroDeBala.toString())
-			game.addVisual(balaNueva)
-			balaNueva.salirDisparada()
+//			game.addVisual(balaNueva)
+			
 			game.onTick(100,balaNueva.nombreTick(), { balaNueva.salirDisparada() })
+			balaNueva.salirDisparada()
+			game.addVisual(balaNueva)
 			game.whenCollideDo(balaNueva, { elemento => balaNueva.ocasionarDanioSiCorresponde(elemento)})
 		 	numeroDeBala ++	
 		 	balasGeneradas.add(balaNueva)
