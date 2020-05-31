@@ -16,7 +16,6 @@ class Tanque{
 	var property target = null
 	var property danioRecibido=0
 	var imagen = "Players/Tanque-"
-//	var balasPropias=#{}
 	
 	method move(nuevaPosicion) {
 		if (self.puedeMover(nuevaPosicion)) { self.position(nuevaPosicion)}}
@@ -36,13 +35,11 @@ class Tanque{
 		return   imagen + self.nivel() + "-" + orientacion.imagen()	}
 		
 	method disparar(){
-		var bala = new BalaComun()
-		bala.generarBala(self)}
+		managerBala.generarBalaDisparadaPor(self)
+		}
 	
 	method recibirImpactoDe(unaBala){
 		danioRecibido = danioRecibido + unaBala.danio()
-//		vida -= unaBala.danio()
-		game.say(self, "vida:" + self.vida())
 		self.destruirSiEstoySinVida()}
 	
 	method destruirSiEstoySinVida(){

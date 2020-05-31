@@ -27,9 +27,6 @@ object powerUpCuracion{
 		tanque.sumarVida(50)
 		game.removeVisual(self)
 	}
-//	method ocasionarDanio(){}
-//	method recibirImpactoDe(objeto){}
-	
 }
 
 
@@ -58,8 +55,6 @@ object powerUpBase{
 	method estaActivo(){
 		return game.hasVisual(self)
 	}
-//	method ocasionarDanio(){}
-//	method recibirImpactoDe(objeto){}
 }
 
 
@@ -85,8 +80,6 @@ object powerUpBase{
 		tanque.subirNivel()
 		game.removeVisual(self)
 	}
-//	method ocasionarDanio(){}
-//	method recibirImpactoDe(objeto){}
 }
 
 object powerUpCuracionBase{
@@ -112,11 +105,7 @@ object powerUpCuracionBase{
 	 	animacion.animar(self.position())
 		paredes.forEach({pared => pared.curarVida(20)})
 		game.removeVisual(self)
-		
-		
 	}
-//	method ocasionarDanio(){}
-//	method recibirImpactoDe(objeto){}
 }
 
 
@@ -145,7 +134,5 @@ object powerUpDestruccion{
 	 	animacion.animar(self.position())
 		game.removeVisual(self)}
 		
-//		method ocasionarDanio(){}
-//		method recibirImpactoDe(objeto){}
 }
 

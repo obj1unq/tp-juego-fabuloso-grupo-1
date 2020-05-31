@@ -1,0 +1,14 @@
+import tanque.*
+import wollok.game.*
+import bala.*
+import orientaciones.*
+import base.*
+
+test "se genera una bala al dispara Tanque 1" {
+var nuevoTanque = new Tanque()
+var tanquePlayer = new Tanque(orientacion=este,position=game.at(base.position().x() -2,base.position().y()) )
+	tanquePlayer.disparar()
+	assert.that(true)
+	assert.that(game.allVisuals().contains())
+
+}

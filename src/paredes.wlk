@@ -7,11 +7,14 @@ import orientaciones.*
 import efectos.*
 
 class Pared{
-	var property vida = 500
+	var vida = 500
 	var property nivel = 1
-	var danioRecibidoTotal = 0
+	var property danioRecibidoTotal = 0
 	var property position
 
+	method vida(){
+		return vida - self.danioRecibidoTotal()	}
+		
 	method image(){	return "Paredes/pared-" + self.nivel() + "-" + self.nombreDeImagenSegunDanio() + ".png"	}
 	
 	method nombreDeImagenSegunDanio(){
@@ -20,20 +23,21 @@ class Pared{
 	 if (self.porcetajeDanioRecibido()  > 10 &&  self.porcetajeDanioRecibido() <= 50)
 			   								{ return 50}  // danio entre 10 y 50%
 			   else { return 10} }// danio entre 0 y 10%
+	
 	 method porcetajeDanioRecibido(){
 		return ( self.vida() * 100 / (danioRecibidoTotal + self.vida() )  )
 	}
+	
 	method esAtravezable(){
 		return false
 	}
+	
 	method curarVida(cantidad){
 		vida = cantidad + vida
 	}
 	
 	method recibirImpactoDe(unaBala){
 		danioRecibidoTotal = danioRecibidoTotal  + unaBala.danio()
-		game.say(self, "vida" + self.vida())
-		vida -= unaBala.danio()
 		self.destruirSiEstoySinVida()
 	}
 	
@@ -49,17 +53,20 @@ class Pared{
 	method agregarParedEn(coordenadaX,coordenadaY){
 		return new Pared (position= game.at(coordenadaX ,coordenadaY ))
 	}
-	
 	method aplicar(x){
 		
 	}
 }
 
 class ParedBase{
-	var property vida = 500
+	var vida  = 500
 	var property nivel
-	var danioRecibidoTotal = 0
+	var property danioRecibidoTotal = 0
 	var property position
+	
+	method vida(){
+		return vida - self.danioRecibidoTotal()
+	}
 
 	method image(){	return "Paredes/pared-" + self.nivel() + "-" + self.nombreDeImagenSegunDanio() + ".png"	}
 	
@@ -80,13 +87,15 @@ class ParedBase{
 	}
 	method recibirImpactoDe(unaBala){
 		danioRecibidoTotal = danioRecibidoTotal  + unaBala.danio()
-		vida -= unaBala.danio()
-		game.say(self, "vida" + self.vida())
 		self.destruirSiEstoySinVida()	}
 	
 	method destruirSiEstoySinVida(){
 		if (self.vida() <= 0){
 			self.destruir()}
+	}
+	method subirNivel(){
+		nivel= self.nivel() + 1 
+		vida = vida + 100
 	}
 	
 	method destruir(){

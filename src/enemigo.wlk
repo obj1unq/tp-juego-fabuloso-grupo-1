@@ -94,8 +94,7 @@ class TanqueEnemigo{
 	}
 	
 	method disparar(){
-		var bala = new BalaComun()
-		bala.generarBala(self)
+		managerBala.generarBalaDisparadaPor(self)
 		}
 	
 	method recibirImpactoDe(unaBala){

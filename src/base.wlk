@@ -27,8 +27,8 @@ object base {
 		if (nivel < 4 )
 		{
 			nivel= self.nivel() + 1
-			paredesDeBase.forEach({unaPared=> unaPared.nivel(self.nivel())})
-			paredesDeBase.forEach({unaPared=> unaPared.vida(unaPared.vida() + (200*self.nivel()))})
+			paredesDeBase.forEach({unaPared=> unaPared.subirNivel()})
+//			paredesDeBase.forEach({unaPared=> unaPared.vida(unaPared.vida() + (200*self.nivel()))})
 		}
 	}
 	

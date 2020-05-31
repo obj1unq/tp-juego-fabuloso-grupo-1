@@ -6,7 +6,6 @@ import tanque.*
 import orientaciones.*
 import paredes.*
 
-
 object nivelManager{
 	var property nivel = null
 	var property jugador = null
@@ -32,15 +31,10 @@ object nivelManager{
 		self.nivel(gameOver)
 		game.clear()
 		self.inicializarParedes()
-		
-		
 	}
-
-	
 	method dibujarPaded(x,y){
 		game.addVisual(new Pared(position=game.at(x, y) ))
 	}
-	
 	method pasarDeNivel(){
 		game.clear()
 		self.nivel(self.nivel().siguienteNivel())
@@ -57,10 +51,6 @@ object nivelManager{
 		game.clear()
 		game.ground("Fondos/Fondo-1.png")
 		self.nivel().ubicarPlayer(self.jugador())
-	}
-	method finalizarNivelBaseRota(){
-		game.clear()
-		game.ground("Fondos/gameOver.png")
 	}
 }
 
@@ -92,8 +82,6 @@ object nivel1{
 	const fila20 = [0,0,1,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const mapa = [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
 		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
-//		           [fila1,fila2,fila3,fila4,fila5,fila6,fila7,fila8,fila9,fila10,
-//		          fila11,fila12,fila13,fila14,fila15,fila16,fila17,fila18,fila19,fila20]
 		          
     const maxTanques = 5
   
@@ -102,10 +90,10 @@ object nivel1{
 		return mapa
 	}
 	method fila(){
-		return 20 //game.height()
+		return game.height() // 20 
 	}
 	method col(){
-		return 20 //game.width()
+		return game.width() //20 //
 	}
 	method maxTanques(){
 		return maxTanques
@@ -163,20 +151,6 @@ object gameOver{
 	method col(){
 		return 20 //game.width()
 	}
-//	method maxTanques(){
-//		return maxTanques
-//	}
-//	method siguienteNiel(){
-//		return self // aca va nivel2 cuando exista
-//	}
-//	method ubicarBase(base){
-//		game.addVisual(base)
-//	}
-	
-//	method ubicarPlayer(jugador){
-//		game.addVisual(jugador)
-//		game.say(jugador, "A jugar !!")
-//	}
 }
 
 

@@ -13,7 +13,8 @@ import nivel.*
 
 class AnimacionRecibirDisparo{
 		var numeroAnimacion = 1
-		var disparoRecibidoDe= este
+		var property disparoRecibidoDe= este
+		var property nombreDeTick =""
 		
 		method image(){	
 			return "efectos/recibirDisparoDel-" + numeroAnimacion + "-" + disparoRecibidoDe + ".png"
@@ -22,18 +23,12 @@ class AnimacionRecibirDisparo{
 		method esAtravezable(){
 		return true
 		}
-		
-		method animar(unaCoordenada, orientacionBala) {
-   			disparoRecibidoDe = orientacionBala
-			game.addVisualIn ( self, game.at(unaCoordenada.x(), unaCoordenada.y()))
-			game.onTick(50, "AnimacionRecibirImpacto",{self.siguienteAnimacion()})
-			self.destruirAnimacionAlTerminar()
-		}
 		method destruirAnimacionAlTerminar(){
-			if (numeroAnimacion >=3) {
-				game.removeTickEvent("AnimacionRecibirImpacto")
-				numeroAnimacion = 1
+			if (numeroAnimacion ==3) {
 				game.removeVisual(self)
+				game.removeTickEvent(self.nombreDeTick())
+//				numeroAnimacion = 1
+				
 			}
 		}
 		method siguienteAnimacion (){
@@ -117,4 +112,18 @@ class BalaNivel4 {
 		}
 		method aplicar(param1){}
 		method aplicar(){}
+}
+
+object animacionDisparo{
+	var cantidadAnimacion = 1
+	
+	method crearAnimacion(posicion, orientacion){
+		const unaAnimacion= new AnimacionRecibirDisparo()
+		unaAnimacion.disparoRecibidoDe(orientacion)
+		unaAnimacion.nombreDeTick("animacionDispario" + cantidadAnimacion.toString())
+		game.addVisualIn(unaAnimacion, game.at(posicion.x(), posicion.y()))
+		game.onTick(50, unaAnimacion.nombreDeTick(),{unaAnimacion.siguienteAnimacion()})
+//		unaAnimacion.destruirAnimacionAlTerminar()
+		cantidadAnimacion ++
+	}
 }
