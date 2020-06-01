@@ -79,7 +79,7 @@ class AnimacionTomarPowerUps{
 		method destruirAnimacionAlTerminar(){
 			if (numeroAnimacion >= 3) {
 				game.removeTickEvent("tomaPowerUps")
-				numeroAnimacion = 1
+				numeroAnimacion = null
 				game.removeVisual(self)
 			}
 		}

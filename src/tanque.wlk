@@ -16,6 +16,7 @@ class Tanque{
 	var property target = null
 	var property danioRecibido=0
 	var imagen = "Players/Tanque-"
+
 	
 	method move(nuevaPosicion) {
 		if (self.puedeMover(nuevaPosicion)) { self.position(nuevaPosicion)}}
@@ -63,6 +64,9 @@ class Tanque{
 	
 	method tomarPowerUps(powerUp){
 		powerUp.aplicar(self)
+	}
+	method pasarNivel(){
+		
 	}	
 	
 	method subirNivel() {

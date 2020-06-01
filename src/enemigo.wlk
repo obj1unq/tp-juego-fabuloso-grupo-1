@@ -115,10 +115,8 @@ class TanqueEnemigo{
 		if (self.nombreTick() != ""){
 			game.removeTickEvent(self.nombreTick())
 			game.removeVisual(self)
-		} else {
-			nivelManager.finalizarNivel()
-		}
-	}
+			nivelManager.sumarEnemigoMuerto()
+	}}
 	
 	method puedeMover(hacia){
 		return game.getObjectsIn(hacia).all({cosa => cosa.esAtravezable()}) and self.orientacion().puedeMover(hacia)

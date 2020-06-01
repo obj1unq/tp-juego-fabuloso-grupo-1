@@ -25,6 +25,7 @@ object powerUpCuracion{
 		var animacion = new AnimacionTomarPowerUps()
 	 	animacion.animar(self.position())
 		tanque.sumarVida(50)
+		game.say(tanque,"Me siento mas saludable!!")
 		game.removeVisual(self)
 	}
 }
@@ -104,6 +105,7 @@ object powerUpCuracionBase{
 		var animacion = new AnimacionTomarPowerUps()
 	 	animacion.animar(self.position())
 		paredes.forEach({pared => pared.curarVida(20)})
+		game.say(base, "Paredes Curadas!!")
 		game.removeVisual(self)
 	}
 }
