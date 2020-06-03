@@ -47,7 +47,7 @@ class BalaComun {
 	
 	method destruirObjecto(){
 		game.removeTickEvent(self.nombreTick())
-		game.removeVisual(self)
+		game.removeVisual(self) //arreglar aca
 		managerBala.balasGeneradas().remove(self)
 		}
 		

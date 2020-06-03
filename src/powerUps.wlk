@@ -5,18 +5,16 @@ import randomizer.*
 import paredes.*
 import efectos.*
 
-object powerUpCuracion{
+class PowerUp{
 	var property position = self.posicionNueva()
 	method posicionNueva(){
 		return randomizer.emptyPosition()
 	}
 	
-	method image(){
-		return "powerups/BaseHeal.png"
-	}
 	method esAtravezable(){
 		return true
 	}
+	
 	method estaActivo(){
 		return game.hasVisual(self)
 	}
@@ -24,117 +22,91 @@ object powerUpCuracion{
 	method aplicar(tanque){
 		var animacion = new AnimacionTomarPowerUps()
 	 	animacion.animar(self.position())
+	 	game.removeVisual(self)
+	}
+	
+}
+object powerUpCuracion inherits PowerUp{ 
+	
+	
+	method image(){
+		return "powerups/BaseHeal.png"
+	}
+	
+	
+	override method aplicar(tanque){
 		tanque.sumarVida(50)
 		game.say(tanque,"Me siento mas saludable!!")
-		game.removeVisual(self)
+		
 	}
 }
 
 
-object powerUpBase{
+object powerUpBase inherits PowerUp{
 	
-	var property position = self.posicionNueva()
-	method posicionNueva(){
-		return randomizer.emptyPosition()
-	}
+	
 	
     method  image (){
     	return "powerups/BaseUp.png"
     }
     
-	 method aplicar(tanque){
-	 	var animacion = new AnimacionTomarPowerUps()
-	 	animacion.animar(self.position())
+	override method aplicar(tanque){
+	 	super(tanque)
 		base.subirNivel()
-		game.removeVisual(self)
 		
 		
+		
 	}
-	method esAtravezable(){
-		return true
-	}
-	method estaActivo(){
-		return game.hasVisual(self)
-	}
+	
 }
 
 
-  object powerUpAumentoDanio{
-  	var property position = self.posicionNueva()
-	method posicionNueva(){
-		return randomizer.emptyPosition()
-	}
+  object powerUpAumentoDanio inherits PowerUp{
+  	
 	
   	method image(){
   		return "powerups/Shot1.png"
   	}
-  	method esAtravezable(){
-		return true
-	}
-	method estaActivo(){
-		return game.hasVisual(self)
-	}
+  	
 	
-	method aplicar(tanque){
-		var animacion = new AnimacionTomarPowerUps()
-	 	animacion.animar(self.position())
+	override method aplicar(tanque){
+		super(tanque)
 		tanque.subirNivel()
-		game.removeVisual(self)
+		
 	}
 }
 
-object powerUpCuracionBase{
+object powerUpCuracionBase inherits PowerUp{
 	const paredes = base.paredesDeBase()
-	var property position = self.posicionNueva()
-	method posicionNueva(){
-		return randomizer.emptyPosition()
-	}
 	
-	method esAtravezable(){
-		return true
-	}
-	method estaActivo(){
-		return game.hasVisual(self)
-	}
 	
 	method image(){
 		return "powerups/Doble.png"
 	}
 	
-	method aplicar(tanque){
-		var animacion = new AnimacionTomarPowerUps()
-	 	animacion.animar(self.position())
+	override method aplicar(tanque){
+		super(tanque)
 		paredes.forEach({pared => pared.curarVida(20)})
 		game.say(base, "Paredes Curadas!!")
-		game.removeVisual(self)
+		
 	}
 }
 
 
-object powerUpDestruccion{
-	var property position = self.posicionNueva()
-	method posicionNueva(){
-		return randomizer.emptyPosition()
-	}
+object powerUpDestruccion inherits PowerUp{
 	
-	method esAtravezable(){
-		return true
-	}
-	method estaActivo(){
-		return game.hasVisual(self)
-	}
 	
 	method image(){
 		return "powerups/Shot3.png" // le puse cualquier imagen
 	}
 	
-	method aplicar(tanque){
+	override method aplicar(tanque){
+		super(tanque)
 		if(not tanqueEnemigoManagwer.tanques().isEmpty()){
 			tanqueEnemigoManagwer.destruirTodos()
 		}
-		var animacion = new AnimacionTomarPowerUps()
-	 	animacion.animar(self.position())
-		game.removeVisual(self)}
 		
+}
+
 }
 

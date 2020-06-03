@@ -29,7 +29,7 @@ object nivelManager{
 	method inicializarParedes(){
 		(0..nivel.col()-1).forEach( {i => 
             (0..nivel.fila()-1).forEach({ j =>	
-            	if (nivel.mapa().asList().get(j).asList().get(i) == 1) {
+            	if (nivel.mapa().asList().get(j).get(i) == 1) {
             		self.dibujarPaded(i, j)          	}    
             })
         })
@@ -49,7 +49,7 @@ object nivelManager{
 		
 	}
 	
-	method pasarDeNivel(){
+	method pasarDeNivel(){// quitar ontick primero
 //	game.clear()
 		self.limpiarMapa() // quita todos Visuales del Mapa
 		self.nivel(self.nivel().siguienteNivel())
@@ -158,7 +158,7 @@ object nivel1{ // UNQ en el mapa :P
 	const fila20 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const mapa = [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
 		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
-	const property enemigosParaPasar = 2
+	const property enemigosParaPasar = 1
     const maxTanques = 3
   
 	
@@ -188,7 +188,7 @@ object nivel1{ // UNQ en el mapa :P
 	}
 }
 
-object nivel3{ 
+object nivel3{   // hacer clase nivel
 	/**********************************
 	 * 20 x 20 
 	 * O = no hay pared
