@@ -59,6 +59,7 @@ object nivelManager{
 	method iniciarEnemigos(){
 		tanqueEnemigoManagwer.maxTanques(self.nivel().maxTanques())
 		tanqueEnemigoManagwer.target(self.jugador())
+		game.onTick(tanqueEnemigoManagwer.tankOnTickSpeed(), "tankManagerAtaque", {tanqueEnemigoManagwer.atacar()})
 		game.onTick(8000, "tankManager", {tanqueEnemigoManagwer.start()})
 	}
 	
@@ -66,6 +67,8 @@ object nivelManager{
 		game.clear()
 		game.ground("Fondos/Fondo-1.png")
 		self.nivel().ubicarPlayer(self.jugador())
+		game.removeTickEvent("tankManagerAtaque")
+		game.removeTickEvent("tankManager")
 	}
 }
 

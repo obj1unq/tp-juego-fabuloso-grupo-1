@@ -10,12 +10,12 @@ import nivel.*
 /* manager de tanques enemigos */
 object tanqueEnemigoManagwer{
 	const property tanques = []
-	const tankOnTickSpeed = 500
+	const property tankOnTickSpeed = 500
 	var target = base    // la base o el tanque
 	var targetAux = base // la base o el tanque 
 	var orientacion = norte
 	var property maxTanques = 0
-	var numeroDeTanque = 1
+//	var numeroDeTanque = 1
 	var imagen = "Enemigos/tanqueEnemigo-"
 	
 	method target(atacar){
@@ -43,12 +43,12 @@ object tanqueEnemigoManagwer{
 		tank.orientacion(self.orientacion())
 		tank.imagen(imagen)
 		tank.target(self.target())
-		tank.nombreTick("tanqueEnemigo" + numeroDeTanque.toString() )
+//		tank.nombreTick("tanqueEnemigo" + numeroDeTanque.toString() )
 		self.tanques().add(tank)
 		game.addVisual(tank)
-		game.onTick(tankOnTickSpeed, tank.nombreTick(), {tank.ataque()})
+//		game.onTick(tankOnTickSpeed, tank.nombreTick(), {tank.ataque()})
 		game.say(tank, "Moriras !!")
-		numeroDeTanque ++		
+//		numeroDeTanque ++		
 	}
 	
 	method start(){
@@ -60,7 +60,12 @@ object tanqueEnemigoManagwer{
 	
 	method destruirTodos(){
 			tanques.forEach({tanque => tanque.destruir()})
-	 }  
+	}
+	
+	method atacar(){
+		tanques.forEach({ tanque => tanque.ataque() })
+	}
+	    
 }
 
 class TanqueEnemigo{
@@ -70,13 +75,13 @@ class TanqueEnemigo{
 	var property balasPropias = #{}
 	var property nivel = 1
 	var property target = null
-	var property nombreTick = ""
+//	var property nombreTick = ""
 	var imagen = ""
 	
 	method move(nuevaPosicion) {
 		if (self.puedeMover(nuevaPosicion)) {
 			self.position(nuevaPosicion)
-		} else if (self.nombreTick() != ""){
+		} else {
 			self.orientacion(self.orientacion().siguienteOrientacion())
 			self.orientacion().mover(self)
 		}
@@ -112,11 +117,9 @@ class TanqueEnemigo{
 	}
 	
 	method destruir(){
-		if (self.nombreTick() != ""){
-			game.removeTickEvent(self.nombreTick())
 			game.removeVisual(self)
 			nivelManager.sumarEnemigoMuerto()
-	}}
+	}
 	
 	method puedeMover(hacia){
 		return game.getObjectsIn(hacia).all({cosa => cosa.esAtravezable()}) and self.orientacion().puedeMover(hacia)
