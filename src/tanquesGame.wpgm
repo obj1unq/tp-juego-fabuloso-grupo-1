@@ -22,13 +22,9 @@ program TanquesGame {
 	game.ground("Fondos/Fondo-1.png")
   
  //********     TANQUE PALYER   *****************
-// 	tanquePlayer.position(game.at(base.position().x() -2,base.position().y()))
-//	tanquePlayer.orientacion(este)
-//	tanquePlayer.bala(balaComun)
-var tanquePlayer = new Tanque(orientacion=este,
-							  position=game.at(base.position().x() -2,base.position().y())
-							  )
-
+	var tanquePlayer = new Tanque(orientacion=este,
+	                              position=game.at(base.position().x() -2,base.position().y())
+							  	 )
 //************************************************
   
 //	VISUALES

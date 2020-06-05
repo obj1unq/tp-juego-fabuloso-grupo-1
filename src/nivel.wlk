@@ -23,9 +23,11 @@ object nivelManager{
 	method incializarMapa() {
 		self.inicializarParedes()
         self.nivel().ubicarBase(self.base())
-        self.nivel().ubicarPlayer(self.jugador())  
+        self.nivel().ubicarPlayer(self.jugador())
+        game.say(jugador, "A jugar !!")  
         self.iniciarEnemigos()  
     }
+    
 	method inicializarParedes(){
 		(0..nivel.col()-1).forEach( {i => 
             (0..nivel.fila()-1).forEach({ j =>	
@@ -64,11 +66,13 @@ object nivelManager{
 	}
 	
 	method finalizarNivel(){
+		game.removeTickEvent("tankManagerAtaque")
+		game.removeTickEvent("tankManager")
+		game.removeTickEvent("managerPowerUp")
 		game.clear()
 		game.ground("Fondos/Fondo-1.png")
 		self.nivel().ubicarPlayer(self.jugador())
-		game.removeTickEvent("tankManagerAtaque")
-		game.removeTickEvent("tankManager")
+		game.say(self.jugador(), "GAME OVER")
 	}
 }
 
@@ -127,7 +131,8 @@ object nivel2{
 	}
 		
 	method ubicarPlayer(jugador){
-		game.addVisualCharacter(jugador)
+//		game.addVisualCharacter(jugador)
+		game.addVisual(jugador)
 		game.say(jugador, "Pasaste de Nivel!! Sigamoos Jugando!")
 	}
 }
@@ -187,8 +192,8 @@ object nivel1{ // UNQ en el mapa :P
 		
 	method ubicarPlayer(jugador){
 		game.addVisual(jugador)
-		game.say(jugador, "A jugar !!")
 	}
+	
 }
 
 object nivel3{   // hacer clase nivel

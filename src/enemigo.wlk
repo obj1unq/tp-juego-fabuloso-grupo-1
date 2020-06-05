@@ -15,7 +15,6 @@ object tanqueEnemigoManagwer{
 	var targetAux = base // la base o el tanque 
 	var orientacion = norte
 	var property maxTanques = 0
-//	var numeroDeTanque = 1
 	var imagen = "Enemigos/tanqueEnemigo-"
 	
 	method target(atacar){
@@ -43,12 +42,9 @@ object tanqueEnemigoManagwer{
 		tank.orientacion(self.orientacion())
 		tank.imagen(imagen)
 		tank.target(self.target())
-//		tank.nombreTick("tanqueEnemigo" + numeroDeTanque.toString() )
 		self.tanques().add(tank)
 		game.addVisual(tank)
-//		game.onTick(tankOnTickSpeed, tank.nombreTick(), {tank.ataque()})
 		game.say(tank, "Moriras !!")
-//		numeroDeTanque ++		
 	}
 	
 	method start(){
@@ -68,17 +64,11 @@ object tanqueEnemigoManagwer{
 	    
 }
 
-class TanqueEnemigo{
-	var property vida = 100
-	var property position = null
-	var property orientacion = null
+class TanqueEnemigo inherits TanqueBase{
 	var property balasPropias = #{}
-	var property nivel = 1
-	var property target = null
-//	var property nombreTick = ""
 	var imagen = ""
 	
-	method move(nuevaPosicion) {
+	override method move(nuevaPosicion) {
 		if (self.puedeMover(nuevaPosicion)) {
 			self.position(nuevaPosicion)
 		} else {
@@ -87,42 +77,31 @@ class TanqueEnemigo{
 		}
 	}
 	
-	method sumarVida(cantidad){
-		vida = vida + cantidad
-	}
 	method imagen(path){
 		imagen = path
 	}
-	method image(){
+	override method image(){
 		return   imagen + self.nivel() + "-" + orientacion.imagen()
-		//TODO: self + ""-" +
 	}
 	
-	method disparar(){
-		managerBala.generarBalaDisparadaPor(self)
-		}
 	
-	method recibirImpactoDe(unaBala){
+	override method recibirImpactoDe(unaBala){
 		vida -= unaBala.danio()
-		game.say(self, "vida" + self.vida())
-		self.destruirSiEstoySinVida()	}
+		self.destruirSiEstoySinVida()
+	}
 		
 		
-	method destruirSiEstoySinVida(){
-		var animacionDestruir= new AnimacionExplocionTanque()
+	override method destruirSiEstoySinVida(){
+		const animacionDestruir= new AnimacionExplocionTanque()
 		if (self.vida() <= 0){
 			animacionDestruir.animar(self.position())
 			self.destruir()
 		}
 	}
 	
-	method destruir(){
-			game.removeVisual(self)
-			nivelManager.sumarEnemigoMuerto()
-	}
-	
-	method puedeMover(hacia){
-		return game.getObjectsIn(hacia).all({cosa => cosa.esAtravezable()}) and self.orientacion().puedeMover(hacia)
+	override method destruir(){
+		super()
+		nivelManager.sumarEnemigoMuerto()
 	}
 	
 	method ataque(){
@@ -183,9 +162,7 @@ class TanqueEnemigo{
 			self.orientacion().mover(self)
 		}
 	}
-	method esAtravezable(){
-		return false
-	}
+
 	method tomarPowerUps(powerUp){
 		powerUp.aplicar(self)
 	}	
