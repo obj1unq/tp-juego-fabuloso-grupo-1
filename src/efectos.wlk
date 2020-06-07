@@ -127,3 +127,24 @@ object animacionDisparo{
 		cantidadAnimacion ++
 	}
 }
+
+object barraDeVida{
+	var property position = game.at(0,18)
+	var porcentaje = 10
+	method image()
+		{ 
+		return ("efectos/vida-" + self.redondeDeDanio().toString()  + ".png")
+		}
+
+	method porcetajeDanioRecibido()
+		{
+			return ((nivelManager.jugador().vida() * 100 / 
+					(nivelManager.jugador().danioRecibido() + 
+						nivelManager.jugador().vida())
+			) / 10)
+		}
+		
+		method redondeDeDanio(){
+			return self.porcetajeDanioRecibido().roundUp()
+		}					
+	}

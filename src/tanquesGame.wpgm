@@ -30,6 +30,7 @@ program TanquesGame {
 //	VISUALES
 
     base.dibujarParedes()
+    game.addVisual(barraDeVida)
     	
 //**********  INICIO CON NIVEL 1  ****************
     nivelManager.nivel(nivel1)
