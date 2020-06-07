@@ -10,7 +10,7 @@ object nivelManager{
 	var property nivel = null
 	var property jugador = null
 	var property base = null
-	var enemigosMuertos = 0
+	var property enemigosMuertos = 0
 	
 	method sumarEnemigoMuerto(){
 		enemigosMuertos++
@@ -166,7 +166,7 @@ object nivel1{ // UNQ en el mapa :P
 	const fila20 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const mapa = [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
 		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
-	const property enemigosParaPasar = 1
+	const property enemigosParaPasar = 3
     const maxTanques = 3
   
 	

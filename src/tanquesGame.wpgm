@@ -31,6 +31,7 @@ program TanquesGame {
 
     base.dibujarParedes()
     game.addVisual(barraDeVida)
+    game.addVisual(enemigosFaltantes)
     	
 //**********  INICIO CON NIVEL 1  ****************
     nivelManager.nivel(nivel1)
@@ -48,10 +49,7 @@ program TanquesGame {
 	//Colisiones
 	
 	game.whenCollideDo(tanquePlayer, {powerUps => tanquePlayer.tomarPowerUps(powerUps)})	
-     
-  
-
-			
+ 
 //	START
   game.start()
 }
