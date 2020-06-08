@@ -12,6 +12,10 @@ object nivelManager{
 	var property base = null
 	var property enemigosMuertos = 0
 	
+	method nombreDelNivel(){
+		return self.nivel().nombreNivel()
+	}
+	
 	method sumarEnemigoMuerto(){
 		enemigosMuertos++
 		if (enemigosMuertos == self.nivel().enemigosParaPasar()){
@@ -104,7 +108,7 @@ object nivel2{
 	const fila20 = [0,0,1,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const mapa = [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
 		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
-		          
+	const property nombreNivel="nivel2"
     const maxTanques = 2
     const property enemigosParaPasar = 5
 	
@@ -146,28 +150,49 @@ object nivel1{ // UNQ en el mapa :P
 	 * ********************************/
 	const fila1  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const fila2  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila3  = [0,1,0,0,0,1,0,1,0,0, 0,1,0,0,1,1,1,0,0,0]
-	const fila4  = [0,1,0,0,0,1,0,1,1,0, 0,1,0,1,0,0,0,0,0,0]
-	const fila5  = [0,1,0,0,0,1,0,1,1,0, 0,1,0,1,0,0,0,1,0,0]
-	const fila6  = [0,1,0,0,0,1,0,1,1,1, 0,1,0,1,0,0,0,1,0,0]
-	const fila7  = [0,1,0,0,0,1,0,1,0,1, 1,1,0,1,0,0,0,1,0,0]
-	const fila8  = [0,1,0,0,0,1,0,1,0,0, 1,1,0,1,0,1,0,1,0,0]
-	const fila9  = [0,1,0,0,0,1,0,1,0,0, 0,0,0,1,0,1,0,1,0,0]
-	const fila10 = [0,0,1,1,1,0,0,1,0,0, 0,0,0,0,1,1,1,0,0,0]
-	const fila11 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,1,0,0,0,0]
-	const fila12 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,1,0,0,0]
+	const fila3  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila4  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila5  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila6  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila7  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila8  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila9  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila10 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila11 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila12 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const fila13 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const fila14 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila15 = [0,0,1,1,1,1,1,1,1,0, 0,1,1,1,1,1,1,1,1,0]
-	const fila16 = [0,0,0,0,1,1,1,0,0,0, 0,0,0,1,1,1,1,0,0,0]
+	const fila15 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila16 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const fila17 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const fila18 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const fila19 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const fila20 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+//	const fila1  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+//	const fila2  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+//	const fila3  = [0,1,0,0,0,1,0,1,0,0, 0,1,0,0,1,1,1,0,0,0]
+//	const fila4  = [0,1,0,0,0,1,0,1,1,0, 0,1,0,1,0,0,0,0,0,0]
+//	const fila5  = [0,1,0,0,0,1,0,1,1,0, 0,1,0,1,0,0,0,1,0,0]
+//	const fila6  = [0,1,0,0,0,1,0,1,1,1, 0,1,0,1,0,0,0,1,0,0]
+//	const fila7  = [0,1,0,0,0,1,0,1,0,1, 1,1,0,1,0,0,0,1,0,0]
+//	const fila8  = [0,1,0,0,0,1,0,1,0,0, 1,1,0,1,0,1,0,1,0,0]
+//	const fila9  = [0,1,0,0,0,1,0,1,0,0, 0,0,0,1,0,1,0,1,0,0]
+//	const fila10 = [0,0,1,1,1,0,0,1,0,0, 0,0,0,0,1,1,1,0,0,0]
+//	const fila11 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,1,0,0,0,0]
+//	const fila12 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,1,0,0,0]
+//	const fila13 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+//	const fila14 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+//	const fila15 = [0,0,1,1,1,1,1,1,1,0, 0,1,1,1,1,1,1,1,1,0]
+//	const fila16 = [0,0,0,0,1,1,1,0,0,0, 0,0,0,1,1,1,1,0,0,0]
+//	const fila17 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+//	const fila18 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+//	const fila19 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+//	const fila20 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const mapa = [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
 		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
-	const property enemigosParaPasar = 3
+	const property enemigosParaPasar = 
     const maxTanques = 3
+    const property nombreNivel="nivel1"
   
 	
 	method mapa(){
@@ -249,6 +274,7 @@ object nivel3{   // hacer clase nivel
 		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
 	const property enemigosParaPasar = 2
     const maxTanques = 3
+    const property nombreNivel="nivel3"
   
 	
 	method mapa(){

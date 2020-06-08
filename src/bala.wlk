@@ -29,7 +29,7 @@ class BalaComun {
 		if (self.puedeMover(nuevaPosicion)) {
 			self.position(nuevaPosicion)
 		} else {
-			self.destruirObjecto()
+			managerBala.borrarBala(self)
 		}
 	}
 	
@@ -40,16 +40,9 @@ class BalaComun {
 	method ocasionarDanioSiCorresponde(unObjeto){
 		if (!unObjeto.esAtravezable()){
 			unObjeto.recibirImpactoDe(self)
-			self.destruirObjecto()
-			animacionDisparo.crearAnimacion(self.position(), self.orientacion())
+			managerBala.borrarBala(self)
 		}
 	}
-	
-	method destruirObjecto(){
-		game.removeTickEvent(self.nombreTick())
-		game.removeVisual(self) //arreglar aca
-		managerBala.balasGeneradas().remove(self)
-		}
 		
 	method esAtravezable(){
 		return true
@@ -62,14 +55,39 @@ class BalaComun {
 object managerBala{
 	var numeroDeBala=1
 	var property balasGeneradas=#{}
+	var nombreDeTick=""
+	
+	method borrarBala(unaBala){
+		if (game.hasVisual(unaBala)){
+			game.removeVisual(unaBala) //arreglar aca
+			self.balasGeneradas().remove(unaBala)
+		}
+	}
+	
+	method generaMovimientoSinoExiste(){
+		if (nombreDeTick == ""){
+		game.onTick(500, "moverBalas", {self.sihayBalasMover()})
+		nombreDeTick = "moverBalas"
+		}
+	}
+	method moverBalas(){
+		balasGeneradas.forEach({unaBala=> unaBala.salirDisparada()})
+	}
+	
+	method sihayBalasMover(){
+		 if (not balasGeneradas.isEmpty())
+		 {
+		 	self.moverBalas()
+		 }else{
+		   game.removeTickEvent("moverBalas") 
+		   nombreDeTick = ""	
+	 	}
+	}
 		method generarBalaDisparadaPor(objeto){
 		const balaNueva= new BalaComun	(	position = objeto.position(), 
 											orientacion= objeto.orientacion(),
 											nivel= objeto.nivel() )
-			balaNueva.nombreTick("balaN°" + numeroDeBala.toString())
-//			game.addVisual(balaNueva)
-			
-			game.onTick(100,balaNueva.nombreTick(), { balaNueva.salirDisparada() })
+			self.generaMovimientoSinoExiste()
 			balaNueva.salirDisparada()
 			game.addVisual(balaNueva)
 			game.whenCollideDo(balaNueva, { elemento => balaNueva.ocasionarDanioSiCorresponde(elemento)})

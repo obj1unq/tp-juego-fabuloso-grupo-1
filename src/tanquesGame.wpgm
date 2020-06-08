@@ -31,13 +31,15 @@ program TanquesGame {
 
     base.dibujarParedes()
     game.addVisual(barraDeVida)
-    game.addVisual(enemigosFaltantes)
-    	
+  
+		
 //**********  INICIO CON NIVEL 1  ****************
     nivelManager.nivel(nivel1)
     nivelManager.jugador(tanquePlayer)
     nivelManager.base(base)
 	nivelManager.incializarMapa()
+	game.addVisual(ImagenDeNivel)
+	 game.addVisual(enemigosFaltantes)
 //************************************************
 	game.onTick(8000, "managerPowerUp", { managerPowerUp.agregarPower(managerPowerUp.powerRandom()) })
 //	TECLADO

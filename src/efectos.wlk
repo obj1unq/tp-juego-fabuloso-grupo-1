@@ -148,7 +148,6 @@ object barraDeVida{
 			return self.porcetajeDanioRecibido().roundUp()
 		}					
 	}
-	
 object  enemigosFaltantes {
 	var property position = game.at(15,18)
 	method image()
@@ -156,4 +155,12 @@ object  enemigosFaltantes {
 		return ("efectos/enemigosFaltantes-" + nivelManager.nivel().maxTanques() + "-muerte-" + nivelManager.enemigosMuertos() + ".png")
 		}
 		
+}
+object ImagenDeNivel {
+	var property position = game.at(game.center().x()-1,18)
+	method image()
+		{
+		return ("assets/Fondos/"+ nivelManager.nombreDelNivel()+ ".png")
+		}
+	
 }
