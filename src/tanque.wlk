@@ -61,7 +61,11 @@ class TanqueBase{
 }
 
 class Tanque inherits TanqueBase{
+	var  puntaje = 0000
 	
+	method puntaje() {
+		return puntaje
+	}
 	override method destruir ()
 		{	super()
 			nivelManager.finalizarNivel()

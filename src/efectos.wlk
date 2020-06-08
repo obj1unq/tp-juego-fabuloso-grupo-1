@@ -156,11 +156,70 @@ object  enemigosFaltantes {
 		}
 		
 }
+object score {
+	var property position = game.at(0,19)
+	method image()
+		{ 
+		return ("assets/puntaje/score.png")
+		}
+}
+
 object ImagenDeNivel {
 	var property position = game.at(game.center().x()-1,18)
 	method image()
 		{
 		return ("assets/Fondos/"+ nivelManager.nombreDelNivel()+ ".png")
+		}
+	
+}
+
+
+object millones {
+	const var tanque = nivelManager.jugador()
+	var property position = game.at(3,19)
+	method image()
+		{
+		return ("assets/puntaje/0.png")
+		}
+	
+}
+
+object miles {
+	const var tanque = nivelManager.jugador()
+	var property position = game.at(4,19)
+	method image()
+		{
+		return ("assets/puntaje/0.png")
+		}
+	
+}
+
+object centenas {
+	const var tanque = nivelManager.jugador()
+	var property position = game.at(5,19)
+	method image()
+		{
+		return ("assets/puntaje/0.png")
+		}
+	
+}
+
+object decenas {
+	const var tanque = nivelManager.jugador()
+	var property position = game.at(6,19)
+	method image()
+		{
+		return ("assets/puntaje/0.png")
+		}
+	
+}
+
+object unidades {
+	const var tanque = nivelManager.jugador()
+	var property position = game.at(7,19)
+	method image()
+		{
+		return ("assets/puntaje/0.png")
 		}
 	
 }
