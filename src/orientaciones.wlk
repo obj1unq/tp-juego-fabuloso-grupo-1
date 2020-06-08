@@ -12,7 +12,7 @@ object norte{
 		objeto.move(objeto.position().up(1))
 	}
 	method puedeMover(hacia){
-		return game.height() > hacia.y() 
+		return game.height() -2 > hacia.y() // -2 para el menu
 	}
 	method siguienteOrientacion(){
 		return este
