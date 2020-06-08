@@ -149,7 +149,7 @@ object barraDeVida{
 		}					
 	}
 object  enemigosFaltantes {
-	var property position = game.at(15,18)
+	var property position = game.at(12,18)
 	method image()
 		{ 
 		return ("efectos/enemigosFaltantes-" + nivelManager.nivel().maxTanques() + "-muerte-" + nivelManager.enemigosMuertos() + ".png")
