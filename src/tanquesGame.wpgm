@@ -40,6 +40,12 @@ program TanquesGame {
 	nivelManager.incializarMapa()
 	game.addVisual(ImagenDeNivel)
 	 game.addVisual(enemigosFaltantes)
+	 game.addVisual(score)
+	 	game.addVisual(millones)
+	 	game.addVisual(miles)
+	 	game.addVisual(centenas)
+	 	game.addVisual(decenas)
+	 	game.addVisual(unidades)
 //************************************************
 	game.onTick(8000, "managerPowerUp", { managerPowerUp.agregarPower(managerPowerUp.powerRandom()) })
 //	TECLADO
