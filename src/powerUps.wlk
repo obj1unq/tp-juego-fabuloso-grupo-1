@@ -35,6 +35,7 @@ object powerUpCuracion inherits PowerUp{
 	
 	
 	override method aplicar(tanque){
+		super(tanque)
 		tanque.sumarVida(50)
 		game.say(tanque,"Me siento mas saludable!!")
 		
