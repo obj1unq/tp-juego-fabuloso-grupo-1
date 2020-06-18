@@ -68,7 +68,7 @@ class Tanque inherits TanqueBase{
 	}
 	override method destruir ()
 		{	super()
-			nivelManager.finalizarNivel()
+			nivelManager.mapaGameOver()
 		}
 	method subirNivel()
 		 {	if (nivel < 4 )	

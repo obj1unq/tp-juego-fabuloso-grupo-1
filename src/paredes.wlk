@@ -7,7 +7,7 @@ import orientaciones.*
 import efectos.*
 
 class Pared{
-	var vida = 500
+	var vida = 200
 	var property nivel = 1
 	var property danioRecibidoTotal = 0
 	var property position
@@ -59,7 +59,7 @@ class Pared{
 }
 
 class ParedBase{
-	var vida  = 500
+	var vida  = 300
 	var property nivel
 	var property danioRecibidoTotal = 0
 	var property position
