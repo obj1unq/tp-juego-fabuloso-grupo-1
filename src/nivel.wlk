@@ -5,12 +5,14 @@ import enemigo.*
 import tanque.*
 import orientaciones.*
 import paredes.*
+import efectos.*
 
 object nivelManager{
 	var property nivel = null
 	var property jugador = null
 	var property base = null
 	var property enemigosMuertos = 0
+	var property gano = false
 	
 	method nombreDelNivel(){
 		return self.nivel().nombreNivel()
@@ -25,11 +27,22 @@ object nivelManager{
 	}
 	
 	method incializarMapa() {
-		self.inicializarParedes()
-        self.nivel().ubicarBase(self.base())
-        self.nivel().ubicarPlayer(self.jugador())
-        game.say(jugador, "A jugar !!")  
-        self.iniciarEnemigos()  
+		if (not self.gano()) {
+			game.addVisual(ImagenDeNivel)
+	    	game.addVisual(enemigosFaltantes)
+		    game.addVisual(score)
+		 	game.addVisual(millones)
+	 		game.addVisual(miles)
+	 		game.addVisual(centenas)
+	 		game.addVisual(decenas)
+	 		game.addVisual(unidades)
+			self.inicializarParedes()
+        	self.nivel().ubicarBase(self.base())
+        	self.nivel().ubicarPlayer(self.jugador())  
+        	self.iniciarEnemigos()
+        } else {
+        	self.mapaWin()
+        }  
     }
     
 	method inicializarParedes(){
@@ -46,6 +59,13 @@ object nivelManager{
 		game.clear()
 		self.inicializarParedes()
 	}
+	
+	method mapaWin(){
+		self.nivel(win)
+		game.clear()
+		self.inicializarParedes()
+	}
+	
 	method dibujarPaded(x,y){
 		game.addVisual(new Pared(position=game.at(x, y) ))
 	}
@@ -55,9 +75,8 @@ object nivelManager{
 		
 	}
 	
-	method pasarDeNivel(){// quitar ontick primero
-//	game.clear()
-		self.limpiarMapa() // quita todos Visuales del Mapa
+	method pasarDeNivel(){
+		self.limpiarMapa()
 		self.nivel(self.nivel().siguienteNivel())
 		self.incializarMapa()
 	}
@@ -69,80 +88,33 @@ object nivelManager{
 		game.onTick(8000, "tankManager", {tanqueEnemigoManagwer.start()})
 	}
 	
-	method finalizarNivel(){
-		game.removeTickEvent("tankManagerAtaque")
-		game.removeTickEvent("tankManager")
-		game.removeTickEvent("managerPowerUp")
-		game.clear()
-		game.ground("Fondos/Fondo-1.png")
-		self.nivel().ubicarPlayer(self.jugador())
-		game.say(self.jugador(), "GAME OVER")
-	}
 }
 
-object nivel2{
-	/**********************************
-	 * 20 x 20 
-	 * O = no hay pared
-	 * 1 = hay pared
-	 * ********************************/
-	const fila1  = [0,0,0,0,0,0,1,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila2  = [0,0,0,1,0,0,1,0,0,0, 0,0,0,0,0,0,1,0,0,0]
-	const fila3  = [0,0,0,0,0,0,1,1,1,0, 0,0,0,1,0,0,0,0,0,0]
-	const fila4  = [0,0,0,1,0,0,0,0,0,0, 0,0,0,1,0,0,1,0,0,0]
-	const fila5  = [0,0,0,0,0,0,0,0,0,1, 1,1,0,1,0,0,1,0,0,0]
-	const fila6  = [0,0,0,1,0,0,0,0,0,0, 0,0,0,0,0,0,1,0,0,0]
-	const fila7  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila8  = [0,0,0,1,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila9  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,1,0,0]
-	const fila10 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,0,0,1,0,0]
-	const fila11 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,1,0,0]
-	const fila12 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,0,0,1,0,0]
-	const fila13 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,1,1,1,0,0]
-	const fila14 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila15 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila16 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,1,1,1,1,0]
-	const fila17 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,0,0,1,0,0]
-	const fila18 = [0,0,0,0,1,0,0,0,0,0, 0,1,0,0,0,0,0,1,0,0]
-	const fila19 = [0,0,1,0,0,0,0,0,1,1, 1,1,0,0,0,0,0,1,0,0]
-	const fila20 = [0,0,1,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const mapa = [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
-		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
-	const property nombreNivel="nivel2"
-    const maxTanques = 2
-    const property enemigosParaPasar = 5
+class Nivel{
+	method mapa()           // abstracto
+	method maxTanques()     // abstracto
 	
-	method mapa(){
-		return mapa
+	method siguienteNivel(){
+		nivelManager.gano(false)
+		return null
 	}
+	
 	method fila(){
-		return game.height() // 20 
+		return game.height() 
 	}
 	method col(){
-		return game.width() //20 //
+		return game.width()
 	}
-	method maxTanques(){
-		return maxTanques
-	}
-	method siguienteNivel(){
-		return nivel3 // aca va nivel2 cuando exista
-	}
-	
 	method ubicarBase(base){
 		game.addVisual(base)
 		base.dibujarParedes()
-		
 	}
-		
 	method ubicarPlayer(jugador){
-//		game.addVisualCharacter(jugador)
 		game.addVisual(jugador)
-		game.say(jugador, "Pasaste de Nivel!! Sigamoos Jugando!")
 	}
 }
 
-
-object nivel1{ // UNQ en el mapa :P
+class Nivel1 inherits Nivel { // UNQ en el mapa :P
 	/**********************************
 	 * 20 x 20 
 	 * O = no hay pared
@@ -168,91 +140,90 @@ object nivel1{ // UNQ en el mapa :P
 	const fila18 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const fila19 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const fila20 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila1  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila2  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila3  = [0,1,0,0,0,1,0,1,0,0, 0,1,0,0,1,1,1,0,0,0]
-//	const fila4  = [0,1,0,0,0,1,0,1,1,0, 0,1,0,1,0,0,0,0,0,0]
-//	const fila5  = [0,1,0,0,0,1,0,1,1,0, 0,1,0,1,0,0,0,1,0,0]
-//	const fila6  = [0,1,0,0,0,1,0,1,1,1, 0,1,0,1,0,0,0,1,0,0]
-//	const fila7  = [0,1,0,0,0,1,0,1,0,1, 1,1,0,1,0,0,0,1,0,0]
-//	const fila8  = [0,1,0,0,0,1,0,1,0,0, 1,1,0,1,0,1,0,1,0,0]
-//	const fila9  = [0,1,0,0,0,1,0,1,0,0, 0,0,0,1,0,1,0,1,0,0]
-//	const fila10 = [0,0,1,1,1,0,0,1,0,0, 0,0,0,0,1,1,1,0,0,0]
-//	const fila11 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,1,0,0,0,0]
-//	const fila12 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,1,0,0,0]
-//	const fila13 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila14 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila15 = [0,0,1,1,1,1,1,1,1,0, 0,1,1,1,1,1,1,1,1,0]
-//	const fila16 = [0,0,0,0,1,1,1,0,0,0, 0,0,0,1,1,1,1,0,0,0]
-//	const fila17 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila18 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila19 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila20 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const mapa = [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
 		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
-	const property enemigosParaPasar = 
-    const maxTanques = 3
-    const property nombreNivel="nivel1"
+	const property enemigosParaPasar = 1
+    const maxTanques = 1
+    const property nombreNivel = "nivel1"
   
 	
-	method mapa(){
+	override method mapa(){
 		return mapa
 	}
-	method fila(){
-		return game.height() // 20 
-	}
-	method col(){
-		return game.width() //20 //
-	}
-	method maxTanques(){
+	
+	override method maxTanques(){
 		return maxTanques
 	}
-	method siguienteNivel(){
-		return nivel2 
+	
+	override method siguienteNivel(){
+		super()
+		return new Nivel2() 
 	}
-	method ubicarBase(base){
-		game.addVisual(base)
-		base.dibujarParedes()
-	}
-		
-	method ubicarPlayer(jugador){
-		game.addVisual(jugador)
+			
+	override method ubicarPlayer(jugador){
+		super(jugador)
+		game.say(jugador, "A Jugar!")
 	}
 	
 }
+class Nivel2 inherits Nivel {
+	/**********************************
+	 * 20 x 20 
+	 * O = no hay pared
+	 * 1 = hay pared
+	 * ********************************/
+	const fila1  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila2  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila3  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila4  = [0,0,0,1,0,0,0,0,0,0, 0,0,0,1,0,0,1,0,0,0]
+	const fila5  = [0,0,0,0,0,0,0,0,0,1, 1,1,0,1,0,0,1,0,0,0]
+	const fila6  = [0,0,0,1,0,0,0,0,0,0, 0,0,0,0,0,0,1,0,0,0]
+	const fila7  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila8  = [0,0,0,1,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila9  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,1,0,0]
+	const fila10 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,0,0,1,0,0]
+	const fila11 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,1,0,0]
+	const fila12 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,0,0,1,0,0]
+	const fila13 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,1,1,1,0,0]
+	const fila14 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila15 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila16 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,1,1,1,1,0]
+	const fila17 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,0,0,1,0,0]
+	const fila18 = [0,0,0,0,1,0,0,0,0,0, 0,1,0,0,0,0,0,1,0,0]
+	const fila19 = [0,0,1,0,0,0,0,0,1,1, 1,1,0,0,0,0,0,1,0,0]
+	const fila20 = [0,0,1,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const mapa = [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
+		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
+	const property nombreNivel = "nivel2"
+    const maxTanques = 1
+    const property enemigosParaPasar = 1
+	
+	override method mapa(){
+		return mapa
+	}
+	override method maxTanques(){
+		return maxTanques
+	}
+	override method siguienteNivel(){
+		super()
+		return new Nivel3()
+	}
+	override method ubicarPlayer(jugador){
+		super(jugador)
+		game.say(jugador, "Pasaste de Nivel!! Sigamoos Jugando!")
+	}
+}
 
-object nivel3{   // hacer clase nivel
+class Nivel3 inherits Nivel {   // hacer clase nivel
 	/**********************************
 	 * 20 x 20 
 	 * O = no hay pared
 	 * 1 = hay pared
 	 * Paredes nulas
 	 * ********************************/ 
-//	const fila1  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila2  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila3  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila4  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila5  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila6  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila7  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila8  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila9  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila10 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila11 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila12 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila13 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila14 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila15 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila16 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila17 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila18 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila19 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//	const fila20 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-//######################################################################
-
 	const fila1  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila2  = [0,1,1,1,1,1,1,1,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila3  = [0,0,0,0,0,0,0,0,0,0, 0,1,1,1,1,1,1,1,1,0]
+	const fila2  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila3  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const fila4  = [0,1,1,1,1,1,1,1,1,0, 0,0,0,0,0,0,0,0,0,0]
 	const fila5  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const fila6  = [0,0,0,0,0,0,0,0,0,0, 0,1,1,1,1,1,1,1,1,0]
@@ -272,33 +243,26 @@ object nivel3{   // hacer clase nivel
 	const fila20 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const mapa = [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
 		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
-	const property enemigosParaPasar = 2
-    const maxTanques = 3
-    const property nombreNivel="nivel3"
+	const property enemigosParaPasar = 1
+    const maxTanques = 1
+    const property nombreNivel = "nivel3"
   
 	
-	method mapa(){
+	override method mapa(){
 		return mapa
 	}
-	method fila(){
-		return game.height() // 20 
-	}
-	method col(){
-		return game.width() //20 //
-	}
-	method maxTanques(){
+	
+	override method maxTanques(){
 		return maxTanques
 	}
-	method siguienteNivel(){
-		return nivel4 
+	
+	override method siguienteNivel(){
+		nivelManager.gano(true)
+		return win
 	}
-	method ubicarBase(base){
-		game.addVisual(base)
-		base.dibujarParedes()
-	}
-		
+			
 	method ubicarPlayer(jugador){
-		game.addVisual(jugador)
+		super(jugador)
 		game.say(jugador, "Ultimo Nivel!! Sigamos adelante!")
 	}
 }
@@ -332,18 +296,58 @@ object gameOver{
 	const fila20 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
 	const mapa =  [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
 		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
-    const maxTanques = 5
-  
-	
+    	
 	method mapa(){
 		return mapa
 	}
 	method fila(){
-		return 20 //game.height()
+		return game.height() 
 	}
 	method col(){
-		return 20 //game.width()
+		return game.width()
 	}
 }
+
+object win{
+	/**********************************
+	 * 20 x 20 
+	 * O = no hay pared
+	 * 1 = hay pared
+	 * ********************************/
+	const fila1  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila2  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila3  = [0,0,1,0,0,0,1,0,0,1, 1,0,0,1,0,0,1,0,0,0]
+	const fila4  = [0,0,1,0,0,0,1,0,1,0, 0,1,0,1,0,0,1,0,0,0]
+	const fila5  = [0,0,0,1,0,1,0,0,1,0, 0,1,0,1,0,0,1,0,0,0]
+	const fila6  = [0,0,0,0,1,0,0,0,1,0, 0,1,0,1,0,0,1,0,0,0]
+	const fila7  = [0,0,0,0,1,0,0,0,1,0, 0,1,0,1,0,0,1,0,0,0]
+	const fila8  = [0,0,0,0,1,0,0,0,0,1, 1,0,0,0,1,1,0,0,0,0]
+	const fila9  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0] 
+	const fila10 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila11 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila12 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila13 = [0,0,1,0,0,0,0,0,0,1, 0,1,0,1,1,0,0,0,1,0]
+	const fila14 = [0,0,1,0,0,0,0,0,0,1, 0,1,0,1,0,1,0,0,1,0]
+	const fila15 = [0,0,0,1,0,1,1,0,1,0, 0,1,0,1,0,1,0,0,1,0]
+	const fila16 = [0,0,0,1,0,1,1,0,1,0, 0,1,0,1,0,0,1,0,1,0]
+	const fila17 = [0,0,0,0,1,0,0,1,0,0, 0,1,0,1,0,0,1,0,1,0]
+	const fila18 = [0,0,0,0,1,0,0,1,0,0, 0,1,0,1,0,0,0,1,1,0]
+	const fila19 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila20 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const mapa =  [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
+		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
+    	
+	method mapa(){
+		return mapa
+	}
+	method fila(){
+		return game.height() 
+	}
+	method col(){
+		return game.width()
+	}
+
+}
+
 
 
