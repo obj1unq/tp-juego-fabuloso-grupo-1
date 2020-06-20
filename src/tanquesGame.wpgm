@@ -27,15 +27,6 @@ program TanquesGame {
 	var tanquePlayer = new Tanque(orientacion=este,
 	                              position=game.at(base.position().x() -2,base.position().y())
 							  	 )
-//***********************************************
-  
-
-//***********    VISUALES     *******************
-    base.dibujarParedes()
-    game.addVisual(barraDeVida)
-//***********************************************
-  
-		
 //**********  INICIO CON NIVEL 1  ****************
     nivelManager.nivel(new Nivel1())
     nivelManager.jugador(tanquePlayer)

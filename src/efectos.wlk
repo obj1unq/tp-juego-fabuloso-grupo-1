@@ -130,7 +130,7 @@ object animacionDisparo{
 
 object barraDeVida{
 	var property position = game.at(0,18)
-	var porcentaje = 10
+	const porcentaje = 10
 	method image()
 		{ 
 		return ("efectos/vida-" + self.redondeDeDanio().toString()  + ".png")
@@ -141,7 +141,7 @@ object barraDeVida{
 			return ((nivelManager.jugador().vida() * 100 / 
 					(nivelManager.jugador().danioRecibido() + 
 						nivelManager.jugador().vida())
-			) / 10)
+			) / porcentaje)
 		}
 		
 		method redondeDeDanio(){
@@ -152,18 +152,17 @@ object  enemigosFaltantes {
 	var property position = game.at(12,18)
 	method image()
 		{ 
-		return ("efectos/enemigosFaltantes-" + nivelManager.nivel().maxTanques() + "-muerte-" + nivelManager.enemigosMuertos() + ".png")
+		return ("efectos/enemigosFaltantes-" + nivelManager.nivel().enemigosParaPasar() + "-muerte-" + nivelManager.enemigosMuertos() + ".png")
 		}
 		
 }
 class NumeroScore{
 	
 	method image(){	return ("assets/puntaje/"+self.numeroMostrado()+ ".png") }
-	
  	method numeroMostrado (){
  		return(nivelManager.puntajeComoTexto().charAt(self.posicionATomar()))
  	}
- 	method posicionATomar()
+ 	method posicionATomar() //abstracto
 }
 
 object decenasDeMil inherits NumeroScore {

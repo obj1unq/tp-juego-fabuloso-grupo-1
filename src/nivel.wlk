@@ -49,7 +49,20 @@ object nivelManager{
 	
 	method incializarMapa() {
 		if (not self.gano()) {
-			game.addVisual(imagenDeNivel)
+			self.visualesDeMenuSuperior()
+			base.dibujarParedes()
+			self.inicializarParedes()
+        	self.nivel().ubicarBase(self.base())
+        	self.nivel().ubicarPlayer(self.jugador())  
+        	self.iniciarEnemigos()
+        	game.addVisual(barraDeVida)
+        } else {
+        	self.mapaWin()
+        }  
+    }
+    
+    method visualesDeMenuSuperior(){
+    		game.addVisual(imagenDeNivel)
 	    	game.addVisual(enemigosFaltantes)
 		    game.addVisual(score)
 		 	game.addVisual(decenasDeMil)
@@ -57,13 +70,6 @@ object nivelManager{
 	 		game.addVisual(centenas)
 	 		game.addVisual(decenas)
 	 		game.addVisual(unidades)
-			self.inicializarParedes()
-        	self.nivel().ubicarBase(self.base())
-        	self.nivel().ubicarPlayer(self.jugador())  
-        	self.iniciarEnemigos()
-        } else {
-        	self.mapaWin()
-        }  
     }
     
 	method inicializarParedes(){
