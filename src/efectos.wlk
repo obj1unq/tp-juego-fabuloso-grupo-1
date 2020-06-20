@@ -156,70 +156,47 @@ object  enemigosFaltantes {
 		}
 		
 }
+class NumeroScore{
+	
+	method image(){	return ("assets/puntaje/"+self.numeroMostrado()+ ".png") }
+	
+ 	method numeroMostrado (){
+ 		return(nivelManager.puntajeComoTexto().charAt(self.posicionATomar()))
+ 	}
+ 	method posicionATomar()
+}
+
+object decenasDeMil inherits NumeroScore {
+	var property position =  game.at(3,19) 
+	override method posicionATomar (){return 0} 
+}
+
+object unidadesDeMil inherits NumeroScore{
+	var property position = game.at(4,19)
+	override method posicionATomar (){return 1} 						
+}
+
+object centenas inherits NumeroScore {
+	var property position = game.at(5,19)
+	override method posicionATomar (){return 2} 
+}
+
+object decenas inherits NumeroScore{
+	var property position = game.at(6,19)
+	override method posicionATomar (){return 3} 
+	}
+
+object unidades inherits NumeroScore{
+	var property position = game.at(7,19)
+	override method posicionATomar (){return 4} 
+}
+
+object imagenDeNivel {
+	var property position = game.at(game.center().x() -1 ,18)
+	method image(){	return ("assets/Fondos/"+ nivelManager.nombreDelNivel()+ ".png")}
+}
+
 object score {
 	var property position = game.at(0,19)
-	method image()
-		{ 
-		return ("assets/puntaje/score.png")
-		}
-}
-
-object ImagenDeNivel {
-	var property position = game.at(game.center().x()-1,18)
-	method image()
-		{
-		return ("assets/Fondos/"+ nivelManager.nombreDelNivel()+ ".png")
-		}
-	
-}
-
-
-object millones {
-	const var tanque = nivelManager.jugador()
-	var property position = game.at(3,19)
-	method image()
-		{
-		return ("assets/puntaje/0.png")
-		}
-	
-}
-
-object miles {
-	const var tanque = nivelManager.jugador()
-	var property position = game.at(4,19)
-	method image()
-		{
-		return ("assets/puntaje/0.png")
-		}
-	
-}
-
-object centenas {
-	const var tanque = nivelManager.jugador()
-	var property position = game.at(5,19)
-	method image()
-		{
-		return ("assets/puntaje/0.png")
-		}
-	
-}
-
-object decenas {
-	const var tanque = nivelManager.jugador()
-	var property position = game.at(6,19)
-	method image()
-		{
-		return ("assets/puntaje/0.png")
-		}
-	
-}
-
-object unidades {
-	const var tanque = nivelManager.jugador()
-	var property position = game.at(7,19)
-	method image()
-		{
-		return ("assets/puntaje/0.png")
-		}
-	
+	method image(){ return ("assets/puntaje/score.png")	}
 }

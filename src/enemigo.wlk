@@ -67,6 +67,7 @@ object tanqueEnemigoManagwer{
 class TanqueEnemigo inherits TanqueBase{
 	var property balasPropias = #{}
 	var imagen = ""
+	var puntaje = 20
 	
 	override method move(nuevaPosicion) {
 		if (self.puedeMover(nuevaPosicion)) {
@@ -101,6 +102,7 @@ class TanqueEnemigo inherits TanqueBase{
 	
 	override method destruir(){
 		super()
+		nivelManager.sumarPuntos(puntaje)
 		nivelManager.sumarEnemigoMuerto()
 	}
 	

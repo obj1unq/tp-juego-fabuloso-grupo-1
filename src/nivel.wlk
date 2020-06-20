@@ -13,6 +13,27 @@ object nivelManager{
 	var property base = null
 	var property enemigosMuertos = 0
 	var property gano = false
+	var  property puntaje = 0000
+	var puntajeComoTexto=""
+	
+	method puntaje() {
+		return puntaje
+	}
+	method puntajeComoTexto (){
+		puntajeComoTexto = puntaje.toString()
+		return self.textoDe5Cifras()
+	}
+	method textoDe5Cifras(){
+		if (puntajeComoTexto.length() < 5){
+			puntajeComoTexto= "0" + puntajeComoTexto
+			return self.textoDe5Cifras()
+		}else {
+			return puntajeComoTexto
+		}
+	}
+	method sumarPuntos(unNumero){
+		puntaje= puntaje + unNumero
+	}
 	
 	method nombreDelNivel(){
 		return self.nivel().nombreNivel()
@@ -28,11 +49,11 @@ object nivelManager{
 	
 	method incializarMapa() {
 		if (not self.gano()) {
-			game.addVisual(ImagenDeNivel)
+			game.addVisual(imagenDeNivel)
 	    	game.addVisual(enemigosFaltantes)
 		    game.addVisual(score)
-		 	game.addVisual(millones)
-	 		game.addVisual(miles)
+		 	game.addVisual(decenasDeMil)
+	 		game.addVisual(unidadesDeMil)
 	 		game.addVisual(centenas)
 	 		game.addVisual(decenas)
 	 		game.addVisual(unidades)
@@ -261,7 +282,7 @@ class Nivel3 inherits Nivel {   // hacer clase nivel
 		return win
 	}
 			
-	method ubicarPlayer(jugador){
+	override method ubicarPlayer(jugador){
 		super(jugador)
 		game.say(jugador, "Ultimo Nivel!! Sigamos adelante!")
 	}
