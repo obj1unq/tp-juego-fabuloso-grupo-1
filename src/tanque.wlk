@@ -64,37 +64,32 @@ class TanqueBase{
 class Tanque inherits TanqueBase{
 	const pathImagen= "Players/Tanque-"
 	var adicionalesAImagen= ""
-	override method destruir ()
-		{	super()
-			nivelManager.mapaGameOver()
+	override method destruir (){
+		super()
+		nivelManager.mapaGameOver()
+	}
+	method subirNivel() {
+		if (nivel < 4 ){
+			nivel= self.nivel() + 1
+			vida = vida + 100 
+			self.danioRecibido(0)
 		}
-	method subirNivel()
-		 {	if (nivel < 4 )	
-		 	{	nivel= self.nivel() + 1
-				vida = vida + 100 
-				self.danioRecibido(0)
-			}
-		}
-		
+	}
 	method imagenNormal(){
 		return self.nivel().toString() + "-" + orientacion.imagen().toString()
 	}
 	method adicionalesAImagen(){
 		return adicionalesAImagen
 	}
-	
 	method adicionalesAImagen(efecto){
 		adicionalesAImagen= efecto.toString()
 	}
-	
 	method imagenCompleta(){
 		return pathImagen + self.adicionalesAImagen() + self.imagenNormal()
 	}
-	
 	override method image()	{
 			return   self.imagenCompleta()
 	}
-		
 	method tomarPowerUps(powerUp){
 			powerUp.aplicar(self)
 		}

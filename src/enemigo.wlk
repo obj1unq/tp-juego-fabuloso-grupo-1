@@ -85,23 +85,15 @@ class TanqueEnemigo inherits TanqueBase{
 		return   imagen + self.nivel() + "-" + orientacion.imagen()
 	}
 	
-	
 	override method recibirImpactoDe(unaBala){
 		vida -= unaBala.danio()
 		self.destruirSiEstoySinVida()
 	}
-		
-		
-	override method destruirSiEstoySinVida(){
-		const animacionDestruir= new AnimacionExplocionTanque()
-		if (self.vida() <= 0){
-			animacionDestruir.animar(self.position())
-			self.destruir()
-		}
-	}
 	
 	override method destruir(){
+		const animacionDestruir= new AnimacionExplocionTanque()
 		super()
+		animacionDestruir.animar(self.position())
 		nivelManager.sumarPuntos(puntaje)
 		nivelManager.sumarEnemigoMuerto()
 	}
