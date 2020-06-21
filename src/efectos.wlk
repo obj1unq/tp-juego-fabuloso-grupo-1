@@ -11,32 +11,10 @@ import paredes.*
 import nivel.*
 
 
-class AnimacionRecibirDisparo{
-		var numeroAnimacion = 1
-		var property disparoRecibidoDe= este
-		var property nombreDeTick =""
-		
-		method image(){	
-			return "efectos/recibirDisparoDel-" + numeroAnimacion + "-" + disparoRecibidoDe + ".png"
-		}
-		
-		method esAtravezable(){
-		return true
-		}
-		method destruirAnimacionAlTerminar(){
-			if (numeroAnimacion ==3) {
-				game.removeVisual(self)
-				game.removeTickEvent(self.nombreDeTick())
-//				numeroAnimacion = 1
-				
-			}
-		}
-		method siguienteAnimacion (){
-			numeroAnimacion++
-			self.destruirAnimacionAlTerminar()
-		}
-		method aplicar(){}
-		method aplicar(algo){}
+object recibirImpacto{
+	method normalizarImagen(){
+		nivelManager.jugador().adicionalesAImagen("")
+	}
 }
 
 class AnimacionExplocionTanque{

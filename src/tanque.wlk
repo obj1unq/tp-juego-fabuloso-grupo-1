@@ -37,6 +37,7 @@ class TanqueBase{
 	
 	method recibirImpactoDe(unaBala)
 		{	danioRecibido = danioRecibido + unaBala.danio()
+			nivelManager.jugador().adicionalesAImagen("danio")
 			self.destruirSiEstoySinVida()
 		}
 	
@@ -61,7 +62,8 @@ class TanqueBase{
 }
 
 class Tanque inherits TanqueBase{
-	
+	const pathImagen= "Players/Tanque-"
+	var adicionalesAImagen= ""
 	override method destruir ()
 		{	super()
 			nivelManager.mapaGameOver()
@@ -74,10 +76,26 @@ class Tanque inherits TanqueBase{
 			}
 		}
 		
-	method tomarPowerUps(powerUp)
-		{	powerUp.aplicar(self)
-		}
-	override method image()
-		{	return   "Players/Tanque-" + self.nivel() + "-" + orientacion.imagen()
+	method imagenNormal(){
+		return self.nivel().toString() + "-" + orientacion.imagen().toString()
+	}
+	method adicionalesAImagen(){
+		return adicionalesAImagen
+	}
+	
+	method adicionalesAImagen(efecto){
+		adicionalesAImagen= efecto.toString()
+	}
+	
+	method imagenCompleta(){
+		return pathImagen + self.adicionalesAImagen() + self.imagenNormal()
+	}
+	
+	override method image()	{
+			return   self.imagenCompleta()
+	}
+		
+	method tomarPowerUps(powerUp){
+			powerUp.aplicar(self)
 		}
 }
