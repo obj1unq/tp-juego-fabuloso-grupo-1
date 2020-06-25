@@ -75,8 +75,7 @@ object nivelManager{
 	method inicializarParedes(){
 		(0..nivel.col()-1).forEach( {i => 
             (0..nivel.fila()-1).forEach({ j =>	
-            	if (nivel.mapa().asList().get(j).get(i) == 1) {
-            		self.dibujarPaded(i, j)          	}    
+            	nivel.mapa().asList().get(j).get(i).dibujarPared(i, j)
             })
         })
 	}
@@ -92,11 +91,7 @@ object nivelManager{
 		game.clear()
 		self.inicializarParedes()
 	}
-	
-	method dibujarPaded(x,y){
-		game.addVisual(new Pared(position=game.at(x, y) ))
-	}
-	
+		
 	method limpiarMapa(){
 		game.allVisuals().forEach({unElemento=> game.removeVisual(unElemento)})
 		
@@ -141,32 +136,47 @@ class Nivel{
 	}
 }
 
+/********* objetos de la matriz del nivel
+ *  o = sin pared
+ *  x = con pared
+ */
+object o{
+	method dibujarPared(x,y){}
+}
+
+object x{
+	method dibujarPared(x,y){
+		game.addVisual(new Pared(position=game.at(x, y) ))
+	}
+}
+/********************************************** */
+
 class Nivel1 inherits Nivel { // UNQ en el mapa :P
 	/**********************************
 	 * 20 x 20 
 	 * O = no hay pared
 	 * 1 = hay pared
 	 * ********************************/
-	const fila1  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila2  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila3  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila4  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila5  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila6  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila7  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila8  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila9  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila10 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila11 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila12 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila13 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila14 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila15 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila16 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila17 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila18 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila19 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila20 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila1  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila2  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila3  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila4  = [o,o,x,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila5  = [o,o,x,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila6  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila7  = [o,o,o,x,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila8  = [o,o,o,x,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila9  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila10 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila11 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila12 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila13 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila14 = [o,o,o,o,o,x,x,x,o,o, o,o,o,o,o,o,x,o,o,o]
+	const fila15 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,x,o,o,o]
+	const fila16 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,x,o,o,o]
+	const fila17 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,x,o,o,o]
+	const fila18 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila19 = [o,o,o,o,o,o,o,o,o,o, x,x,x,o,o,o,o,o,o,o]
+	const fila20 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
 	const mapa = [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
 		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
 	const property enemigosParaPasar = 1
@@ -199,26 +209,26 @@ class Nivel2 inherits Nivel {
 	 * O = no hay pared
 	 * 1 = hay pared
 	 * ********************************/
-	const fila1  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila2  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila3  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila4  = [0,0,0,1,0,0,0,0,0,0, 0,0,0,1,0,0,1,0,0,0]
-	const fila5  = [0,0,0,0,0,0,0,0,0,1, 1,1,0,1,0,0,1,0,0,0]
-	const fila6  = [0,0,0,1,0,0,0,0,0,0, 0,0,0,0,0,0,1,0,0,0]
-	const fila7  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila8  = [0,0,0,1,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila9  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,1,0,0]
-	const fila10 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,0,0,1,0,0]
-	const fila11 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,1,0,0]
-	const fila12 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,0,0,1,0,0]
-	const fila13 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,1,1,1,0,0]
-	const fila14 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila15 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila16 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,1,1,1,1,0]
-	const fila17 = [0,0,0,0,1,0,0,0,0,0, 0,0,0,0,0,0,0,1,0,0]
-	const fila18 = [0,0,0,0,1,0,0,0,0,0, 0,1,0,0,0,0,0,1,0,0]
-	const fila19 = [0,0,1,0,0,0,0,0,1,1, 1,1,0,0,0,0,0,1,0,0]
-	const fila20 = [0,0,1,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila1  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila2  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila3  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila4  = [o,o,o,x,o,o,o,o,o,o, o,o,o,x,o,o,x,o,o,o]
+	const fila5  = [o,o,o,o,o,o,o,o,o,x, x,x,o,x,o,o,x,o,o,o]
+	const fila6  = [o,o,o,x,o,o,o,o,o,o, o,o,o,o,o,o,x,o,o,o]
+	const fila7  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila8  = [o,o,o,x,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila9  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,x,o,o]
+	const fila10 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,x,o,o]
+	const fila11 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,x,o,o]
+	const fila12 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,x,o,o]
+	const fila13 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,x,x,x,o,o]
+	const fila14 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila15 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila16 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,x,x,x,x,o]
+	const fila17 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,x,o,o]
+	const fila18 = [o,o,o,o,x,o,o,o,o,o, o,x,o,o,o,o,o,x,o,o]
+	const fila19 = [o,o,x,o,o,o,o,o,x,x, x,x,o,o,o,o,o,x,o,o]
+	const fila20 = [o,o,x,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
 	const mapa = [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
 		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
 	const property nombreNivel = "nivel2"
@@ -248,26 +258,26 @@ class Nivel3 inherits Nivel {   // hacer clase nivel
 	 * 1 = hay pared
 	 * Paredes nulas
 	 * ********************************/ 
-	const fila1  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila2  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila3  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila4  = [0,1,1,1,1,1,1,1,1,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila5  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila6  = [0,0,0,0,0,0,0,0,0,0, 0,1,1,1,1,1,1,1,1,0]
-	const fila7  = [0,1,1,1,1,1,1,1,1,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila8  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila9  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila10 = [0,0,0,0,0,0,0,0,0,0, 0,1,1,1,1,1,1,1,1,0]
-	const fila11 = [0,1,1,1,1,1,1,1,1,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila12 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila13 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila14 = [0,1,1,1,1,1,1,1,1,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila15 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila16 = [0,0,0,0,0,0,0,0,0,0, 0,1,1,1,1,1,1,1,1,0]
-	const fila17 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila18 = [0,1,1,1,1,1,1,1,1,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila19 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila20 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila1  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila2  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila3  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila4  = [o,x,x,x,x,x,x,x,x,o, o,o,o,o,o,o,o,o,o,o]
+	const fila5  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila6  = [o,o,o,o,o,o,o,o,o,o, o,x,x,x,x,x,x,x,x,o]
+	const fila7  = [o,x,x,x,x,x,x,x,x,o, o,o,o,o,o,o,o,o,o,o]
+	const fila8  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila9  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila10 = [o,o,o,o,o,o,o,o,o,o, o,x,x,x,x,x,x,x,x,o]
+	const fila11 = [o,x,x,x,x,x,x,x,x,o, o,o,o,o,o,o,o,o,o,o]
+	const fila12 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila13 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila14 = [o,x,x,x,x,x,x,x,x,o, o,o,o,o,o,o,o,o,o,o]
+	const fila15 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila16 = [o,o,o,o,o,o,o,o,o,o, o,x,x,x,x,x,x,x,x,o]
+	const fila17 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila18 = [o,x,x,x,x,x,x,x,x,o, o,o,o,o,o,o,o,o,o,o]
+	const fila19 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila20 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
 	const mapa = [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
 		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
 	const property enemigosParaPasar = 1
@@ -301,26 +311,26 @@ object gameOver{
 	 * O = no hay pared
 	 * 1 = hay pared
 	 * ********************************/
-	const fila1  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila2  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila3  = [0,1,1,0,0,0,1,1,0,0, 1,0,0,0,1,0,1,1,1,1]
-	const fila4  = [1,0,0,1,0,1,0,0,1,0, 1,1,0,1,1,0,1,0,0,0]
-	const fila5  = [1,0,0,0,0,1,1,1,1,0, 1,0,1,0,1,0,1,1,1,0]
-	const fila6  = [1,0,1,1,0,1,0,0,1,0, 1,0,0,0,1,0,1,0,0,0]
-	const fila7  = [1,0,0,1,0,1,0,0,1,0, 1,0,0,0,1,0,1,0,0,0]
-	const fila8  = [0,1,1,0,0,1,0,0,1,0, 1,0,0,0,1,0,1,1,1,1]
-	const fila9  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila10 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila11 = [0,1,1,0,0,1,0,0,0,1, 0,1,1,1,1,0,1,1,1,1]
-	const fila12 = [1,0,0,1,0,1,0,0,0,1, 0,1,0,0,0,0,1,0,0,1]
-	const fila13 = [1,0,0,1,0,1,0,0,0,1, 0,1,1,1,0,0,1,1,1,0]
-	const fila14 = [1,0,0,1,0,0,1,0,1,0, 0,1,0,0,0,0,1,0,0,1]
-	const fila15 = [1,0,0,1,0,0,1,0,1,0, 0,1,0,0,0,0,1,0,0,1]
-	const fila16 = [0,1,1,0,0,0,0,1,0,0, 0,1,1,1,1,0,1,0,0,1]
-	const fila17 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila18 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila19 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila20 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila1  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila2  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila3  = [o,x,x,o,o,o,x,x,o,o, x,o,o,o,x,o,x,x,x,x]
+	const fila4  = [x,o,o,x,o,x,o,o,x,o, x,x,o,x,x,o,x,o,o,o]
+	const fila5  = [x,o,o,o,o,x,x,x,x,o, x,o,x,o,x,o,x,x,x,o]
+	const fila6  = [x,o,x,x,o,x,o,o,x,o, x,o,o,o,x,o,x,o,o,o]
+	const fila7  = [x,o,o,x,o,x,o,o,x,o, x,o,o,o,x,o,x,o,o,o]
+	const fila8  = [o,x,x,o,o,x,o,o,x,o, x,o,o,o,x,o,x,x,x,x]
+	const fila9  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila10 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila11 = [o,x,x,o,o,x,o,o,o,x, o,x,x,x,x,o,x,x,x,x]
+	const fila12 = [x,o,o,x,o,x,o,o,o,x, o,x,o,o,o,o,x,o,o,x]
+	const fila13 = [x,o,o,x,o,x,o,o,o,x, o,x,x,x,o,o,x,x,x,o]
+	const fila14 = [x,o,o,x,o,o,x,o,x,o, o,x,o,o,o,o,x,o,o,x]
+	const fila15 = [x,o,o,x,o,o,x,o,x,o, o,x,o,o,o,o,x,o,o,x]
+	const fila16 = [o,x,x,o,o,o,o,x,o,o, o,x,x,x,x,o,x,o,o,x]
+	const fila17 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila18 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila19 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila20 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
 	const mapa =  [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
 		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
     	
@@ -341,26 +351,26 @@ object win{
 	 * O = no hay pared
 	 * 1 = hay pared
 	 * ********************************/
-	const fila1  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila2  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila3  = [0,0,1,0,0,0,1,0,0,1, 1,0,0,1,0,0,1,0,0,0]
-	const fila4  = [0,0,1,0,0,0,1,0,1,0, 0,1,0,1,0,0,1,0,0,0]
-	const fila5  = [0,0,0,1,0,1,0,0,1,0, 0,1,0,1,0,0,1,0,0,0]
-	const fila6  = [0,0,0,0,1,0,0,0,1,0, 0,1,0,1,0,0,1,0,0,0]
-	const fila7  = [0,0,0,0,1,0,0,0,1,0, 0,1,0,1,0,0,1,0,0,0]
-	const fila8  = [0,0,0,0,1,0,0,0,0,1, 1,0,0,0,1,1,0,0,0,0]
-	const fila9  = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0] 
-	const fila10 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila11 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila12 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila13 = [0,0,1,0,0,0,0,0,0,1, 0,1,0,1,1,0,0,0,1,0]
-	const fila14 = [0,0,1,0,0,0,0,0,0,1, 0,1,0,1,0,1,0,0,1,0]
-	const fila15 = [0,0,0,1,0,1,1,0,1,0, 0,1,0,1,0,1,0,0,1,0]
-	const fila16 = [0,0,0,1,0,1,1,0,1,0, 0,1,0,1,0,0,1,0,1,0]
-	const fila17 = [0,0,0,0,1,0,0,1,0,0, 0,1,0,1,0,0,1,0,1,0]
-	const fila18 = [0,0,0,0,1,0,0,1,0,0, 0,1,0,1,0,0,0,1,1,0]
-	const fila19 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
-	const fila20 = [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0]
+	const fila1  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila2  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila3  = [o,o,x,o,o,o,x,o,o,x, x,o,o,x,o,o,x,o,o,o]
+	const fila4  = [o,o,x,o,o,o,x,o,x,o, o,x,o,x,o,o,x,o,o,o]
+	const fila5  = [o,o,o,x,o,x,o,o,x,o, o,x,o,x,o,o,x,o,o,o]
+	const fila6  = [o,o,o,o,x,o,o,o,x,o, o,x,o,x,o,o,x,o,o,o]
+	const fila7  = [o,o,o,o,x,o,o,o,x,o, o,x,o,x,o,o,x,o,o,o]
+	const fila8  = [o,o,o,o,x,o,o,o,o,x, x,o,o,o,x,x,o,o,o,o]
+	const fila9  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o] 
+	const fila10 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila11 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila12 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila13 = [o,o,x,o,o,o,o,o,o,x, o,x,o,x,x,o,o,o,x,o]
+	const fila14 = [o,o,x,o,o,o,o,o,o,x, o,x,o,x,o,x,o,o,x,o]
+	const fila15 = [o,o,o,x,o,x,x,o,x,o, o,x,o,x,o,x,o,o,x,o]
+	const fila16 = [o,o,o,x,o,x,x,o,x,o, o,x,o,x,o,o,x,o,x,o]
+	const fila17 = [o,o,o,o,x,o,o,x,o,o, o,x,o,x,o,o,x,o,x,o]
+	const fila18 = [o,o,o,o,x,o,o,x,o,o, o,x,o,x,o,o,o,x,x,o]
+	const fila19 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
+	const fila20 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
 	const mapa =  [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
 		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
     	
@@ -375,6 +385,3 @@ object win{
 	}
 
 }
-
-
-
