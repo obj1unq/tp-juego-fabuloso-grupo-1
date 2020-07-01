@@ -15,7 +15,8 @@ class TanqueBase{
 	var property nivel = 1
 	var property target = null
 	var property danioRecibido=0
-	method image()
+	var adicionalesAImagen= ""
+	const pathImagen= "Players/Tanque-"
 	
 	method move(nuevaPosicion) 
 		{	if (self.puedeMover(nuevaPosicion)) 
@@ -37,10 +38,10 @@ class TanqueBase{
 	
 	method recibirImpactoDe(unaBala)
 		{	danioRecibido = danioRecibido + unaBala.danio()
-			nivelManager.jugador().adicionalesAImagen("danio")
+			self.cambiarAImagenRecibirDisparo()
 			self.destruirSiEstoySinVida()
 		}
-	
+		
 	method destruirSiEstoySinVida()
 		{	if (self.vida() <= 0)
 			{	self.destruir()
@@ -58,23 +59,19 @@ class TanqueBase{
 				 
 	method esAtravezable()
 		{	return false
-		}	
-}
-
-class Tanque inherits TanqueBase{
-	const pathImagen= "Players/Tanque-"
-	var adicionalesAImagen= ""
-	override method destruir (){
-		super()
-		nivelManager.mapaGameOver()
-	}
-	method subirNivel() {
-		if (nivel < 4 ){
-			nivel= self.nivel() + 1
-			vida = vida + 100 
-			self.danioRecibido(0)
 		}
+		
+	// Cambio de imagenes Segun corresponda
+	
+	method cambiarAImagenRecibirDisparo(){
+			self.adicionalesAImagen("danio")
+			normalizadorDeImagenes.agregarAColar(self)
 	}
+	
+	method normalizarImagen(){
+		self.adicionalesAImagen("")
+	}
+	
 	method imagenNormal(){
 		return self.nivel().toString() + "-" + orientacion.imagen().toString()
 	}
@@ -87,9 +84,26 @@ class Tanque inherits TanqueBase{
 	method imagenCompleta(){
 		return pathImagen + self.adicionalesAImagen() + self.imagenNormal()
 	}
-	override method image()	{
+	method image()	{
 			return   self.imagenCompleta()
 	}
+			
+}
+
+class Tanque inherits TanqueBase{
+	const pathImagen= "Players/Tanque-"
+	override method destruir (){
+		super()
+		nivelManager.mapaGameOver()
+	}
+	method subirNivel() {
+		if (nivel < 4 ){
+			nivel= self.nivel() + 1
+			vida = vida + 100 
+			self.danioRecibido(0)
+		}
+	}
+
 	method tomarPowerUps(powerUp){
 			powerUp.aplicar(self)
 		}

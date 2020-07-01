@@ -66,7 +66,7 @@ object managerBala{
 	
 	method generaMovimientoSinoExiste(){
 		if (nombreDeTick == ""){
-		game.onTick(500, "moverBalas", {self.sihayBalasMover()})
+		game.onTick(2000, "moverBalas", {self.sihayBalasMover()})
 		nombreDeTick = "moverBalas"
 		}
 	}

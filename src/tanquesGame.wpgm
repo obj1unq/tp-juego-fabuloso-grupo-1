@@ -44,7 +44,7 @@ program TanquesGame {
 	
 	
 	game.onTick(8000, "managerPowerUp", { managerPowerUp.agregarPower(managerPowerUp.powerRandom()) })
-	game.onTick (500, "imagenNormal",{recibirImpacto.normalizarImagen()}
+	game.onTick (500, "imagenNormal",{normalizadorDeImagenes.normalizarImagen()})
 	game.whenCollideDo(tanquePlayer, {powerUps => tanquePlayer.tomarPowerUps(powerUps)})	
  
 //	START

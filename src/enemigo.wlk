@@ -10,12 +10,12 @@ import nivel.*
 /* manager de tanques enemigos */
 object tanqueEnemigoManagwer{
 	const property tanques = []
-	const property tankOnTickSpeed = 500
+	const property tankOnTickSpeed = 1000
 	var target = base    // la base o el tanque
 	var targetAux = base // la base o el tanque 
 	var orientacion = norte
 	var property maxTanques = 0
-	var imagen = "Enemigos/tanqueEnemigo-"
+//	var imagen = "Enemigos/tanqueEnemigo-"
 	
 	method target(atacar){
 		target = base
@@ -40,7 +40,7 @@ object tanqueEnemigoManagwer{
 		
 		tank.position(randomizer.emptyPosition())
 		tank.orientacion(self.orientacion())
-		tank.imagen(imagen)
+//		tank.imagen(imagen)
 		tank.target(self.target())
 		self.tanques().add(tank)
 		game.addVisual(tank)
@@ -68,6 +68,7 @@ class TanqueEnemigo inherits TanqueBase{
 	var property balasPropias = #{}
 	var imagen = ""
 	var puntaje = 20
+	const pathImagen= "Enemigos/tanqueEnemigo-"
 	
 	override method move(nuevaPosicion) {
 		if (self.puedeMover(nuevaPosicion)) {
@@ -76,18 +77,6 @@ class TanqueEnemigo inherits TanqueBase{
 			self.orientacion(self.orientacion().siguienteOrientacion())
 			self.orientacion().mover(self)
 		}
-	}
-	
-	method imagen(path){
-		imagen = path
-	}
-	override method image(){
-		return   imagen + self.nivel() + "-" + orientacion.imagen()
-	}
-	
-	override method recibirImpactoDe(unaBala){
-		vida -= unaBala.danio()
-		self.destruirSiEstoySinVida()
 	}
 	
 	override method destruir(){

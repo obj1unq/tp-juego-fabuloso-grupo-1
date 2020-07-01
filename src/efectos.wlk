@@ -11,9 +11,15 @@ import paredes.*
 import nivel.*
 
 
-object recibirImpacto{
+object normalizadorDeImagenes{
+	const colaNormalizadoraDeimagenes=#{}
+	
+	method agregarAColar(unaVisual){
+		colaNormalizadoraDeimagenes.add(unaVisual)
+	}
+	
 	method normalizarImagen(){
-		nivelManager.jugador().adicionalesAImagen("")
+		colaNormalizadoraDeimagenes.forEach({unTanque=> unTanque.normalizarImagen()})
 	}
 }
 
