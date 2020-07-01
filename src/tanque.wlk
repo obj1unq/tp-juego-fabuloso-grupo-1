@@ -32,9 +32,10 @@ class TanqueBase{
 		{	return vida - self.danioRecibido()
 		}
 	
-	method disparar()
-		{	managerBala.generarBalaDisparadaPor(self)
-		}
+	method disparar(){
+		self.cambiarImagenRealizarDisparo()
+		managerBala.generarBalaDisparadaPor(self)
+	}
 	
 	method recibirImpactoDe(unaBala)
 		{	danioRecibido = danioRecibido + unaBala.danio()
@@ -65,6 +66,10 @@ class TanqueBase{
 	
 	method cambiarAImagenRecibirDisparo(){
 			self.adicionalesAImagen("danio")
+			normalizadorDeImagenes.agregarAColar(self)
+	}
+	method cambiarImagenRealizarDisparo(){
+		self.adicionalesAImagen("disparo")
 			normalizadorDeImagenes.agregarAColar(self)
 	}
 	
@@ -103,7 +108,7 @@ class Tanque inherits TanqueBase{
 			self.danioRecibido(0)
 		}
 	}
-
+	
 	method tomarPowerUps(powerUp){
 			powerUp.aplicar(self)
 		}

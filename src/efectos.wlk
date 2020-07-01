@@ -48,6 +48,16 @@ class AnimacionExplocionTanque{
 		method aplicar(param1){}
 		method aplicar(){}
 }
+object animacionExplosionBase{
+	var animacion = 1
+	
+	
+	method siguienteAnimacion(){
+		animacion = animacion + 1 
+	}
+	
+}
+
 
 class AnimacionTomarPowerUps{
 	var numeroAnimacion = 1
