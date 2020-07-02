@@ -6,16 +6,13 @@ import tanque.*
 import orientaciones.*
 import efectos.*
 
-class Pared{
-	var vida = 200
-	var property nivel = 1
-	var property danioRecibidoTotal = 0
-	var property position
-
-	method vida(){
-		return vida - self.danioRecibidoTotal()	}
-		
-	method image(){	return "Paredes/pared-" + self.nivel() + "-" + self.nombreDeImagenSegunDanio() + ".png"	}
+class Pared inherits ObjetoConVisualesEnElJuego{
+	
+	override method vida(){	return 100	}
+	
+	override method  pathImagen(){
+		return "Paredes/pared-"
+	}
 	
 	method nombreDeImagenSegunDanio(){
 	if (self.porcetajeDanioRecibido() > 50 && self.porcetajeDanioRecibido() <= 100) 
@@ -25,84 +22,17 @@ class Pared{
 			   else { return 10} }// danio entre 0 y 10%
 	
 	 method porcetajeDanioRecibido(){
-		return ( self.vida() * 100 / (danioRecibidoTotal + self.vida() )  )
+		return ( self.vida() * 100 / (self.danioRecibido() + self.vida() )  )
 	}
 	
-	method esAtravezable(){
-		return false
-	}
-	
-	method curarVida(cantidad){
-		vida = cantidad + vida
-	}
-	
-	method recibirImpactoDe(unaBala){
-		danioRecibidoTotal = danioRecibidoTotal  + unaBala.danio()
-		self.destruirSiEstoySinVida()
-	}
-	
-	method destruirSiEstoySinVida(){
-		if (self.vida() <= 0){
-			self.destruir()}
-	}
-	
-	method destruir(){
-		game.removeVisual(self)
-	}
-	
-	method agregarParedEn(coordenadaX,coordenadaY){
-		return new Pared (position= game.at(coordenadaX ,coordenadaY ))
-	}
-	method aplicar(x){
-		
+	override method imagenNormal(){
+		return self.nivel().toString() + "-" + self.nombreDeImagenSegunDanio() + ".png"
 	}
 }
 
-class ParedBase{
-	var vida  = 300
-	var property nivel
-	var property danioRecibidoTotal = 0
-	var property position
-	
-	method vida(){
-		return vida - self.danioRecibidoTotal()
-	}
 
-	method image(){	return "Paredes/pared-" + self.nivel() + "-" + self.nombreDeImagenSegunDanio() + ".png"	}
-	
-	method nombreDeImagenSegunDanio(){
-		if (self.porcetajeDanioRecibido() > 50 && self.porcetajeDanioRecibido() <= 100) 
-											 { return 100}  // danio entre 50 y 100%
-	 if (self.porcetajeDanioRecibido()  > 10 &&  self.porcetajeDanioRecibido() <= 50)
-			   								{ return 50}  // danio entre 10 y 50%
-			   else { return 10} }// danio entre 0 y 10%
-	 method porcetajeDanioRecibido(){
-		return ( self.vida() * 100 / (danioRecibidoTotal + self.vida() )  )
-	}
-	method esAtravezable(){
-		return false
-	}
-	method curarVida(cantidad){
-		vida = cantidad + vida
-	}
-	method recibirImpactoDe(unaBala){
-		danioRecibidoTotal = danioRecibidoTotal  + unaBala.danio()
-		self.destruirSiEstoySinVida()	}
-	
-	method destruirSiEstoySinVida(){
-		if (self.vida() <= 0){
-			self.destruir()}
-	}
-	method subirNivel(){
-		nivel= self.nivel() + 1 
-		vida = vida + 100
-	}
-	
-	method destruir(){
-		base.quitarPared(self)
-	}
-}
-
+// objeto que dibuja las paredes segun una lista.. Esto creo que esta en el nivel Manager, 
+//Aunque hay que revisarlo
 object listaDeCoordenadas {
 	var property numero
 	var property inicio=0

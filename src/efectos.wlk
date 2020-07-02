@@ -19,8 +19,11 @@ object normalizadorDeImagenes{
 	}
 	
 	method normalizarImagen(){
-		colaNormalizadoraDeimagenes.forEach({unTanque=> unTanque.normalizarImagen()})
+		if (not colaNormalizadoraDeimagenes.isEmpty()){
+			colaNormalizadoraDeimagenes.forEach({unaVisual=> unaVisual.normalizarImagen()})
+		}
 	}
+
 }
 
 class AnimacionExplocionTanque{
@@ -97,9 +100,9 @@ object barraDeVida{
 
 	method porcetajeDanioRecibido()
 		{
-			return ((nivelManager.jugador().vida() * 100 / 
+			return ((nivelManager.jugador().vidaRestante() * 100 / 
 					(nivelManager.jugador().danioRecibido() + 
-						nivelManager.jugador().vida())
+						nivelManager.jugador().vidaRestante())
 			) / porcentaje)
 		}
 		

@@ -27,87 +27,64 @@ class PowerUp{
 	
 }
 object powerUpCuracion inherits PowerUp{ 
-	
-	
 	method image(){
 		return "powerups/BaseHeal.png"
 	}
 	
-	
 	override method aplicar(tanque){
 		super(tanque)
-		tanque.sumarVida(50)
+		tanque.reducirDanioRecibido(50)
 		game.say(tanque,"Me siento mas saludable!!")
-		
 	}
 }
 
 
-object powerUpBase inherits PowerUp{
-	
-	
-	
+object powerUpBase inherits PowerUp{	
     method  image (){
     	return "powerups/BaseUp.png"
     }
-    
+ 
 	override method aplicar(tanque){
 	 	super(tanque)
 		base.subirNivel()
-		
-		
-		
 	}
 	
 }
 
-
   object powerUpAumentoDanio inherits PowerUp{
-  	
-	
   	method image(){
   		return "powerups/Shot1.png"
   	}
-  	
-	
 	override method aplicar(tanque){
 		super(tanque)
 		tanque.subirNivel()
-		
 	}
 }
 
 object powerUpCuracionBase inherits PowerUp{
 	const paredes = base.paredesDeBase()
-	
-	
 	method image(){
 		return "powerups/Doble.png"
 	}
 	
 	override method aplicar(tanque){
 		super(tanque)
-		paredes.forEach({pared => pared.curarVida(20)})
+		paredes.forEach({pared => pared.reducirDanioRecibido(20)})
 		game.say(base, "Paredes Curadas!!")
-		
 	}
 }
 
 
 object powerUpDestruccion inherits PowerUp{
-	
-	
 	method image(){
 		return "powerups/Shot3.png" // le puse cualquier imagen
 	}
-	
 	override method aplicar(tanque){
 		super(tanque)
 		if(not tanqueEnemigoManagwer.tanques().isEmpty()){
 			tanqueEnemigoManagwer.destruirTodos()
-		}
-		
-}
+		}	
+	}
 
 }
 

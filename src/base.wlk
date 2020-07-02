@@ -7,31 +7,24 @@ import tanque.*
 import paredes.*
 import nivel.*
 
-object base {
-	var property vida = 1
-	var property position = game.at(game.center().x(),game.center().y() )
-	var property nivel= 1
+object base inherits ObjetoConVisualesEnElJuego {
 	var property paredesDeBase=#{}
 	var property paredesCoordenadas
+	override method position (){
+		return game.at(game.center().x(),game.center().y() )
+	}
 	
-	method quitarPared(unaPared){
-		paredesDeBase.remove(unaPared)
-		game.removeVisual(unaPared)
-		
-	}	
-	
-	method image(){
+	override method vida(){ return 1}
+	override method image(){
 		return "Bases/base.png"
 	}
-	method subirNivel(){
-		if (nivel < 4 )
-		{
-			nivel= self.nivel() + 1
+	
+	override method subirNivel(){
+		if (self.nivel() < 4 )
+		{	nivel= self.nivel() + 1
 			paredesDeBase.forEach({unaPared=> unaPared.subirNivel()})
-//			paredesDeBase.forEach({unaPared=> unaPared.vida(unaPared.vida() + (200*self.nivel()))})
 		}
 	}
-	
 	method dibujarParedes (){
 	   var coordenadasBaseX=  game.center().x()
 	   var coordenadasBaseY= game.center().y()
@@ -43,34 +36,25 @@ object base {
 	   									(coordenadasBaseX),(coordenadasBaseY - 1),
 	   									(coordenadasBaseX + 1) ,(coordenadasBaseY- 1),
 	   									(coordenadasBaseX + 1),(coordenadasBaseY)]			
-	listaDeCoordenadas.construirParedesEn_(paredesCoordenadas)
+		listaDeCoordenadas.construirParedesEn_(paredesCoordenadas)
 	}
 
 	method construirParedBaseEn(x,y) {
-	var paredBase= new ParedBase(position= game.at(x,y) , nivel= self.nivel())
-	game.addVisualIn(paredBase, game.at(x,y))
+	var paredBase= new Pared(position= game.at(x,y))
+	game.addVisual(paredBase)
 	paredesDeBase.add(paredBase)
 	}
 	
-	method esAtravezable(){
-		return false
-	}
-	
-	method recibirImpactoDe(unaBala){
-//		danioRecibidoTotal = danioRecibidoTotal  + unaBala.danio()
-		vida -= unaBala.danio()
-		self.destruirSiEstoySinVida()	
-		}
-		
-	method destruirSiEstoySinVida(){
-		if (self.vida() <= 0){
-			self.destruir()
-		}
-	}
-	
-	method destruir(){
-	game.removeVisual(self)
+	override method destruir(){
+	super()
 	nivelManager.mapaGameOver()
 	}
+	
+	override method pathImagen(){}
+	override method normalizarImagen(){}
+	override method imagenNormal(){return ""}
+	override method adicionalesAImagen(){return ""}
+	override method adicionalesAImagen(efecto){}
+	override method imagenCompleta(){return ""}
 	
 }

@@ -8,44 +8,40 @@ import nivel.*
 import enemigo.*
 import efectos.*
 
-class TanqueBase{
-	var vida = 100
+class ObjetoConVisualesEnElJuego {
+
 	var property position = null
-	var property orientacion = null
 	var property nivel = 1
-	var property target = null
 	var property danioRecibido=0
 	var adicionalesAImagen= ""
 	
-	method pathImagen()
+	method vida(){ return 100 * ((self.nivel()-1) +100) }
 	
-	method move(nuevaPosicion) 
-		{	if (self.puedeMover(nuevaPosicion)) 
-			{	 self.position(nuevaPosicion)
-			}
-		}
-		
-	method sumarVida(cantidad)
+	method pathImagen() //EJ: "Paredes/pared-"
+	
+	method reducirDanioRecibido(cantidad)
 		{	danioRecibido = (self.danioRecibido() - cantidad).max(0)
 		}
 	
-	method vida()
-		{	return vida - self.danioRecibido()
+	method vidaRestante()
+		{	return self.vida() - self.danioRecibido()
 		}
-	
-	method disparar(){
-		self.cambiarImagenRealizarDisparo()
-		managerBala.generarBalaDisparadaPor(self)
+
+	method subirNivel() {
+		if (nivel < 4 ){
+			nivel= self.nivel() + 1
+			self.danioRecibido(0)
+		}
 	}
-	
+			
 	method recibirImpactoDe(unaBala)
 		{	danioRecibido = danioRecibido + unaBala.danio()
-			self.cambiarAImagenRecibirDisparo()
+			self.agregarEfectoDeimagen("danio")
 			self.destruirSiEstoySinVida()
 		}
 		
 	method destruirSiEstoySinVida()
-		{	if (self.vida() <= 0)
+		{	if (self.vidaRestante() <= 0)
 			{	self.destruir()
 			}
 		}
@@ -53,25 +49,17 @@ class TanqueBase{
 	method destruir()
 		{	game.removeVisual(self)
 		}
-	
-	method puedeMover(hacia)
-		{	return 	 game.getObjectsIn(hacia).all({cosa => cosa.esAtravezable()})
-					 and self.orientacion().puedeMover(hacia)
-		}
 				 
 	method esAtravezable()
 		{	return false
 		}
+	
 		
 	// Cambio de imagenes Segun corresponda
 	
-	method cambiarAImagenRecibirDisparo(){
-			self.adicionalesAImagen("danio")
-			normalizadorDeImagenes.agregarAColar(self)
-	}
-	method cambiarImagenRealizarDisparo(){
-		self.adicionalesAImagen("disparo")
-			normalizadorDeImagenes.agregarAColar(self)
+	method agregarEfectoDeimagen(efecto){
+		self.adicionalesAImagen(efecto)
+		normalizadorDeImagenes.agregarAColar(self)
 	}
 	
 	method normalizarImagen(){
@@ -79,8 +67,9 @@ class TanqueBase{
 	}
 	
 	method imagenNormal(){
-		return self.nivel().toString() + "-" + orientacion.imagen().toString()
+		return self.nivel().toString() + "-"
 	}
+	
 	method adicionalesAImagen(){
 		return adicionalesAImagen
 	}
@@ -97,6 +86,31 @@ class TanqueBase{
 	}
 }
 
+class TanqueBase inherits ObjetoConVisualesEnElJuego{
+	var property orientacion = null
+	var property target = null
+	
+	override method imagenNormal(){
+		return self.nivel().toString() + "-" + orientacion.imagen().toString()
+	}
+	
+	method move(nuevaPosicion) 
+		{	if (self.puedeMover(nuevaPosicion)) 
+			{	 self.position(nuevaPosicion)
+			}
+		}
+		
+	method puedeMover(hacia)
+		{	return 	 game.getObjectsIn(hacia).all({cosa => cosa.esAtravezable()})
+					 and self.orientacion().puedeMover(hacia)
+		}
+	method disparar(){
+		self.agregarEfectoDeimagen("disparo")
+		managerBala.generarBalaDisparadaPor(self)
+	}
+}
+
+
 class Tanque inherits TanqueBase{
 	
 	override method  pathImagen(){
@@ -106,13 +120,6 @@ class Tanque inherits TanqueBase{
 	override method destruir (){
 		super()
 		nivelManager.mapaGameOver()
-	}
-	method subirNivel() {
-		if (nivel < 4 ){
-			nivel= self.nivel() + 1
-			vida = vida + 100 
-			self.danioRecibido(0)
-		}
 	}
 	
 	method tomarPowerUps(powerUp){

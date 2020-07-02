@@ -15,7 +15,6 @@ object tanqueEnemigoManagwer{
 	var targetAux = base // la base o el tanque 
 	var orientacion = norte
 	var property maxTanques = 0
-//	var imagen = "Enemigos/tanqueEnemigo-"
 	
 	method target(atacar){
 		target = base
@@ -40,7 +39,6 @@ object tanqueEnemigoManagwer{
 		
 		tank.position(randomizer.emptyPosition())
 		tank.orientacion(self.orientacion())
-//		tank.imagen(imagen)
 		tank.target(self.target())
 		self.tanques().add(tank)
 		game.addVisual(tank)
@@ -68,6 +66,7 @@ class TanqueEnemigo inherits TanqueBase{
 	var property balasPropias = #{}
 	var imagen = ""
 	var puntaje = 20
+	var property target = null
 	
 	override method  pathImagen(){
 		return "Enemigos/tanqueEnemigo-"
