@@ -16,7 +16,8 @@ class TanqueBase{
 	var property target = null
 	var property danioRecibido=0
 	var adicionalesAImagen= ""
-	const pathImagen= "Players/Tanque-"
+	
+	method pathImagen()
 	
 	method move(nuevaPosicion) 
 		{	if (self.puedeMover(nuevaPosicion)) 
@@ -86,17 +87,22 @@ class TanqueBase{
 	method adicionalesAImagen(efecto){
 		adicionalesAImagen= efecto.toString()
 	}
+	
 	method imagenCompleta(){
-		return pathImagen + self.adicionalesAImagen() + self.imagenNormal()
+		return self.pathImagen() + self.adicionalesAImagen() + self.imagenNormal()
 	}
+	
 	method image()	{
-			return   self.imagenCompleta()
+		return self.imagenCompleta()
 	}
-			
 }
 
 class Tanque inherits TanqueBase{
-	const pathImagen= "Players/Tanque-"
+	
+	override method  pathImagen(){
+		return "Players/Tanque-"
+	}
+	
 	override method destruir (){
 		super()
 		nivelManager.mapaGameOver()

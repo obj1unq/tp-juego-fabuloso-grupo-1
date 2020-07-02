@@ -73,8 +73,8 @@ object nivelManager{
     }
     
 	method inicializarParedes(){
-		(0..nivel.col()-1).forEach( {i => 
-            (0..nivel.fila()-1).forEach({ j =>	
+		((nivel.col()-1)..0).forEach( {i => 
+            ((nivel.fila()-1)..0).forEach({ j =>	
             	nivel.mapa().asList().get(j).get(i).dibujarPared(i, j)
             })
         })
@@ -157,35 +157,33 @@ class Nivel1 inherits Nivel { // UNQ en el mapa :P
 	 * O = no hay pared
 	 * 1 = hay pared
 	 * ********************************/
-	const fila1  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila2  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila3  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila4  = [o,o,x,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila5  = [o,o,x,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila6  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila7  = [o,o,o,x,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila8  = [o,o,o,x,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila9  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila10 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila11 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila12 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila13 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila14 = [o,o,o,o,o,x,x,x,o,o, o,o,o,o,o,o,x,o,o,o]
-	const fila15 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,x,o,o,o]
-	const fila16 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,x,o,o,o]
-	const fila17 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,x,o,o,o]
-	const fila18 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila19 = [o,o,o,o,o,o,o,o,o,o, x,x,x,o,o,o,o,o,o,o]
-	const fila20 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const mapa = [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
-		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
+
 	const property enemigosParaPasar = 1
     const maxTanques = 1
     const property nombreNivel = "nivel1"
   
 	
 	override method mapa(){
-		return mapa
+		return  [[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				 [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				 [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				 [o,o,x,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+	 			 [o,o,x,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				 [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				 [o,o,o,x,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				 [o,o,o,x,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				 [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				 [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				 [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				 [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				 [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				 [o,o,o,o,o,x,x,x,o,o, o,o,o,o,o,o,x,o,o,o],
+				 [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,x,o,o,o],
+				 [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,x,o,o,o],
+				 [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,x,o,o,o],
+				 [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				 [o,o,o,o,o,o,o,o,o,o, x,x,x,o,o,o,o,o,o,o],
+				 [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]]
 	}
 	
 	override method maxTanques(){

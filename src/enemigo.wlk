@@ -68,7 +68,10 @@ class TanqueEnemigo inherits TanqueBase{
 	var property balasPropias = #{}
 	var imagen = ""
 	var puntaje = 20
-	const pathImagen= "Enemigos/tanqueEnemigo-"
+	
+	override method  pathImagen(){
+		return "Enemigos/tanqueEnemigo-"
+	}
 	
 	override method move(nuevaPosicion) {
 		if (self.puedeMover(nuevaPosicion)) {

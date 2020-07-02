@@ -48,6 +48,7 @@ class AnimacionExplocionTanque{
 		method aplicar(param1){}
 		method aplicar(){}
 }
+
 object animacionExplosionBase{
 	var animacion = 1
 	
@@ -85,42 +86,6 @@ class AnimacionTomarPowerUps{
 		method aplicar(){}
 }
 
-class BalaNivel4 {
-	var numeroAnimacion = 1
-	
-		method animar(bala) {
-			game.onTick(50, "animacionBala",{self.siguienteAnimacion()})
-			return "Disparos/normal-" + bala.nivel()  +"-"+ numeroAnimacion + "-" + bala.orientacion().imagen()
-		}
-		
-		method destruirAnimacionAlTerminar(){
-			if (numeroAnimacion >= 3) {
-				game.removeTickEvent("tomaPowerUps")
-				numeroAnimacion = 1
-				game.removeVisual(self)
-			}
-		}
-		method siguienteAnimacion (){
-			numeroAnimacion++
-			self.destruirAnimacionAlTerminar()
-		}
-		method aplicar(param1){}
-		method aplicar(){}
-}
-
-object animacionDisparo{
-	var cantidadAnimacion = 1
-	
-	method crearAnimacion(posicion, orientacion){
-		const unaAnimacion= new AnimacionRecibirDisparo()
-		unaAnimacion.disparoRecibidoDe(orientacion)
-		unaAnimacion.nombreDeTick("animacionDispario" + cantidadAnimacion.toString())
-		game.addVisualIn(unaAnimacion, game.at(posicion.x(), posicion.y()))
-		game.onTick(50, unaAnimacion.nombreDeTick(),{unaAnimacion.siguienteAnimacion()})
-//		unaAnimacion.destruirAnimacionAlTerminar()
-		cantidadAnimacion ++
-	}
-}
 
 object barraDeVida{
 	var property position = game.at(0,18)
