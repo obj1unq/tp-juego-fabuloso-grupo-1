@@ -11,22 +11,15 @@ import nivel.*
 object tanqueEnemigoManagwer{
 	const property tanques = []
 	const property tankOnTickSpeed = 1000
-	var target = base    // la base o el tanque
-	var targetAux = base // la base o el tanque 
+	var target = null    // la base o el tanque 
 	var orientacion = norte
 	var property maxTanques = 0
 	
 	method target(atacar){
-		target = base
-		targetAux = atacar
+		target = atacar
 	}
 	method target(){
-		if ( target.equals(base) ) {
-			target = targetAux
-		} else {
-			target = base
-		}
-		return target
+		return [target,target,target,base,target,target,target,base,target].anyOne()
 	} 
 	
 	method orientacion(){
@@ -66,7 +59,7 @@ class TanqueEnemigo inherits TanqueBase{
 	var property balasPropias = #{}
 	var imagen = ""
 	var puntaje = 20
-	var property target = null
+	//var property target = null
 	
 	override method  pathImagen(){
 		return "Enemigos/tanqueEnemigo-"

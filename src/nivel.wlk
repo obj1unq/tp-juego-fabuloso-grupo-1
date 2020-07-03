@@ -12,7 +12,6 @@ object nivelManager{
 	var property jugador = null
 	var property base = null
 	var property enemigosMuertos = 0
-	var property gano = false
 	var  property puntaje = 0000
 	var puntajeComoTexto=""
 	
@@ -48,50 +47,33 @@ object nivelManager{
 	}
 	
 	method incializarMapa() {
-		if (not self.gano()) {
-			self.visualesDeMenuSuperior()
-			base.dibujarParedes()
-			self.inicializarParedes()
-        	self.nivel().ubicarBase(self.base())
-        	self.nivel().ubicarPlayer(self.jugador())  
-        	self.iniciarEnemigos()
-        	game.addVisual(barraDeVida)
-        } else {
-        	self.mapaWin()
-        }  
+		self.nivel().inicializarMapa()
     }
     
     method visualesDeMenuSuperior(){
-    		game.addVisual(imagenDeNivel)
-	    	game.addVisual(enemigosFaltantes)
-		    game.addVisual(score)
-		 	game.addVisual(decenasDeMil)
-	 		game.addVisual(unidadesDeMil)
-	 		game.addVisual(centenas)
-	 		game.addVisual(decenas)
-	 		game.addVisual(unidades)
+    	game.addVisual(imagenDeNivel)
+	    game.addVisual(enemigosFaltantes)
+		game.addVisual(score)
+		game.addVisual(decenasDeMil)
+	 	game.addVisual(unidadesDeMil)
+	 	game.addVisual(centenas)
+	 	game.addVisual(decenas)
+	 	game.addVisual(unidades)
     }
     
 	method inicializarParedes(){
-		((nivel.col()-1)..0).forEach( {i => 
-            ((nivel.fila()-1)..0).forEach({ j =>	
-            	nivel.mapa().asList().get(j).get(i).dibujarPared(i, j)
+		(0..(nivel.fila()-1)).forEach( {i => 
+            (0..(nivel.col()-1)).forEach({ j =>	
+            	nivel.mapa().asList().get(i).get(j).dibujarPared(j, (nivel.fila()-1)-i)
             })
         })
 	}
 	
 	method mapaGameOver(){
-		self.nivel(gameOver)
-		game.clear()
-		self.inicializarParedes()
+		self.nivel(new GameOver())
+		self.nivel().inicializarMapa()
 	}
 	
-	method mapaWin(){
-		self.nivel(win)
-		game.clear()
-		self.inicializarParedes()
-	}
-		
 	method limpiarMapa(){
 		game.allVisuals().forEach({unElemento=> game.removeVisual(unElemento)})
 		
@@ -116,10 +98,7 @@ class Nivel{
 	method mapa()           // abstracto
 	method maxTanques()     // abstracto
 	
-	method siguienteNivel(){
-		nivelManager.gano(false)
-		return null
-	}
+	method siguienteNivel() //abstracto
 	
 	method fila(){
 		return game.height() 
@@ -133,6 +112,16 @@ class Nivel{
 	}
 	method ubicarPlayer(jugador){
 		game.addVisual(jugador)
+	}
+	
+	method inicializarMapa(){
+		nivelManager.visualesDeMenuSuperior()
+		base.dibujarParedes()
+		nivelManager.inicializarParedes()
+        self.ubicarBase(nivelManager.base())
+        self.ubicarPlayer(nivelManager.jugador())  
+        nivelManager.iniciarEnemigos()
+        game.addVisual(barraDeVida)
 	}
 }
 
@@ -152,12 +141,6 @@ object x{
 /********************************************** */
 
 class Nivel1 inherits Nivel { // UNQ en el mapa :P
-	/**********************************
-	 * 20 x 20 
-	 * O = no hay pared
-	 * 1 = hay pared
-	 * ********************************/
-
 	const property enemigosParaPasar = 1
     const maxTanques = 1
     const property nombreNivel = "nivel1"
@@ -202,39 +185,31 @@ class Nivel1 inherits Nivel { // UNQ en el mapa :P
 	
 }
 class Nivel2 inherits Nivel {
-	/**********************************
-	 * 20 x 20 
-	 * O = no hay pared
-	 * 1 = hay pared
-	 * ********************************/
-	const fila1  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila2  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila3  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila4  = [o,o,o,x,o,o,o,o,o,o, o,o,o,x,o,o,x,o,o,o]
-	const fila5  = [o,o,o,o,o,o,o,o,o,x, x,x,o,x,o,o,x,o,o,o]
-	const fila6  = [o,o,o,x,o,o,o,o,o,o, o,o,o,o,o,o,x,o,o,o]
-	const fila7  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila8  = [o,o,o,x,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila9  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,x,o,o]
-	const fila10 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,x,o,o]
-	const fila11 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,x,o,o]
-	const fila12 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,x,o,o]
-	const fila13 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,x,x,x,o,o]
-	const fila14 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila15 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila16 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,x,x,x,x,o]
-	const fila17 = [o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,x,o,o]
-	const fila18 = [o,o,o,o,x,o,o,o,o,o, o,x,o,o,o,o,o,x,o,o]
-	const fila19 = [o,o,x,o,o,o,o,o,x,x, x,x,o,o,o,o,o,x,o,o]
-	const fila20 = [o,o,x,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const mapa = [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
-		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
 	const property nombreNivel = "nivel2"
     const maxTanques = 1
     const property enemigosParaPasar = 1
 	
 	override method mapa(){
-		return mapa
+		return  [[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,x,o,o,o,o,o,o, o,o,o,x,o,o,x,o,o,o],
+				[o,o,o,o,o,o,o,o,o,x, x,x,o,x,o,o,x,o,o,o],
+				[o,o,o,x,o,o,o,o,o,o, o,o,o,o,o,o,x,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,x,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,x,o,o],
+				[o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,x,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,x,o,o],
+				[o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,x,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,x,x,x,o,o],
+				[o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,x,x,x,x,o],
+				[o,o,o,o,x,o,o,o,o,o, o,o,o,o,o,o,o,x,o,o],
+				[o,o,o,o,x,o,o,o,o,o, o,x,o,o,o,o,o,x,o,o],
+				[o,o,x,o,o,o,o,o,x,x, x,x,o,o,o,o,o,x,o,o],
+				[o,o,x,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]]
 	}
 	override method maxTanques(){
 		return maxTanques
@@ -249,42 +224,33 @@ class Nivel2 inherits Nivel {
 	}
 }
 
-class Nivel3 inherits Nivel {   // hacer clase nivel
-	/**********************************
-	 * 20 x 20 
-	 * O = no hay pared
-	 * 1 = hay pared
-	 * Paredes nulas
-	 * ********************************/ 
-	const fila1  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila2  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila3  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila4  = [o,x,x,x,x,x,x,x,x,o, o,o,o,o,o,o,o,o,o,o]
-	const fila5  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila6  = [o,o,o,o,o,o,o,o,o,o, o,x,x,x,x,x,x,x,x,o]
-	const fila7  = [o,x,x,x,x,x,x,x,x,o, o,o,o,o,o,o,o,o,o,o]
-	const fila8  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila9  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila10 = [o,o,o,o,o,o,o,o,o,o, o,x,x,x,x,x,x,x,x,o]
-	const fila11 = [o,x,x,x,x,x,x,x,x,o, o,o,o,o,o,o,o,o,o,o]
-	const fila12 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila13 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila14 = [o,x,x,x,x,x,x,x,x,o, o,o,o,o,o,o,o,o,o,o]
-	const fila15 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila16 = [o,o,o,o,o,o,o,o,o,o, o,x,x,x,x,x,x,x,x,o]
-	const fila17 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila18 = [o,x,x,x,x,x,x,x,x,o, o,o,o,o,o,o,o,o,o,o]
-	const fila19 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila20 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const mapa = [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
-		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
+class Nivel3 inherits Nivel {
 	const property enemigosParaPasar = 1
     const maxTanques = 1
     const property nombreNivel = "nivel3"
   
 	
 	override method mapa(){
-		return mapa
+		return [[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,x,x,x,x,x,x,x,x,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,x,x,x,x,x,x,x,x,o],
+				[o,x,x,x,x,x,x,x,x,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,x,x,x,x,x,x,x,x,o],
+				[o,x,x,x,x,x,x,x,x,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,x,x,x,x,x,x,x,x,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,x,x,x,x,x,x,x,x,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,x,x,x,x,x,x,x,x,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]]
 	}
 	
 	override method maxTanques(){
@@ -292,8 +258,7 @@ class Nivel3 inherits Nivel {   // hacer clase nivel
 	}
 	
 	override method siguienteNivel(){
-		nivelManager.gano(true)
-		return win
+		return new Win()
 	}
 			
 	override method ubicarPlayer(jugador){
@@ -303,83 +268,68 @@ class Nivel3 inherits Nivel {   // hacer clase nivel
 }
 
 
-object gameOver{
-	/**********************************
-	 * 20 x 20 
-	 * O = no hay pared
-	 * 1 = hay pared
-	 * ********************************/
-	const fila1  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila2  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila3  = [o,x,x,o,o,o,x,x,o,o, x,o,o,o,x,o,x,x,x,x]
-	const fila4  = [x,o,o,x,o,x,o,o,x,o, x,x,o,x,x,o,x,o,o,o]
-	const fila5  = [x,o,o,o,o,x,x,x,x,o, x,o,x,o,x,o,x,x,x,o]
-	const fila6  = [x,o,x,x,o,x,o,o,x,o, x,o,o,o,x,o,x,o,o,o]
-	const fila7  = [x,o,o,x,o,x,o,o,x,o, x,o,o,o,x,o,x,o,o,o]
-	const fila8  = [o,x,x,o,o,x,o,o,x,o, x,o,o,o,x,o,x,x,x,x]
-	const fila9  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila10 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila11 = [o,x,x,o,o,x,o,o,o,x, o,x,x,x,x,o,x,x,x,x]
-	const fila12 = [x,o,o,x,o,x,o,o,o,x, o,x,o,o,o,o,x,o,o,x]
-	const fila13 = [x,o,o,x,o,x,o,o,o,x, o,x,x,x,o,o,x,x,x,o]
-	const fila14 = [x,o,o,x,o,o,x,o,x,o, o,x,o,o,o,o,x,o,o,x]
-	const fila15 = [x,o,o,x,o,o,x,o,x,o, o,x,o,o,o,o,x,o,o,x]
-	const fila16 = [o,x,x,o,o,o,o,x,o,o, o,x,x,x,x,o,x,o,o,x]
-	const fila17 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila18 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila19 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila20 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const mapa =  [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
-		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
-    	
-	method mapa(){
-		return mapa
+class GameOver inherits Nivel{    	
+	override method mapa(){
+		return [[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,x,x,o,o,o,x,x,o,o, x,o,o,o,x,o,x,x,x,x],
+				[x,o,o,x,o,x,o,o,x,o, x,x,o,x,x,o,x,o,o,o],
+				[x,o,o,o,o,x,x,x,x,o, x,o,x,o,x,o,x,x,x,o],
+				[x,o,x,x,o,x,o,o,x,o, x,o,o,o,x,o,x,o,o,o],
+				[x,o,o,x,o,x,o,o,x,o, x,o,o,o,x,o,x,o,o,o],
+				[o,x,x,o,o,x,o,o,x,o, x,o,o,o,x,o,x,x,x,x],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,x,x,o,o,x,o,o,o,x, o,x,x,x,x,o,x,x,x,x],
+				[x,o,o,x,o,x,o,o,o,x, o,x,o,o,o,o,x,o,o,x],
+				[x,o,o,x,o,x,o,o,o,x, o,x,x,x,o,o,x,x,x,o],
+				[x,o,o,x,o,o,x,o,x,o, o,x,o,o,o,o,x,o,o,x],
+				[x,o,o,x,o,o,x,o,x,o, o,x,o,o,o,o,x,o,o,x],
+				[o,x,x,o,o,o,o,x,o,o, o,x,x,x,x,o,x,o,o,x],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]]
 	}
-	method fila(){
-		return game.height() 
+	override method maxTanques(){return 0}
+	override method siguienteNivel(){return null}
+	
+	override method inicializarMapa(){
+		game.clear()
+		nivelManager.inicializarParedes()
 	}
-	method col(){
-		return game.width()
-	}
+
 }
 
-object win{
-	/**********************************
-	 * 20 x 20 
-	 * O = no hay pared
-	 * 1 = hay pared
-	 * ********************************/
-	const fila1  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila2  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila3  = [o,o,x,o,o,o,x,o,o,x, x,o,o,x,o,o,x,o,o,o]
-	const fila4  = [o,o,x,o,o,o,x,o,x,o, o,x,o,x,o,o,x,o,o,o]
-	const fila5  = [o,o,o,x,o,x,o,o,x,o, o,x,o,x,o,o,x,o,o,o]
-	const fila6  = [o,o,o,o,x,o,o,o,x,o, o,x,o,x,o,o,x,o,o,o]
-	const fila7  = [o,o,o,o,x,o,o,o,x,o, o,x,o,x,o,o,x,o,o,o]
-	const fila8  = [o,o,o,o,x,o,o,o,o,x, x,o,o,o,x,x,o,o,o,o]
-	const fila9  = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o] 
-	const fila10 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila11 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila12 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila13 = [o,o,x,o,o,o,o,o,o,x, o,x,o,x,x,o,o,o,x,o]
-	const fila14 = [o,o,x,o,o,o,o,o,o,x, o,x,o,x,o,x,o,o,x,o]
-	const fila15 = [o,o,o,x,o,x,x,o,x,o, o,x,o,x,o,x,o,o,x,o]
-	const fila16 = [o,o,o,x,o,x,x,o,x,o, o,x,o,x,o,o,x,o,x,o]
-	const fila17 = [o,o,o,o,x,o,o,x,o,o, o,x,o,x,o,o,x,o,x,o]
-	const fila18 = [o,o,o,o,x,o,o,x,o,o, o,x,o,x,o,o,o,x,x,o]
-	const fila19 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const fila20 = [o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]
-	const mapa =  [fila20,fila19,fila18,fila17,fila16,fila15,fila14,fila13,fila12,fila11,
-		          fila10,fila9,fila8,fila7,fila6,fila5,fila4,fila3,fila2,fila1]
-    	
-	method mapa(){
-		return mapa
+class Win inherits Nivel{    	
+	override method mapa(){
+		return [[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,x,o,o,o,x,o,o,x, x,o,o,x,o,o,x,o,o,o],
+				[o,o,x,o,o,o,x,o,x,o, o,x,o,x,o,o,x,o,o,o],
+				[o,o,o,x,o,x,o,o,x,o, o,x,o,x,o,o,x,o,o,o],
+				[o,o,o,o,x,o,o,o,x,o, o,x,o,x,o,o,x,o,o,o],
+				[o,o,o,o,x,o,o,o,x,o, o,x,o,x,o,o,x,o,o,o],
+				[o,o,o,o,x,o,o,o,o,x, x,o,o,o,x,x,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,x,o,o,o,o,o,o,x, o,x,o,x,x,o,o,o,x,o],
+				[o,o,x,o,o,o,o,o,o,x, o,x,o,x,o,x,o,o,x,o],
+				[o,o,o,x,o,x,x,o,x,o, o,x,o,x,o,x,o,o,x,o],
+				[o,o,o,x,o,x,x,o,x,o, o,x,o,x,o,o,x,o,x,o],
+				[o,o,o,o,x,o,o,x,o,o, o,x,o,x,o,o,x,o,x,o],
+				[o,o,o,o,x,o,o,x,o,o, o,x,o,x,o,o,o,x,x,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
+				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]]
 	}
-	method fila(){
-		return game.height() 
-	}
-	method col(){
-		return game.width()
+	override method maxTanques(){return 0}
+	override method siguienteNivel(){return null}
+	
+	override method inicializarMapa(){
+		game.clear()
+		nivelManager.inicializarParedes()
 	}
 
 }
