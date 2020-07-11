@@ -18,10 +18,12 @@ object nivelManager{
 	method puntaje() {
 		return puntaje
 	}
+	
 	method puntajeComoTexto (){
 		puntajeComoTexto = puntaje.toString()
 		return self.textoDe5Cifras()
 	}
+	
 	method textoDe5Cifras(){
 		if (puntajeComoTexto.length() < 5){
 			puntajeComoTexto= "0" + puntajeComoTexto
@@ -30,6 +32,7 @@ object nivelManager{
 			return puntajeComoTexto
 		}
 	}
+	
 	method sumarPuntos(unNumero){
 		puntaje= puntaje + unNumero
 	}
@@ -49,17 +52,21 @@ object nivelManager{
 	method incializarMapa() {
 		self.nivel().inicializarMapa()
     }
-    
-    method visualesDeMenuSuperior(){
-    	game.addVisual(imagenDeNivel)
-	    game.addVisual(enemigosFaltantes)
-		game.addVisual(score)
-		game.addVisual(decenasDeMil)
-	 	game.addVisual(unidadesDeMil)
-	 	game.addVisual(centenas)
-	 	game.addVisual(decenas)
-	 	game.addVisual(unidades)
+    method crearJugador1(){
+    	return 	self.jugador(new Tanque(orientacion=este,
+    							position=game.at(base.position().x() -2,base.position().y())))
     }
+    
+//    method visualesDeMenuSuperior(){
+//    	game.addVisual(imagenDeNivel)
+//	    game.addVisual(enemigosFaltantes)
+//		game.addVisual(score)
+//		game.addVisual(decenasDeMil)
+//	 	game.addVisual(unidadesDeMil)
+//	 	game.addVisual(centenas)
+//	 	game.addVisual(decenas)
+//	 	game.addVisual(unidades)
+//    }
     
 	method inicializarParedes(){
 		(0..(nivel.fila()-1)).forEach( {i => 
@@ -69,6 +76,20 @@ object nivelManager{
         })
 	}
 	
+//	method InicializarJuego(){
+//		managerPowerUp.inicializarPowersUps()
+//		self.configurarControles()
+//		self.inicializarNivel()
+//		
+//	}
+	
+//	method inicializarNivel(){
+//		nivelManager.nivel(new Nivel1())
+//    	nivelManager.jugador(tanquePlayer)
+//    	nivelManager.base(base)
+//		nivelManager.incializarMapa()
+//	}
+
 	method mapaGameOver(){
 		self.nivel(new GameOver())
 		self.nivel().inicializarMapa()
@@ -115,7 +136,7 @@ class Nivel{
 	}
 	
 	method inicializarMapa(){
-		nivelManager.visualesDeMenuSuperior()
+//		nivelManager.visualesDeMenuSuperior()
 		base.dibujarParedes()
 		nivelManager.inicializarParedes()
         self.ubicarBase(nivelManager.base())

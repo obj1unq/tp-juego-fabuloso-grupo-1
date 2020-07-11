@@ -13,6 +13,7 @@ import nivel.*
 
 object normalizadorDeImagenes{
 	const colaNormalizadoraDeimagenes=#{}
+
 	
 	method agregarAColar(unaVisual){
 		colaNormalizadoraDeimagenes.add(unaVisual)
@@ -159,5 +160,17 @@ object imagenDeNivel {
 
 object score {
 	var property position = game.at(0,19)
+	
+	method mostrarMenuSuperior(){
+		game.addVisual(imagenDeNivel)
+	    game.addVisual(enemigosFaltantes)
+		game.addVisual(score)
+		game.addVisual(decenasDeMil)
+	 	game.addVisual(unidadesDeMil)
+	 	game.addVisual(centenas)
+	 	game.addVisual(decenas)
+	 	game.addVisual(unidades)
+	}
+	
 	method image(){ return ("assets/puntaje/score.png")	}
 }

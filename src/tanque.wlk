@@ -8,8 +8,8 @@ import nivel.*
 import enemigo.*
 import efectos.*
 
-class ObjetoConVisualesEnElJuego {
-
+class ObjectosQueRecibenDanio{
+	
 	var property position = null
 	var property nivel = 1
 	var property danioRecibido = 0
@@ -36,7 +36,6 @@ class ObjetoConVisualesEnElJuego {
 			
 	method recibirImpactoDe(unaBala)
 		{	self.danioRecibido(self.danioRecibido() + unaBala.danio())
-			self.agregarEfectoDeimagen("danio")
 			self.destruirSiEstoySinVida()
 		}
 		
@@ -53,9 +52,10 @@ class ObjetoConVisualesEnElJuego {
 	method esAtravezable()
 		{	return false
 		}
-	
-		
-	// Cambio de imagenes Segun corresponda
+}
+
+class ObjetosQueCambiaSegunDanio inherits  ObjectosQueRecibenDanio{
+
 	
 	method agregarEfectoDeimagen(efecto){
 		self.adicionalesAImagen(efecto)
@@ -65,6 +65,10 @@ class ObjetoConVisualesEnElJuego {
 	method normalizarImagen(){
 		self.adicionalesAImagen("")
 	}
+	override method recibirImpactoDe(unaBala){
+		super(unaBala)
+		self.agregarEfectoDeimagen("danio")
+	}		
 	
 	method imagenNormal(){
 		return self.nivel().toString() + "-"
@@ -86,7 +90,8 @@ class ObjetoConVisualesEnElJuego {
 	}
 }
 
-class TanqueBase inherits ObjetoConVisualesEnElJuego{
+class TanqueBase inherits ObjetosQueCambiaSegunDanio{
+	
 	var property orientacion = null
 	var property target = null
 	

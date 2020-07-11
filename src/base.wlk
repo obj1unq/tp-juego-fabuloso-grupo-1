@@ -7,7 +7,7 @@ import tanque.*
 import paredes.*
 import nivel.*
 
-object base inherits ObjetoConVisualesEnElJuego {
+object base inherits ObjectosQueRecibenDanio {
 	var property paredesDeBase=#{}
 	var property paredesCoordenadas
 	override method position (){
@@ -15,6 +15,7 @@ object base inherits ObjetoConVisualesEnElJuego {
 	}
 	
 	override method vida(){ return 1}
+	
 	override method image(){
 		return "Bases/base.png"
 	}
@@ -25,6 +26,7 @@ object base inherits ObjetoConVisualesEnElJuego {
 			paredesDeBase.forEach({unaPared=> unaPared.subirNivel()})
 		}
 	}
+	
 	method dibujarParedes (){
 	   var coordenadasBaseX=  game.center().x()
 	   var coordenadasBaseY= game.center().y()
@@ -49,12 +51,5 @@ object base inherits ObjetoConVisualesEnElJuego {
 	super()
 	nivelManager.mapaGameOver()
 	}
-	
-	override method pathImagen(){}
-	override method normalizarImagen(){}
-	override method imagenNormal(){return ""}
-	override method adicionalesAImagen(){return ""}
-	override method adicionalesAImagen(efecto){}
-	override method imagenCompleta(){return ""}
 	
 }

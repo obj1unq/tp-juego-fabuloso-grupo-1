@@ -6,7 +6,7 @@ import tanque.*
 import orientaciones.*
 import efectos.*
 
-class Pared inherits ObjetoConVisualesEnElJuego{
+class Pared inherits ObjetosQueCambiaSegunDanio{
 	
 //	override method vida(){	return 100	}
 	

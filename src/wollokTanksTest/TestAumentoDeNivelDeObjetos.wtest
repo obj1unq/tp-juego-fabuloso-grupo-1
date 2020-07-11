@@ -24,7 +24,7 @@ describe "wollok Tanques" {
 	var balaNivel4
 	var enemigoConPosicion
 	fixture {
-		game.allVisuals().forEach({unaVisual=> game.removeVisual(unaVisual)})
+		game.clear() //limpio juego antes de test
 		tanque = new Tanque(orientacion=este,position=game.at(base.position().x() -2,base.position().y()))
 		enemigo = new TanqueEnemigo()
 		balaEnemigo = new BalaComun(position = enemigo.position(), orientacion= enemigo.orientacion(),nivel= enemigo.nivel() )

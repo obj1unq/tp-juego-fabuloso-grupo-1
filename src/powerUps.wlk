@@ -4,9 +4,11 @@ import base.*
 import randomizer.*
 import paredes.*
 import efectos.*
+import nivel.*
 
 class PowerUp{
 	var property position = self.posicionNueva()
+	
 	method posicionNueva(){
 		return randomizer.emptyPosition()
 	}
@@ -26,6 +28,7 @@ class PowerUp{
 	}
 	
 }
+
 object powerUpCuracion inherits PowerUp{ 
 	method image(){
 		return "powerups/BaseHeal.png"

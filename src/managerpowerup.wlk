@@ -1,33 +1,29 @@
 import wollok.game.*
 import powerUps.*
+import nivel.*
 
 object managerPowerUp {
 	const property powerUps = [powerUpCuracion,powerUpBase,powerUpAumentoDanio,powerUpDestruccion,powerUpCuracionBase]
-	var property powerUpActual = self.powerUps().anyOne()
+	
+	method inicializarPowersUps(){
+		game.onTick(8000, "managerPowerUp", { managerPowerUp.agregarPower(managerPowerUp.powerRandom()) })
+		
+		game.whenCollideDo(nivelManager.jugador(), {powerUps => nivelManager.jugador().tomarPowerUps(powerUps)})
+//		game.whenCollideDo(tanquePlayer, {powerUps => tanquePlayer.tomarPowerUps(powerUps)})	
+	}
 	
 	method agregarPower(powerRandom){
 		if(powerRandom.estaActivo()){
 			game.removeVisual(powerRandom)
-			self.cambiarPower()
-			
 		}
 		else{
 			powerRandom.position(powerRandom.posicionNueva())
 			game.addVisual(powerRandom)
-			self.cambiarPower()
-			
 		}
-		
-		
-	}
-	method cambiarPower(){
-		powerUpActual = self.powerUps().anyOne()
 	}
 	
 	method powerRandom(){
-		return powerUpActual
+		return self.powerUps().anyOne()
 	}
-	
-	
 }
 

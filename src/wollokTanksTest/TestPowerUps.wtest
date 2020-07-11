@@ -19,8 +19,7 @@ describe "wollok Tanques" {
 	var paredNivel1
 	var enemigoConPosicion
 	fixture {
-		
-		game.allVisuals().forEach({unaVisual=> game.removeVisual(unaVisual)})
+		game.clear()
 		tanque = new Tanque(orientacion=este,position=game.at(base.position().x() -2,base.position().y()))
 		enemigo = new TanqueEnemigo()
 		balaEnemigo = new BalaComun(position = enemigo.position(), orientacion= enemigo.orientacion(),nivel= enemigo.nivel() )
@@ -28,5 +27,6 @@ describe "wollok Tanques" {
 		paredNivel1 = new Pared()
 		enemigoConPosicion= new TanqueEnemigo(position = game.center())
 	}
+	
 	
 }
