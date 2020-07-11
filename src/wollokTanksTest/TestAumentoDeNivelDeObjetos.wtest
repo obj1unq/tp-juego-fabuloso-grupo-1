@@ -10,6 +10,7 @@ import managerpowerup.*
 import paredes.*
 import nivel.*
 import efectos.*
+import ObjetosTest.*
 
 describe "wollok Tanques" {
 	var balaEnemigo
@@ -93,18 +94,14 @@ describe "wollok Tanques" {
 	test "tanque player nivel 2 dispara una bala del mismo nivel y con mas danio" {
 		assert.equals(1, tanque.nivel())
 		tanque.disparar()
-		var objetosNivel1EnJuego= game.allVisuals().filter{unObjeto=> unObjeto.nivel() == 1}
-		var objetosNivel2EnJuego= game.allVisuals().filter{unObjeto=> unObjeto.nivel() == 2}
-		assert.equals(1, objetosNivel1EnJuego.size())
-		assert.equals(0, objetosNivel2EnJuego.size())
+		assert.equals(1, wollokTanks.cantidadDeObjetosDeNivel_(1))
+		assert.equals(0,  wollokTanks.cantidadDeObjetosDeNivel_(2))
 		tanque.subirNivel()
 		tanque.disparar()
-		objetosNivel2EnJuego= game.allVisuals().filter{unObjeto=> unObjeto.nivel() == 2}
-		objetosNivel1EnJuego= game.allVisuals().filter{unObjeto=> unObjeto.nivel() == 1}
-		//vuelvo a probar	
+			
 		assert.equals(2, tanque.nivel())
-		assert.equals(1, objetosNivel1EnJuego.size())
-		assert.equals(1, objetosNivel2EnJuego.size())
+		assert.equals(1, wollokTanks.cantidadDeObjetosDeNivel_(1))
+		assert.equals(1, wollokTanks.cantidadDeObjetosDeNivel_(2))
 	}
 
 	test "tanque nivel 2 aumenta la vida"{	

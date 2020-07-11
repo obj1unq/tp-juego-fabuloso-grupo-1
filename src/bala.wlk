@@ -84,9 +84,9 @@ object managerBala{
 	 	}
 	}
 		method generarBalaDisparadaPor(objeto){
-		const balaNueva= new BalaComun	(	position = objeto.position(), 
-											orientacion= objeto.orientacion(),
-											nivel= objeto.nivel() )
+			const balaNueva= new BalaComun	(position = objeto.position(), 
+											 orientacion= objeto.orientacion(),
+											 nivel= objeto.nivel())
 			self.generaMovimientoSinoExiste()
 			balaNueva.salirDisparada()
 			game.addVisual(balaNueva)

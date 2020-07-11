@@ -8,7 +8,7 @@ import efectos.*
 
 class Pared inherits ObjetoConVisualesEnElJuego{
 	
-	override method vida(){	return 100	}
+//	override method vida(){	return 100	}
 	
 	override method  pathImagen(){
 		return "Paredes/pared-"

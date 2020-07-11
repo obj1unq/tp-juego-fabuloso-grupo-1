@@ -12,10 +12,10 @@ class ObjetoConVisualesEnElJuego {
 
 	var property position = null
 	var property nivel = 1
-	var property danioRecibido=0
+	var property danioRecibido = 0
 	var adicionalesAImagen= ""
 	
-	method vida(){ return 100 * ((self.nivel()-1) +100) }
+	method vida(){ return 100 + ((self.nivel()-1) *100) }
 	
 	method pathImagen() //EJ: "Paredes/pared-"
 	
@@ -35,7 +35,7 @@ class ObjetoConVisualesEnElJuego {
 	}
 			
 	method recibirImpactoDe(unaBala)
-		{	danioRecibido = danioRecibido + unaBala.danio()
+		{	self.danioRecibido(self.danioRecibido() + unaBala.danio())
 			self.agregarEfectoDeimagen("danio")
 			self.destruirSiEstoySinVida()
 		}

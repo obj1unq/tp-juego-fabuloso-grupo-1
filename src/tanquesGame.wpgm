@@ -19,7 +19,7 @@ program TanquesGame {
 	game.height(20)
 	game.width(20)
 	game.cellSize(41)
-	game.ground("Fondos/Fondo-1.png")
+	game.boardGround("Fondos/Fondo-1.png")
 //***********************************************
   
 
