@@ -56,11 +56,16 @@ object nivelManager{
 	method pasarANivel(nivelNuevo){
 		self.limpiarMapa()
 		self.borrarBalas()
-//		self.borraTanquesEnemigos()
-		self.reubicarJugador()
 		self.nivel(nivelNuevo)
 		self.inicializarParedes(nivelNuevo)
-//		self.reubicarJugador()
+		self.reubicarJugador()
+	}
+	
+	method mapaFinal(unMapa){
+		self.limpiarMapa()
+		self.borrarBalas()
+		self.nivel(win)
+		self.inicializarParedes(nivelNuevo)
 	}		
 
     method crearJugador1(){
@@ -270,8 +275,9 @@ object nivel2 inherits Nivel {
 	override method maxTanques(){
 		return maxTanques
 	}
+	
 	override method siguienteNivel(){
-		nivelManager.inicializarNivel(nivel3)
+		 nivelManager.pasarANivel(nivel3)
 	}
 	
 	override method ubicarPlayer(jugador){
@@ -314,7 +320,7 @@ object nivel3 inherits Nivel {
 	}
 	
 	override method siguienteNivel(){
-		nivelManager.inicializarNivel(win)
+		 nivelManager.mapaFinal(win)
 	}
 			
 	override method ubicarPlayer(jugador){
@@ -324,7 +330,7 @@ object nivel3 inherits Nivel {
 }
 
 
-object gameOver inherits Nivel{    	
+object gameOver {    	
 	override method mapa(){
 		return [[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
@@ -347,17 +353,10 @@ object gameOver inherits Nivel{
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]]
 	}
-	override method maxTanques(){return 0}
-	override method siguienteNivel(){return null}
-	
-//	override method inicializarMapa(){
-//		game.clear()
-//		nivelManager.inicializarParedes()
-//	}
 
 }
 
-object win inherits Nivel{    	
+object win inherits {    	
 	override method mapa(){
 		return [[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
@@ -381,9 +380,8 @@ object win inherits Nivel{
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]]
 	}
 	
-	override method maxTanques(){return 0}
-	override method siguienteNivel(){return null}
-	
+//	override method maxTanques(){return 0}
+//	override method siguienteNivel(){return null}
 //	override method inicializarMapa(){
 //		game.clear()
 //		nivelManager.inicializarParedes()
