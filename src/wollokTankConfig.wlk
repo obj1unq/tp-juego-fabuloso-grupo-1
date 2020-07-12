@@ -11,6 +11,7 @@ object wollokTankConfig {
 		self.configuracionVentanaGame()
 		nivelManager.inicializarNivel(nivel1)
 		nivelManager.crearJugador1()
+		
 		self.configurarControles()
 		self.VisualesMenuSuperior()
 		

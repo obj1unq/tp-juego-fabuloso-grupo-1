@@ -8,14 +8,9 @@ import efectos.*
 
 class Pared inherits ObjetosQueCambiaSegunDanio{
 	
-//	override method vida(){	return 100	}
-	
 	override method  pathImagen(){
 		return "Paredes/pared-"
 	}
-//	method causaDanio(){
-//		return false
-//	}
 	
 	method nombreDeImagenSegunDanio(){
 	if (self.porcetajeDanioRecibido() > 50 && self.porcetajeDanioRecibido() <= 100) 

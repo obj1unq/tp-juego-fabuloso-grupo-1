@@ -10,6 +10,7 @@ object managerPowerUp {
 		
 //		game.whenCollideDo(nivelManager.jugador(), {unPowerUps => nivelManager.jugador().tomarPowerUps(unPowerUps)})
 //		game.whenCollideDo(tanquePlayer, {powerUps => tanquePlayer.tomarPowerUps(powerUps)})	
+	
 	}
 	
 	method agregarPower(powerRandom){
@@ -19,6 +20,7 @@ object managerPowerUp {
 		else{
 			powerRandom.position(powerRandom.posicionNueva())
 			game.addVisual(powerRandom)
+			
 		}
 	}
 	

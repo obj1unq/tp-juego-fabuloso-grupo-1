@@ -17,13 +17,12 @@ class ObjectosQueRecibenDanio{
 	
 	method vida(){ return 100 + ((self.nivel()-1) *100) } //+100 vida por nivel que sube
 	
-	
 	method reducirDanioRecibido(cantidad){	
 		danioRecibido = (self.danioRecibido() - cantidad).max(0)
 	}
 	
 	method configurarColisiones(){
-		game.whenCollideDo(self,{elemento => self.recibirImpactoDe(elemento)})
+		game.whenCollideDo(self,{elemento => self.aplicarEfectoDeObjeto(elemento)})
 	}
 	
 	method vidaRestante(){
@@ -36,14 +35,15 @@ class ObjectosQueRecibenDanio{
 			self.danioRecibido(0)
 		}
 	}
-			
-	method recibirImpactoDe(unObjeto){
-		if (unObjeto.causaDanio()){
-			managerBala.borrarBala(unObjeto)
-			self.danioRecibido(self.danioRecibido() + unObjeto.danio())
-			self.destruirSiEstoySinVida()
-		}
+	method aplicarEfectoDeObjeto(unObjeto){
+			unObjeto.aplicar(self)
 	}
+	
+	method recibirDanio(unaBala){
+		self.danioRecibido(self.danioRecibido() + unaBala.danio())
+		self.destruirSiEstoySinVida()
+	}		
+
 		
 	method destruirSiEstoySinVida(){
 		if (self.vidaRestante() <= 0){

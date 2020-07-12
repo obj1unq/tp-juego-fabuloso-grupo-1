@@ -123,7 +123,7 @@ object x{
 	}
 	method configurarPared(unaPared){
 		game.addVisual(unaPared)
-		game.whenCollideDo(unaPared,{unElemento => unaPared.recibirImpactoDe(unElemento)})
+		game.whenCollideDo(unaPared,{unElemento => unaPared.aplicarEfectoDeObjeto(unElemento)})
 	}
 
 }

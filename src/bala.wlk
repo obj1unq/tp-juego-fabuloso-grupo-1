@@ -47,7 +47,11 @@ class BalaComun {
 	}
 	
 	method aplicar(){}
-	method aplicar(parametro){}
+	
+	method aplicar(unTanque){
+			managerBala.borrarBala(self)
+			unTanque.recibirDanio(self)
+	}
 }
 
 
