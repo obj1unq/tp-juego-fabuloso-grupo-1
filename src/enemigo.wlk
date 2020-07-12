@@ -50,6 +50,7 @@ object tanqueEnemigoManager{
 	
 	method destruirTodos(){
 			tanques.forEach({tanque => tanque.destruir()})
+			tanque.clear()
 	}
 	
 	method atacar(){
@@ -77,6 +78,7 @@ class TanqueEnemigo inherits TanqueBase{
 	
 	override method destruir(){
 		super()
+		tanqueEnemigoManager.tanques().remove(self)
 		nivelManager.sumarPuntos(puntaje)
 		nivelManager.sumarEnemigoMuerto()
 	}
