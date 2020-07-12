@@ -57,7 +57,8 @@ object nivelManager{
     							position=game.at(base.position().x() -2,base.position().y())))
     }
     
-	method inicializarParedes(unNivel){		(0..(unNivel.fila()-1)).forEach({i => 
+	method inicializarParedes(unNivel){		
+		(0..(unNivel.fila()-1)).forEach({i => 
             (0..(unNivel.col()-1)).forEach({ j =>	
             	unNivel.mapa().asList().get(i).get(j).dibujarPared(j, (unNivel.fila()-1)-i)})
        		 })

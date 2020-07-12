@@ -48,6 +48,7 @@ object base inherits ObjectosQueRecibenDanio {
 	var paredBase= new Pared(position= game.at(x,y))
 	game.addVisual(paredBase)
 	paredesDeBase.add(paredBase)
+	paredBase.configurarColisiones()
 	}
 	
 	override method destruir(){

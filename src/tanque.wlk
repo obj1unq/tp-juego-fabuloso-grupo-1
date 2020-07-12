@@ -72,10 +72,11 @@ class ObjetosQueCambiaSegunDanio inherits  ObjectosQueRecibenDanio{
 	method normalizarImagen(){
 		self.adicionalesAImagen("")
 	}
-	override method recibirImpactoDe(unaVisualConDanio){
-		super(unaVisualConDanio)
+		
+	override method recibirDanio(unaBala){
+		super(unaBala)
 		self.agregarEfectoDeimagen("danio")
-	}		
+	}
 	
 	method imagenNormal(){
 		return self.nivel().toString() + "-"
@@ -137,7 +138,7 @@ class Tanque inherits TanqueBase{
 	
 	override method destruir (){
 		super()
-		nivelManager.mapaGameOver()
+//		nivelManager.mapaGameOver()
 	}
 	
 	method tomarPowerUps(powerUp){

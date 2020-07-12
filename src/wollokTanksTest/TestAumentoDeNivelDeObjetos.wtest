@@ -34,7 +34,7 @@ describe "wollok Tanques" {
 		balaNivel2=new BalaComun(nivel=2)
 		balaNivel3=new BalaComun(nivel=3)
 		balaNivel4=new BalaComun(nivel=4)
-		enemigoConPosicion= new TanqueEnemigo(position = game.center())
+		enemigoConPosicion= new TanqueEnemigo(position = game.center(),objetivo= tanque)
 	}
 	
 
@@ -52,7 +52,7 @@ describe "wollok Tanques" {
 		assert.equals(100, tanque.vida())
 		assert.equals(0, tanque.danioRecibido())
 		assert.equals(100, tanque.vidaRestante())
-		tanque.recibirImpactoDe(balaNivel1)
+		tanque.aplicarEfectoDeObjeto(balaNivel1)
 		assert.equals(85, tanque.vidaRestante())
 		assert.equals(15, tanque.danioRecibido())	
 	}
@@ -75,7 +75,7 @@ describe "wollok Tanques" {
 		assert.equals(100, enemigo.vida())
 		assert.equals(0, enemigo.danioRecibido())
 		assert.equals(100, enemigo.vidaRestante())
-		enemigo.recibirImpactoDe(balaNivel1)
+		enemigo.aplicarEfectoDeObjeto(balaNivel1)
 		assert.equals(85, enemigo.vidaRestante())
 		assert.equals(15, enemigo.danioRecibido())
 		assert.equals(100, enemigo.vida())		
@@ -85,7 +85,7 @@ describe "wollok Tanques" {
 		assert.equals(100, paredNivel1.vida())
 		assert. equals(0, paredNivel1.danioRecibido())
 		assert.equals(100, paredNivel1.vidaRestante())
-		paredNivel1.recibirImpactoDe(balaNivel1)	
+		paredNivel1.aplicarEfectoDeObjeto(balaNivel1)	
 		assert.equals(85, paredNivel1.vidaRestante())
 		assert.equals(15, paredNivel1.danioRecibido())	
 	}
