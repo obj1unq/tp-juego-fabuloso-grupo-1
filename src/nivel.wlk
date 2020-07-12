@@ -52,7 +52,7 @@ object nivelManager{
 		base.ubicarBase()
 		self.iniciarEnemigos()		
 		}
-	
+		
 	method pasarANivel(nivelNuevo){
 		self.limpiarMapa()
 		self.borrarBalas()
@@ -60,7 +60,6 @@ object nivelManager{
 		self.inicializarParedes(nivelNuevo)
 		self.reubicarJugador()
 	}
-	
 	method mapaFinal(unMapa){
 		game.clear()
 		self.inicializarParedes(unMapa)
@@ -70,41 +69,16 @@ object nivelManager{
     	return 	self.jugador(new Tanque(orientacion=este,
     							position=game.at(base.position().x() -2,base.position().y())))
     }
-    
-//	method inicializarParedes(unNivel){		
-//		(0..(unNivel.fila()-1)).forEach({i => 
-//            (0..(unNivel.col()-1)).forEach({ j =>	
-//            	unNivel.mapa().asList().get(i).get(j).dibujarPared(j, (unNivel.fila()-1)-i)})
-//       		 })
-//        }
-//    method borrarParedesDe(unNivel){
-//    	(0..(unNivel.fila()-1)).forEach({i => 
-//            (0..(unNivel.col()-1)).forEach({ j =>	
-//            	unNivel.mapa().asList().get(i).get(j).borrarPared(j, (unNivel.fila()-1)-i)})
-//       		 })
-//    }
-//  	method dibujarParedes(unNivel){
-//  		var inicioX= game.origin().x()
-//  		var inicioY= game.origin().Y()
-//  		unNivel.mapa().forEach({unaFila=>self.dibujarFilaDeParedes(unaFila)})	
-//  	}
-//    
-//    method  dibujarFilaDeParedes(unaFila){
-//    	unaFila.forEach({unaPared=>self.dibujarUnaPared(unaPared)})
-//    } 
-//*********************************
-
-
 	method inicializarParedes(unNivel){
-		(0..unNivel.mapa().size()-1).forEach({unaCoordenadaEnY=>self.filaDeParedes(unaCoordenadaEnY,unNivel.mapa().get(unaCoordenadaEnY))})
+		((unNivel.mapa().size()-1)..0).forEach({unaCoordenadaEnY=>self.filaDeParedes(unaCoordenadaEnY,unNivel.mapa().reverse().get(unaCoordenadaEnY))})
 	}
 
     method filaDeParedes(unaCoordenadaY,unaFila){
-    	(0..(unaFila.size()-1)).forEach({unaCoordenaEnX=>self.dibujarUnaParedEn_(unaCoordenaEnX, unaCoordenadaY, unaFila.get(unaCoordenaEnX))})
+    	((0..unaFila.size()-1)).forEach({unaCoordenaEnX=>self.dibujarUnaParedEn_(unaCoordenaEnX, unaCoordenadaY, unaFila.get(unaCoordenaEnX))})
     }
     
-    method dibujarUnaParedEn_(x,y,pared){
-    	pared.dibujarPared(y,x)
+    method dibujarUnaParedEn_(x,y,tipoPared){
+    	tipoPared.dibujarPared(x,y)
     }
 
     method dibujarParedesPorLista(lista){
@@ -134,31 +108,6 @@ object nivelManager{
 	method borrarBalas(){
 		managerBala.borrarTodasLasBalas()
 	}
-	
-//	method pasarDeNivel(){
-////	self.borrarParedesDe(self.nivel())
-//		self.nivel(self.nivel().siguienteNivel())
-//		self.inicializarNivel(self.nivel())
-//		self.jugador().position(game.at(base.position().x() -2,base.position().y()))
-//		wollokTankConfig.VisualesMenuSuperior()
-//		self.jugador().configurarColisiones()
-//	}
-	
-//		method inicializarJuego(){
-//		self.configuracionVentanaGame()
-//		nivelManager.inicializarNivel(nivel1)
-//		nivelManager.crearJugador1()
-//		
-//		self.configurarControles()
-//		self.VisualesMenuSuperior()
-//		
-//		game.addVisual(nivelManager.jugador())
-//		managerPowerUp.inicializarPowersUps()
-//
-//		nivelManager.jugador().configurarColisiones()
-//		game.onTick (1000, "imagenNormal",{normalizadorDeImagenes.normalizarImagen()})
-//	}
-	
 	method iniciarEnemigos(){
 		tanqueEnemigoManager.maxTanques(self.nivel().maxTanques())
 		game.onTick(tanqueEnemigoManager.tankOnTickSpeed(), "tankManagerAtaque", {tanqueEnemigoManager.atacar()})
