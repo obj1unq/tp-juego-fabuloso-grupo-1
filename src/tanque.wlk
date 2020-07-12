@@ -141,7 +141,7 @@ class Tanque inherits TanqueBase{
 //		nivelManager.mapaGameOver()
 	}
 	
-	method tomarPowerUps(powerUp){
-			powerUp.aplicar(self)
-		}
+//	method tomarPowerUps(powerUp){
+//			powerUp.aplicar(self)
+//		}
 }

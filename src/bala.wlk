@@ -59,6 +59,10 @@ object managerBala{
 	var property balasGeneradas=#{}
 	var nombreDeTick=""
 	
+	method borrarTodasLasBalas(){
+		self.balasGeneradas().forEach({unaBala=>game.removeVisual(unaBala)})
+		self.balasGeneradas().clear()
+	}
 	method borrarBala(unaBala){
 		if (game.hasVisual(unaBala)){
 			game.removeVisual(unaBala) //arreglar aca

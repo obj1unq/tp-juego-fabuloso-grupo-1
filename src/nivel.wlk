@@ -55,9 +55,12 @@ object nivelManager{
 	
 	method pasarANivel(nivelNuevo){
 		self.limpiarMapa()
+		self.borrarBalas()
+//		self.borraTanquesEnemigos()
+		self.reubicarJugador()
 		self.nivel(nivelNuevo)
 		self.inicializarParedes(nivelNuevo)
-		self.reubicarJugador()
+//		self.reubicarJugador()
 	}		
 
     method crearJugador1(){
@@ -117,6 +120,9 @@ object nivelManager{
 	
 	method borraTanquesEnemigos(){
 		tanqueEnemigoManager.destruirTodos()
+	}
+	method borrarBalas(){
+		managerBala.borrarTodasLasBalas()
 	}
 	
 //	method pasarDeNivel(){
@@ -192,7 +198,7 @@ class Nivel{
 }
 
 object nivel1 inherits Nivel {
-	const property enemigosParaPasar = 1
+	var property enemigosParaPasar = 5
     const maxTanques = 1
     const property nombreNivel = "nivel1"
   

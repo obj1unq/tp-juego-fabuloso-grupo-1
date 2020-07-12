@@ -49,8 +49,8 @@ object tanqueEnemigoManager{
 	}
 	
 	method destruirTodos(){
-			tanques.forEach({tanque => tanque.destruir()})
-			tanque.clear()
+			self.tanques().forEach({tanque => tanque.destruir()})
+//			tanque.clear()
 	}
 	
 	method atacar(){
@@ -140,9 +140,5 @@ class TanqueEnemigo inherits TanqueBase{
 			self.orientacion(oeste)
 			self.orientacion().mover(self)
 		}
-	}
-
-	method tomarPowerUps(powerUp){
-		powerUp.aplicar(self)
 	}	
 }

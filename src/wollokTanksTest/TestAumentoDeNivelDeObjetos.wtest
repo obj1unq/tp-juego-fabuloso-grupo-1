@@ -75,6 +75,7 @@ describe "wollok Tanques" {
 		assert.equals(100, enemigo.vida())
 		assert.equals(0, enemigo.danioRecibido())
 		assert.equals(100, enemigo.vidaRestante())
+		assert.equals(15, balaNivel1.danio())
 		enemigo.aplicarEfectoDeObjeto(balaNivel1)
 		assert.equals(85, enemigo.vidaRestante())
 		assert.equals(15, enemigo.danioRecibido())
