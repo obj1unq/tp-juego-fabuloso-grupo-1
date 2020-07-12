@@ -36,9 +36,9 @@ object tanqueEnemigoManager{
 	}
 	
 	method configurarTanque(unTanque){
-		self.tanques().add(unTanque)
 		game.addVisual(unTanque)
 		unTanque.configurarColisiones()
+		self.tanques().add(unTanque)
 		game.say(unTanque, "Moriras !!")
 	}
 	
@@ -49,7 +49,8 @@ object tanqueEnemigoManager{
 	}
 	
 	method destruirTodos(){
-			tanques.forEach({tanque => tanque.destruir()})
+			self.tanques().forEach({tanque => tanque.destruir()})
+//			tanque.clear()
 	}
 	
 	method atacar(){
@@ -77,6 +78,7 @@ class TanqueEnemigo inherits TanqueBase{
 	
 	override method destruir(){
 		super()
+		tanqueEnemigoManager.tanques().remove(self)
 		nivelManager.sumarPuntos(puntaje)
 		nivelManager.sumarEnemigoMuerto()
 	}
@@ -138,9 +140,5 @@ class TanqueEnemigo inherits TanqueBase{
 			self.orientacion(oeste)
 			self.orientacion().mover(self)
 		}
-	}
-
-	method tomarPowerUps(powerUp){
-		powerUp.aplicar(self)
 	}	
 }

@@ -59,6 +59,10 @@ object managerBala{
 	var property balasGeneradas=#{}
 	var nombreDeTick=""
 	
+	method borrarTodasLasBalas(){
+		self.balasGeneradas().forEach({unaBala=>game.removeVisual(unaBala)})
+		self.balasGeneradas().clear()
+	}
 	method borrarBala(unaBala){
 		if (game.hasVisual(unaBala)){
 			game.removeVisual(unaBala) //arreglar aca
@@ -68,7 +72,7 @@ object managerBala{
 	
 	method generaMovimientoSinoExiste(){
 		if (nombreDeTick == ""){
-		game.onTick(1000, "moverBalas", {self.sihayBalasMover()})
+		game.onTick(500, "moverBalas", {self.sihayBalasMover()})
 		nombreDeTick = "moverBalas"
 		}
 	}

@@ -113,12 +113,28 @@ object  enemigosFaltantes {
 		}
 		
 }
+
 class NumeroScore{
 	
+//	method puntajeComoTexto (){
+//		puntajeComoTexto = nivelManager.puntaje().toString()
+//		return self.textoDe5Cifras()
+//	}
+//	method textoDe5Cifras(){
+//		if (puntajeComoTexto.length() < 5){
+//			puntajeComoTexto= "0" + puntajeComoTexto
+//			return self.textoDe5Cifras()
+//		}else {
+//			return puntajeComoTexto
+//		}
+//	}
+	
 	method image(){	return ("assets/puntaje/"+self.numeroMostrado()+ ".png") }
+ 	
  	method numeroMostrado (){
  		return(nivelManager.puntajeComoTexto().charAt(self.posicionATomar()))
  	}
+ 	
  	method posicionATomar() //abstracto
 }
 

@@ -9,7 +9,17 @@ import nivel.*
 
 object base inherits ObjectosQueRecibenDanio {
 	var property paredesDeBase=#{}
-	var property paredesCoordenadas
+	
+	method paredesBaseCoordenadas(){	
+			return	[	[(game.center().x() + 1 ),	(game.center().y() +1 )	],
+	   					[(game.center().x()     ),	(game.center().y() +1 )	],
+	   					[(game.center().x() -1  ), 	(game.center().y() +1 )	],
+	   					[(game.center().x() -1  ),	(game.center().y()    )	],
+	   					[(game.center().x() -1  ),	(game.center().y() -1 )	],
+	   					[(game.center().x()     ),	(game.center().y() -1 )	],
+	   					[(game.center().x()  +1 ),	(game.center().y() -1 )	],
+	   					[(game.center().x()  +1 ),	(game.center().y()    )	]	]					
+	   }				
 	override method position (){
 		return game.at(game.center().x(),game.center().y() )
 	}
@@ -20,28 +30,19 @@ object base inherits ObjectosQueRecibenDanio {
 	}
 	
 	override method subirNivel(){
-		if (self.nivel() < 4 )
-		{	nivel= self.nivel() + 1
-			paredesDeBase.forEach({unaPared=> unaPared.subirNivel()})
+		if (self.nivel() < 4 ){
+			nivel= self.nivel() + 1
+			self.paredesDeBase().forEach({unaParedDeBase=>unaParedDeBase.subirNivel()})
 		}
 	}
 	
 	method dibujarParedes (){
-	   var coordenadasBaseX=  game.center().x()
-	   var coordenadasBaseY= game.center().y()
-	   paredesCoordenadas= [(coordenadasBaseX + 1 ),(coordenadasBaseY + 1),
-	   									(coordenadasBaseX),(coordenadasBaseY + 1),
-	   									(coordenadasBaseX - 1), (coordenadasBaseY + 1),
-	   									(coordenadasBaseX- 1),(coordenadasBaseY),
-	   									(coordenadasBaseX- 1),(coordenadasBaseY - 1),
-	   									(coordenadasBaseX),(coordenadasBaseY - 1),
-	   									(coordenadasBaseX + 1) ,(coordenadasBaseY- 1),
-	   									(coordenadasBaseX + 1),(coordenadasBaseY)]			
-		listaDeCoordenadas.construirParedesEn_(paredesCoordenadas)
+	   nivelManager.dibujarParedesPorLista(self.paredesBaseCoordenadas())
 	}
 	method ubicarBase(){
 		game.addVisual(self)
 		self.dibujarParedes()
+		self.configurarColisiones()
 	}
 
 	method construirParedBaseEn(x,y) {
@@ -53,7 +54,7 @@ object base inherits ObjectosQueRecibenDanio {
 	
 	override method destruir(){
 	super()
-	nivelManager.mapaGameOver()
+	nivelManager.mapaFinal(gameOver)
 	}
 	
 }

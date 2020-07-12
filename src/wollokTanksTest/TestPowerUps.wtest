@@ -3,30 +3,85 @@ import enemigo.*
 import base.*
 import orientaciones.*
 import powerUps.*
-import randomizer.*
 import tanque.*
 import bala.*
 import managerpowerup.*
 import paredes.*
 import nivel.*
-import efectos.*
+import ObjetosTest.*
 
 describe "wollok Tanques" {
 	var balaEnemigo
 	var tanque
 	var enemigo
-	var balaTanque
-	var paredNivel1
-	var enemigoConPosicion
+
 	fixture {
 		game.clear()
 		tanque = new Tanque(orientacion=este,position=game.at(base.position().x() -2,base.position().y()))
 		enemigo = new TanqueEnemigo()
 		balaEnemigo = new BalaComun(position = enemigo.position(), orientacion= enemigo.orientacion(),nivel= enemigo.nivel() )
-		balaTanque = new BalaComun(position = tanque.position(), orientacion= tanque.orientacion(),nivel= tanque.nivel() )
-		paredNivel1 = new Pared()
-		enemigoConPosicion= new TanqueEnemigo(position = game.center())
+		nivelManager.nivel(nivel1)
 	}
 	
+	test "tanque aplica PowerUps cura Vida"{
+		managerPowerUp.agregarPower(powerUpCuracion)
+		game.addVisual(tanque)
+		tanque.aplicarEfectoDeObjeto(balaEnemigo)
+		assert.equals(100, tanque.vida())
+		assert.equals(15, tanque.danioRecibido())
+		assert.equals(85, tanque.vidaRestante())
+		
+		powerUpCuracion.aplicar(tanque)
+		assert.equals(100, tanque.vida())
+		assert.equals(0, tanque.danioRecibido())
+		assert.equals(100, tanque.vidaRestante())
+	}
 	
+	test "power ups sube nivel de paredes de la Base"{
+		managerPowerUp.agregarPower(powerUpBase)
+		base.ubicarBase()
+		assert.equals(1, base.paredesDeBase().anyOne().nivel())
+		assert.that(wollokTanks.baseConParedNivel(1))
+		tanque.aplicarEfectoDeObjeto(powerUpBase)
+		assert.notThat(wollokTanks.baseConParedNivel(1))
+		assert.that(wollokTanks.baseConParedNivel(2))
+	} 
+	
+	test "powerUps aumento de nivel"{
+		managerPowerUp.agregarPower(powerUpAumentoDanio)
+		assert.equals(1, tanque.nivel())
+		tanque.aplicarEfectoDeObjeto(powerUpAumentoDanio)
+		assert.equals(2, tanque.nivel())
+	}
+	
+	test "powerUpCuracionBase disminuye danio recibido en las paredes de la base"{
+		managerPowerUp.agregarPower(powerUpCuracionBase)
+		base.ubicarBase()
+		assert.that(wollokTanks.baseTodasParedesConDanio(0))
+		wollokTanks.cualquierParedDeLaBase().aplicarEfectoDeObjeto(balaEnemigo)
+		assert.notThat(wollokTanks.baseTodasParedesConDanio(0))
+		tanque.aplicarEfectoDeObjeto(powerUpCuracionBase)
+		assert.that(wollokTanks.baseTodasParedesConDanio(0))
+	}
+	
+	test "powerUps Destruccion todos lo enemigos"{
+		managerPowerUp.agregarPower(powerUpDestruccion) 
+		nivelManager.nivel(nivel1)
+		nivelManager.nivel().enemigosParaPasar(5)
+		
+		assert.equals(1, game.allVisuals().size())// solo esta en el powerUps
+		assert.equals(0, tanqueEnemigoManager.tanques().size())
+		wollokTanks.crear3tanqueEnemigo()
+		assert.equals(4, game.allVisuals().size())
+		assert.equals(3, tanqueEnemigoManager.tanques().size())
+		
+		tanque.aplicarEfectoDeObjeto(powerUpDestruccion)
+		
+		assert.equals(0, tanqueEnemigoManager.tanques().size())
+		assert.equals(1, game.allVisuals().size())
+		
+	}
+	
+	test "powerUps "
+
 }

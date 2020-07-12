@@ -138,10 +138,6 @@ class Tanque inherits TanqueBase{
 	
 	override method destruir (){
 		super()
-//		nivelManager.mapaGameOver()
+		nivelManager.mapaFinal(gameOver)
 	}
-	
-	method tomarPowerUps(powerUp){
-			powerUp.aplicar(self)
-		}
 }

@@ -83,7 +83,7 @@ object powerUpCuracionBase inherits PowerUp{
 
 object powerUpDestruccion inherits PowerUp{
 	method image(){
-		return "powerups/Shot3.png" // le puse cualquier imagen
+		return "powerups/Shot3.png" 
 	}
 	override method aplicar(tanque){
 		super(tanque)

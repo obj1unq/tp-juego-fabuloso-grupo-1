@@ -6,14 +6,15 @@ import tanque.*
 import orientaciones.*
 import paredes.*
 import efectos.*
+import wollokTankConfig.*
 
 object nivelManager{
 	var property nivel = null
 	var property jugador = null
-//	var property base = null
 	var property enemigosMuertos = 0
 	var  property puntaje = 0000
 	var puntajeComoTexto=""
+	var property paredesDeNivelActual=[]
 	
 	method puntaje() {
 		return puntaje
@@ -41,7 +42,7 @@ object nivelManager{
 		enemigosMuertos++
 		if (enemigosMuertos == self.nivel().enemigosParaPasar()){
 			enemigosMuertos = 0
-			self.pasarDeNivel()
+			self.nivel().siguienteNivel()
 		}
 	}
 	
@@ -50,19 +51,38 @@ object nivelManager{
 		self.nivel(unNivel)
 		base.ubicarBase()
 		self.iniciarEnemigos()		
-		}		
+		}
+	
+	method pasarANivel(nivelNuevo){
+		self.limpiarMapa()
+		self.borrarBalas()
+		self.nivel(nivelNuevo)
+		self.inicializarParedes(nivelNuevo)
+		self.reubicarJugador()
+	}
+	
+	method mapaFinal(unMapa){
+		game.clear()
+		self.inicializarParedes(unMapa)
+	}		
 
     method crearJugador1(){
     	return 	self.jugador(new Tanque(orientacion=este,
     							position=game.at(base.position().x() -2,base.position().y())))
     }
     
-	method inicializarParedes(unNivel){		
-		(0..(unNivel.fila()-1)).forEach({i => 
-            (0..(unNivel.col()-1)).forEach({ j =>	
-            	unNivel.mapa().asList().get(i).get(j).dibujarPared(j, (unNivel.fila()-1)-i)})
-       		 })
-        }
+//	method inicializarParedes(unNivel){		
+//		(0..(unNivel.fila()-1)).forEach({i => 
+//            (0..(unNivel.col()-1)).forEach({ j =>	
+//            	unNivel.mapa().asList().get(i).get(j).dibujarPared(j, (unNivel.fila()-1)-i)})
+//       		 })
+//        }
+//    method borrarParedesDe(unNivel){
+//    	(0..(unNivel.fila()-1)).forEach({i => 
+//            (0..(unNivel.col()-1)).forEach({ j =>	
+//            	unNivel.mapa().asList().get(i).get(j).borrarPared(j, (unNivel.fila()-1)-i)})
+//       		 })
+//    }
 //  	method dibujarParedes(unNivel){
 //  		var inicioX= game.origin().x()
 //  		var inicioY= game.origin().Y()
@@ -74,30 +94,70 @@ object nivelManager{
 //    } 
 //*********************************
 
-//	method inicializarParedes(unMapa){
-//		(0..unMapa.size()-1).forEach({unaCoordenadaEnY=>self.filaDeParedes(unaCoordenadaEnY,unMapa.get(unaCoordenadaEnY))})
-//	}
-//
-//    method filaDeParedes(unaCoordenadaY,unaFila){
-//    	(0..(unaFila.size()-1)).forEach({unaCoordenaEnX=>self.dibujarUnaParedEn_(unaCoordenaEnX, unaCoordenadaY, unaFila.get(unaCoordenaEnX))})
-//    }
-//    
-//    method dibujarUnaParedEn_(x,y,pared){
-//    	pared.dibujarPared(x,y)
-//    }  
+
+	method inicializarParedes(unNivel){
+		(0..unNivel.mapa().size()-1).forEach({unaCoordenadaEnY=>self.filaDeParedes(unaCoordenadaEnY,unNivel.mapa().get(unaCoordenadaEnY))})
+	}
+
+    method filaDeParedes(unaCoordenadaY,unaFila){
+    	(0..(unaFila.size()-1)).forEach({unaCoordenaEnX=>self.dibujarUnaParedEn_(unaCoordenaEnX, unaCoordenadaY, unaFila.get(unaCoordenaEnX))})
+    }
     
+    method dibujarUnaParedEn_(x,y,pared){
+    	pared.dibujarPared(y,x)
+    }
+
+    method dibujarParedesPorLista(lista){
+		lista.forEach({parDecoordenadas=> self.dibujarParDeCoordenada(parDecoordenadas)})
+	}
+	method dibujarParDeCoordenada(parDeCoordenadas){
+		self.dibujarUnaParedEn_(parDeCoordenadas.get(1),parDeCoordenadas.get(0),b) //
+	}
+
 //    **********************
 //***********************
     
 	method limpiarMapa(){
-		game.allVisuals().forEach({unElemento=> game.removeVisual(unElemento)})
+		self.paredesDeNivelActual().forEach({unaPared=> game.removeVisual(unaPared)}) //quita Visuales de Paredes
+		self.paredesDeNivelActual().clear() //borra lista de paredes
 	}
 	
-	method pasarDeNivel(){
-		self.limpiarMapa()
-		self.nivel(self.nivel().siguienteNivel())
-//		self.incializarMapa()
+	method reubicarJugador(){//borra la visual la reUbico y la vuelvo a mostrar
+		game.removeVisual(self.jugador())
+		self.jugador().position(game.at(base.position().x() -2,base.position().y()))
+		game.addVisual(self.jugador())
 	}
+	
+	method borraTanquesEnemigos(){
+		tanqueEnemigoManager.destruirTodos()
+	}
+	method borrarBalas(){
+		managerBala.borrarTodasLasBalas()
+	}
+	
+//	method pasarDeNivel(){
+////	self.borrarParedesDe(self.nivel())
+//		self.nivel(self.nivel().siguienteNivel())
+//		self.inicializarNivel(self.nivel())
+//		self.jugador().position(game.at(base.position().x() -2,base.position().y()))
+//		wollokTankConfig.VisualesMenuSuperior()
+//		self.jugador().configurarColisiones()
+//	}
+	
+//		method inicializarJuego(){
+//		self.configuracionVentanaGame()
+//		nivelManager.inicializarNivel(nivel1)
+//		nivelManager.crearJugador1()
+//		
+//		self.configurarControles()
+//		self.VisualesMenuSuperior()
+//		
+//		game.addVisual(nivelManager.jugador())
+//		managerPowerUp.inicializarPowersUps()
+//
+//		nivelManager.jugador().configurarColisiones()
+//		game.onTick (1000, "imagenNormal",{normalizadorDeImagenes.normalizarImagen()})
+//	}
 	
 	method iniciarEnemigos(){
 		tanqueEnemigoManager.maxTanques(self.nivel().maxTanques())
@@ -109,12 +169,9 @@ object nivelManager{
 /********* objetos de la matriz del nivel
  *  o = sin pared
  *  x = con pared
+ * 	b= pared de base
  */
-object o{
-	method dibujarPared(x,y){}
-}
-
-object x{
+class FactoryPared {
 	method dibujarPared(x,y){
 		self.configurarPared(self.paredNueva(x,y))
 	}
@@ -124,9 +181,27 @@ object x{
 	}
 	method configurarPared(unaPared){
 		game.addVisual(unaPared)
+//		nivelManager.paredesDeNivelActual().add(unaPared)
 		game.whenCollideDo(unaPared,{unElemento => unaPared.aplicarEfectoDeObjeto(unElemento)})
 	}
+}
 
+object o inherits FactoryPared{
+	override method dibujarPared(x,y){}
+}
+
+object x inherits FactoryPared{
+	override method configurarPared(unaPared){
+		super(unaPared)
+		nivelManager.paredesDeNivelActual().add(unaPared)
+	}
+}
+
+object b inherits FactoryPared {
+	override method configurarPared(unaPared){
+		super(unaPared)
+		base.paredesDeBase().add(unaPared)
+	}
 }
 
 class Nivel{
@@ -146,11 +221,8 @@ class Nivel{
 	}
 }
 
-
-/********************************************** */
-
-object nivel1 inherits Nivel { // UNQ en el mapa :P
-	const property enemigosParaPasar = 2
+object nivel1 inherits Nivel {
+	var property enemigosParaPasar = 1
     const maxTanques = 1
     const property nombreNivel = "nivel1"
   
@@ -183,7 +255,7 @@ object nivel1 inherits Nivel { // UNQ en el mapa :P
 	}
 	
 	override method siguienteNivel(){
-		 nivelManager.inicializarNivel(nivel2)
+		 nivelManager.pasarANivel(nivel2)
 	}
 			
 	override method ubicarPlayer(jugador){
@@ -222,8 +294,9 @@ object nivel2 inherits Nivel {
 	override method maxTanques(){
 		return maxTanques
 	}
+	
 	override method siguienteNivel(){
-		nivelManager.inicializarNivel(nivel3)
+		 nivelManager.pasarANivel(nivel3)
 	}
 	
 	override method ubicarPlayer(jugador){
@@ -266,7 +339,7 @@ object nivel3 inherits Nivel {
 	}
 	
 	override method siguienteNivel(){
-		nivelManager.inicializarNivel(win)
+		 nivelManager.mapaFinal(win)
 	}
 			
 	override method ubicarPlayer(jugador){
@@ -276,8 +349,8 @@ object nivel3 inherits Nivel {
 }
 
 
-object gameOver inherits Nivel{    	
-	override method mapa(){
+object gameOver {    	
+	method mapa(){
 		return [[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,x,x,o,o,o,x,x,o,o, x,o,o,o,x,o,x,x,x,x],
@@ -299,18 +372,11 @@ object gameOver inherits Nivel{
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]]
 	}
-	override method maxTanques(){return 0}
-	override method siguienteNivel(){return null}
-	
-//	override method inicializarMapa(){
-//		game.clear()
-//		nivelManager.inicializarParedes()
-//	}
 
 }
 
-object win inherits Nivel{    	
-	override method mapa(){
+object win {    	
+	method mapa(){
 		return [[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,o,x,o,o,o,x,o,o,x, x,o,o,x,o,o,x,o,o,o],
@@ -332,13 +398,4 @@ object win inherits Nivel{
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]]
 	}
-	
-	override method maxTanques(){return 0}
-	override method siguienteNivel(){return null}
-	
-//	override method inicializarMapa(){
-//		game.clear()
-//		nivelManager.inicializarParedes()
-//	}
-
 }
