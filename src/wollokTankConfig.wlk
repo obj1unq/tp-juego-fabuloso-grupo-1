@@ -4,6 +4,7 @@ import managerpowerup.*
 import nivel.*
 import efectos.*
 import orientaciones.*
+import enemigo.*
 
 object wollokTankConfig {
 
@@ -33,6 +34,7 @@ object wollokTankConfig {
 		keyboard.down().onPressDo { sur.mover(nivelManager.jugador()) }
 		keyboard.left().onPressDo { oeste.mover(nivelManager.jugador()) }
 		keyboard.right().onPressDo { este.mover(nivelManager.jugador()) }
+		keyboard.x().onPressDo{{tanqueEnemigoManager.destruirTodos()}}
 	}
 	
 	method crearJugardor(){

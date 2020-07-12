@@ -36,9 +36,9 @@ object tanqueEnemigoManager{
 	}
 	
 	method configurarTanque(unTanque){
-		self.tanques().add(unTanque)
 		game.addVisual(unTanque)
 		unTanque.configurarColisiones()
+		self.tanques().add(unTanque)
 		game.say(unTanque, "Moriras !!")
 	}
 	

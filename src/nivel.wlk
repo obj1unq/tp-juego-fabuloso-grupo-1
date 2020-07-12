@@ -62,10 +62,8 @@ object nivelManager{
 	}
 	
 	method mapaFinal(unMapa){
-		self.limpiarMapa()
-		self.borrarBalas()
-		self.nivel(win)
-		self.inicializarParedes(nivelNuevo)
+		game.clear()
+		self.inicializarParedes(unMapa)
 	}		
 
     method crearJugador1(){
@@ -108,6 +106,13 @@ object nivelManager{
     method dibujarUnaParedEn_(x,y,pared){
     	pared.dibujarPared(y,x)
     }
+
+    method dibujarParedesPorLista(lista){
+		lista.forEach({parDecoordenadas=> self.dibujarParDeCoordenada(parDecoordenadas)})
+	}
+	method dibujarParDeCoordenada(parDeCoordenadas){
+		self.dibujarUnaParedEn_(parDeCoordenadas.get(1),parDeCoordenadas.get(0),b) //
+	}
 
 //    **********************
 //***********************
@@ -164,13 +169,9 @@ object nivelManager{
 /********* objetos de la matriz del nivel
  *  o = sin pared
  *  x = con pared
+ * 	b= pared de base
  */
-object o{
-	method dibujarPared(x,y){}
-	method borrarPared(x,y){}
-}
-
-object x{
+class FactoryPared {
 	method dibujarPared(x,y){
 		self.configurarPared(self.paredNueva(x,y))
 	}
@@ -180,8 +181,26 @@ object x{
 	}
 	method configurarPared(unaPared){
 		game.addVisual(unaPared)
-		nivelManager.paredesDeNivelActual().add(unaPared)
+//		nivelManager.paredesDeNivelActual().add(unaPared)
 		game.whenCollideDo(unaPared,{unElemento => unaPared.aplicarEfectoDeObjeto(unElemento)})
+	}
+}
+
+object o inherits FactoryPared{
+	override method dibujarPared(x,y){}
+}
+
+object x inherits FactoryPared{
+	override method configurarPared(unaPared){
+		super(unaPared)
+		nivelManager.paredesDeNivelActual().add(unaPared)
+	}
+}
+
+object b inherits FactoryPared {
+	override method configurarPared(unaPared){
+		super(unaPared)
+		base.paredesDeBase().add(unaPared)
 	}
 }
 
@@ -203,7 +222,7 @@ class Nivel{
 }
 
 object nivel1 inherits Nivel {
-	var property enemigosParaPasar = 5
+	var property enemigosParaPasar = 1
     const maxTanques = 1
     const property nombreNivel = "nivel1"
   
@@ -331,7 +350,7 @@ object nivel3 inherits Nivel {
 
 
 object gameOver {    	
-	override method mapa(){
+	method mapa(){
 		return [[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,x,x,o,o,o,x,x,o,o, x,o,o,o,x,o,x,x,x,x],
@@ -356,8 +375,8 @@ object gameOver {
 
 }
 
-object win inherits {    	
-	override method mapa(){
+object win {    	
+	method mapa(){
 		return [[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,o,x,o,o,o,x,o,o,x, x,o,o,x,o,o,x,o,o,o],
@@ -379,12 +398,4 @@ object win inherits {
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]]
 	}
-	
-//	override method maxTanques(){return 0}
-//	override method siguienteNivel(){return null}
-//	override method inicializarMapa(){
-//		game.clear()
-//		nivelManager.inicializarParedes()
-//	}
-
 }
