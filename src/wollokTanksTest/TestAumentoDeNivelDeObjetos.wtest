@@ -77,7 +77,8 @@ describe "wollok Tanques" {
 		assert.equals(100, enemigo.vidaRestante())
 		enemigo.recibirImpactoDe(balaNivel1)
 		assert.equals(85, enemigo.vidaRestante())
-		assert.equals(15, enemigo.danioRecibido())	
+		assert.equals(15, enemigo.danioRecibido())
+		assert.equals(100, enemigo.vida())		
 	}
 	
 	test "las Paredes reciben danio"{
@@ -110,6 +111,8 @@ describe "wollok Tanques" {
 		tanque.subirNivel()
 		assert.equals(200, tanque.vida())
 	}
+	
+	//Subir de objetos Paredes
 	
 	test "Paredes de nivel 2, aumenta la vida"{
 		assert.equals(100, paredNivel1.vida())

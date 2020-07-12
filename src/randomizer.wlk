@@ -1,4 +1,5 @@
 import wollok.game.*
+import orientaciones.*
 
 object randomizer {
 	var property ramdomName=#{}
@@ -14,5 +15,8 @@ object randomizer {
 			return self.emptyPosition()
 		}
 		}
+	method orientacionAleatoria(){
+		return [norte,este,oeste,este].anyOne()
+	}
 }
 

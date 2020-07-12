@@ -10,7 +10,7 @@ import efectos.*
 object nivelManager{
 	var property nivel = null
 	var property jugador = null
-	var property base = null
+//	var property base = null
 	var property enemigosMuertos = 0
 	var  property puntaje = 0000
 	var puntajeComoTexto=""
@@ -18,12 +18,10 @@ object nivelManager{
 	method puntaje() {
 		return puntaje
 	}
-	
 	method puntajeComoTexto (){
 		puntajeComoTexto = puntaje.toString()
 		return self.textoDe5Cifras()
 	}
-	
 	method textoDe5Cifras(){
 		if (puntajeComoTexto.length() < 5){
 			puntajeComoTexto= "0" + puntajeComoTexto
@@ -32,7 +30,6 @@ object nivelManager{
 			return puntajeComoTexto
 		}
 	}
-	
 	method sumarPuntos(unNumero){
 		puntaje= puntaje + unNumero
 	}
@@ -40,7 +37,6 @@ object nivelManager{
 	method nombreDelNivel(){
 		return self.nivel().nombreNivel()
 	}
-	
 	method sumarEnemigoMuerto(){
 		enemigosMuertos++
 		if (enemigosMuertos == self.nivel().enemigosParaPasar()){
@@ -49,70 +45,87 @@ object nivelManager{
 		}
 	}
 	
-	method incializarMapa() {
-		self.nivel().inicializarMapa()
-    }
+	method inicializarNivel(unNivel){
+		self.inicializarParedes(unNivel)
+		self.nivel(unNivel)
+		base.ubicarBase()
+		self.iniciarEnemigos()		
+		}		
+
     method crearJugador1(){
     	return 	self.jugador(new Tanque(orientacion=este,
     							position=game.at(base.position().x() -2,base.position().y())))
     }
     
-//    method visualesDeMenuSuperior(){
-//    	game.addVisual(imagenDeNivel)
-//	    game.addVisual(enemigosFaltantes)
-//		game.addVisual(score)
-//		game.addVisual(decenasDeMil)
-//	 	game.addVisual(unidadesDeMil)
-//	 	game.addVisual(centenas)
-//	 	game.addVisual(decenas)
-//	 	game.addVisual(unidades)
-//    }
-    
-	method inicializarParedes(){
-		(0..(nivel.fila()-1)).forEach( {i => 
-            (0..(nivel.col()-1)).forEach({ j =>	
-            	nivel.mapa().asList().get(i).get(j).dibujarPared(j, (nivel.fila()-1)-i)
-            })
-        })
-	}
-	
-//	method InicializarJuego(){
-//		managerPowerUp.inicializarPowersUps()
-//		self.configurarControles()
-//		self.inicializarNivel()
-//		
-//	}
-	
-//	method inicializarNivel(){
-//		nivelManager.nivel(new Nivel1())
-//    	nivelManager.jugador(tanquePlayer)
-//    	nivelManager.base(base)
-//		nivelManager.incializarMapa()
-//	}
+	method inicializarParedes(unNivel){		(0..(unNivel.fila()-1)).forEach({i => 
+            (0..(unNivel.col()-1)).forEach({ j =>	
+            	unNivel.mapa().asList().get(i).get(j).dibujarPared(j, (unNivel.fila()-1)-i)})
+       		 })
+        }
+//  	method dibujarParedes(unNivel){
+//  		var inicioX= game.origin().x()
+//  		var inicioY= game.origin().Y()
+//  		unNivel.mapa().forEach({unaFila=>self.dibujarFilaDeParedes(unaFila)})	
+//  	}
+//    
+//    method  dibujarFilaDeParedes(unaFila){
+//    	unaFila.forEach({unaPared=>self.dibujarUnaPared(unaPared)})
+//    } 
+//*********************************
 
-	method mapaGameOver(){
-		self.nivel(new GameOver())
-		self.nivel().inicializarMapa()
-	}
-	
+//	method inicializarParedes(unMapa){
+//		(0..unMapa.size()-1).forEach({unaCoordenadaEnY=>self.filaDeParedes(unaCoordenadaEnY,unMapa.get(unaCoordenadaEnY))})
+//	}
+//
+//    method filaDeParedes(unaCoordenadaY,unaFila){
+//    	(0..(unaFila.size()-1)).forEach({unaCoordenaEnX=>self.dibujarUnaParedEn_(unaCoordenaEnX, unaCoordenadaY, unaFila.get(unaCoordenaEnX))})
+//    }
+//    
+//    method dibujarUnaParedEn_(x,y,pared){
+//    	pared.dibujarPared(x,y)
+//    }  
+    
+//    **********************
+//***********************
+    
 	method limpiarMapa(){
 		game.allVisuals().forEach({unElemento=> game.removeVisual(unElemento)})
-		
 	}
 	
 	method pasarDeNivel(){
 		self.limpiarMapa()
 		self.nivel(self.nivel().siguienteNivel())
-		self.incializarMapa()
+//		self.incializarMapa()
 	}
 	
 	method iniciarEnemigos(){
-		tanqueEnemigoManagwer.maxTanques(self.nivel().maxTanques())
-		tanqueEnemigoManagwer.target(self.jugador())
-		game.onTick(tanqueEnemigoManagwer.tankOnTickSpeed(), "tankManagerAtaque", {tanqueEnemigoManagwer.atacar()})
-		game.onTick(8000, "tankManager", {tanqueEnemigoManagwer.start()})
+		tanqueEnemigoManager.maxTanques(self.nivel().maxTanques())
+		game.onTick(tanqueEnemigoManager.tankOnTickSpeed(), "tankManagerAtaque", {tanqueEnemigoManager.atacar()})
+		game.onTick(8000, "tankManager", {tanqueEnemigoManager.start()})
 	}
 	
+}
+/********* objetos de la matriz del nivel
+ *  o = sin pared
+ *  x = con pared
+ */
+object o{
+	method dibujarPared(x,y){}
+}
+
+object x{
+	method dibujarPared(x,y){
+		self.configurarPared(self.paredNueva(x,y))
+	}
+	
+	method paredNueva(x,y){
+		return new Pared(position = game.at(x,y))
+	}
+	method configurarPared(unaPared){
+		game.addVisual(unaPared)
+		game.whenCollideDo(unaPared,{unElemento => unaPared.recibirImpactoDe(unElemento)})
+	}
+
 }
 
 class Nivel{
@@ -127,42 +140,16 @@ class Nivel{
 	method col(){
 		return game.width()
 	}
-	method ubicarBase(base){
-		game.addVisual(base)
-		base.dibujarParedes()
-	}
 	method ubicarPlayer(jugador){
 		game.addVisual(jugador)
 	}
-	
-	method inicializarMapa(){
-//		nivelManager.visualesDeMenuSuperior()
-		base.dibujarParedes()
-		nivelManager.inicializarParedes()
-        self.ubicarBase(nivelManager.base())
-        self.ubicarPlayer(nivelManager.jugador())  
-        nivelManager.iniciarEnemigos()
-        game.addVisual(barraDeVida)
-	}
 }
 
-/********* objetos de la matriz del nivel
- *  o = sin pared
- *  x = con pared
- */
-object o{
-	method dibujarPared(x,y){}
-}
 
-object x{
-	method dibujarPared(x,y){
-		game.addVisual(new Pared(position=game.at(x, y) ))
-	}
-}
 /********************************************** */
 
-class Nivel1 inherits Nivel { // UNQ en el mapa :P
-	const property enemigosParaPasar = 1
+object nivel1 inherits Nivel { // UNQ en el mapa :P
+	const property enemigosParaPasar = 2
     const maxTanques = 1
     const property nombreNivel = "nivel1"
   
@@ -195,8 +182,7 @@ class Nivel1 inherits Nivel { // UNQ en el mapa :P
 	}
 	
 	override method siguienteNivel(){
-		super()
-		return new Nivel2() 
+		 nivelManager.inicializarNivel(nivel2)
 	}
 			
 	override method ubicarPlayer(jugador){
@@ -205,7 +191,7 @@ class Nivel1 inherits Nivel { // UNQ en el mapa :P
 	}
 	
 }
-class Nivel2 inherits Nivel {
+object nivel2 inherits Nivel {
 	const property nombreNivel = "nivel2"
     const maxTanques = 1
     const property enemigosParaPasar = 1
@@ -236,16 +222,16 @@ class Nivel2 inherits Nivel {
 		return maxTanques
 	}
 	override method siguienteNivel(){
-		super()
-		return new Nivel3()
+		nivelManager.inicializarNivel(nivel3)
 	}
+	
 	override method ubicarPlayer(jugador){
 		super(jugador)
 		game.say(jugador, "Pasaste de Nivel!! Sigamoos Jugando!")
 	}
 }
 
-class Nivel3 inherits Nivel {
+object nivel3 inherits Nivel {
 	const property enemigosParaPasar = 1
     const maxTanques = 1
     const property nombreNivel = "nivel3"
@@ -279,7 +265,7 @@ class Nivel3 inherits Nivel {
 	}
 	
 	override method siguienteNivel(){
-		return new Win()
+		nivelManager.inicializarNivel(win)
 	}
 			
 	override method ubicarPlayer(jugador){
@@ -289,7 +275,7 @@ class Nivel3 inherits Nivel {
 }
 
 
-class GameOver inherits Nivel{    	
+object gameOver inherits Nivel{    	
 	override method mapa(){
 		return [[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
@@ -315,14 +301,14 @@ class GameOver inherits Nivel{
 	override method maxTanques(){return 0}
 	override method siguienteNivel(){return null}
 	
-	override method inicializarMapa(){
-		game.clear()
-		nivelManager.inicializarParedes()
-	}
+//	override method inicializarMapa(){
+//		game.clear()
+//		nivelManager.inicializarParedes()
+//	}
 
 }
 
-class Win inherits Nivel{    	
+object win inherits Nivel{    	
 	override method mapa(){
 		return [[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
@@ -345,12 +331,13 @@ class Win inherits Nivel{
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]]
 	}
+	
 	override method maxTanques(){return 0}
 	override method siguienteNivel(){return null}
 	
-	override method inicializarMapa(){
-		game.clear()
-		nivelManager.inicializarParedes()
-	}
+//	override method inicializarMapa(){
+//		game.clear()
+//		nivelManager.inicializarParedes()
+//	}
 
 }

@@ -13,10 +13,9 @@ object base inherits ObjectosQueRecibenDanio {
 	override method position (){
 		return game.at(game.center().x(),game.center().y() )
 	}
-	
 	override method vida(){ return 1}
 	
-	override method image(){
+	method image(){
 		return "Bases/base.png"
 	}
 	
@@ -39,6 +38,10 @@ object base inherits ObjectosQueRecibenDanio {
 	   									(coordenadasBaseX + 1) ,(coordenadasBaseY- 1),
 	   									(coordenadasBaseX + 1),(coordenadasBaseY)]			
 		listaDeCoordenadas.construirParedesEn_(paredesCoordenadas)
+	}
+	method ubicarBase(){
+		game.addVisual(self)
+		self.dibujarParedes()
 	}
 
 	method construirParedBaseEn(x,y) {
