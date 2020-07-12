@@ -14,7 +14,7 @@ import wollokTankConfig.*
 
 program TanquesGame {
 
-	wollokTankConfig.InicializarJuego()
+	wollokTankConfig.inicializarJuego()
 	
   game.start()
 }

@@ -8,18 +8,17 @@ import efectos.*
 import nivel.*
 
 /* manager de tanques enemigos */
-object tanqueEnemigoManagwer{
+object tanqueEnemigoManager{
 	const property tanques = []
 	const property tankOnTickSpeed = 1000
-	var target = null    // la base o el tanque 
 	var orientacion = norte
 	var property maxTanques = 0
 	
-	method target(atacar){
-		target = atacar
-	}
 	method target(){
-		return [target,target,target,base,target,target,target,base,target].anyOne()
+		return [self.jugador(),self.jugador(),self.jugador(),base,self.jugador(),self.jugador(),self.jugador(),base,self.jugador()].anyOne()
+	} 
+	method jugador() {
+		return nivelManager.jugador()
 	} 
 	
 	method orientacion(){
@@ -27,22 +26,26 @@ object tanqueEnemigoManagwer{
 		return orientacion
 	}
 	
+	method tanqueEnemigoNuevo(){
+		return new TanqueEnemigo(position = randomizer.emptyPosition(), 
+								 objetivo= self.target())
+	}
+
 	method crearTanque(){
-		const tank = new TanqueEnemigo()
-		
-		tank.position(randomizer.emptyPosition())
-		tank.orientacion(self.orientacion())
-		tank.target(self.target())
-		self.tanques().add(tank)
-		game.addVisual(tank)
-		game.say(tank, "Moriras !!")
+		self.configurarTanque(self.tanqueEnemigoNuevo())
+	}
+	
+	method configurarTanque(unTanque){
+		self.tanques().add(unTanque)
+		game.addVisual(unTanque)
+		unTanque.configurarColisiones()
+		game.say(unTanque, "Moriras !!")
 	}
 	
 	method start(){
 		if (self.tanques().size() < self.maxTanques()) {
 			self.crearTanque()
 		}
-		self.tanques().removeAllSuchThat( {tank => not game.hasVisual(tank)} )
 	}
 	
 	method destruirTodos(){
@@ -50,20 +53,19 @@ object tanqueEnemigoManagwer{
 	}
 	
 	method atacar(){
-		tanques.forEach({ tanque => tanque.ataque() })
+		self.tanques().forEach({unTanque => unTanque.ataque()})
 	}
 	    
 }
 
 class TanqueEnemigo inherits TanqueBase{
-	var property balasPropias = #{}
-	var imagen = ""
-	var puntaje = 20
+//	var imagen = ""
+	const puntaje = 20
+	const objetivo
 	
 	override method pathImagen(){
 		return "Enemigos/tanqueEnemigo-"
 	}
-	
 	override method move(nuevaPosicion) {
 		if (self.puedeMover(nuevaPosicion)) {
 			self.position(nuevaPosicion)
@@ -74,9 +76,7 @@ class TanqueEnemigo inherits TanqueBase{
 	}
 	
 	override method destruir(){
-		const animacionDestruir= new AnimacionExplocionTanque()
 		super()
-		animacionDestruir.animar(self.position())
 		nivelManager.sumarPuntos(puntaje)
 		nivelManager.sumarEnemigoMuerto()
 	}
@@ -94,15 +94,15 @@ class TanqueEnemigo inherits TanqueBase{
 	}
 	
 	method estoyAlinadoEnX(){
-		return   target.position().y() == self.position().y() and
-				(   target.position().x() < self.position().x() and self.orientacion() == (oeste) 
-				 or target.position().x() > self.position().x() and self.orientacion() == (este))
+		return   objetivo.position().y() == self.position().y() and
+				(   objetivo.position().x() < self.position().x() and self.orientacion() == (oeste) 
+				 or objetivo.position().x() > self.position().x() and self.orientacion() == (este))
 	}
 	
 	method estoyAlinadoEnY(){
-		return   target.position().x() == self.position().x() and
-				(   target.position().y() < self.position().y() and self.orientacion() == (sur) 
-				 or target.position().y() > self.position().y() and self.orientacion() == (norte))
+		return   objetivo.position().x() == self.position().x() and
+				(   objetivo.position().y() < self.position().y() and self.orientacion() == (sur) 
+				 or objetivo.position().y() > self.position().y() and self.orientacion() == (norte))
 	}
 	
 	method puedeDisparar(){
@@ -114,27 +114,27 @@ class TanqueEnemigo inherits TanqueBase{
 	}
 	
 	method tiroLimpioEnX(){
-		return not tanqueEnemigoManagwer.tanques().any({tank => tank != self and tank.position().x().between(target.position().x().min(self.position().x()), target.position().x().max(self.position().x()))})
+		return not tanqueEnemigoManager.tanques().any({tank => tank != self and tank.position().x().between(objetivo.position().x().min(self.position().x()), objetivo.position().x().max(self.position().x()))})
 	}
 	
 	method tiroLimpioEnY(){
-		return not tanqueEnemigoManagwer.tanques().any({tank => tank != self and tank.position().y().between(target.position().y().min(self.position().y()), target.position().y().max(self.position().y()))})
+		return not tanqueEnemigoManager.tanques().any({tank => tank != self and tank.position().y().between(objetivo.position().y().min(self.position().y()), objetivo.position().y().max(self.position().y()))})
 	}
 	
 	method perseguir(){
-		if (target.position().y() > self.position().y()) {
+		if (objetivo.position().y() > self.position().y()) {
 			self.orientacion(norte)
 			self.orientacion().mover(self)
 		} 
-		else if (target.position().y() < self.position().y()) {
+		else if (objetivo.position().y() < self.position().y()) {
 			self.orientacion(sur)
 			self.orientacion().mover(self)
 		} 
-		else if (target.position().x() > self.position().x()) {
+		else if (objetivo.position().x() > self.position().x()) {
 			self.orientacion(este)
 			self.orientacion().mover(self)
 		}
-		else if (target.position().x() < self.position().x()) {
+		else if (objetivo.position().x() < self.position().x()) {
 			self.orientacion(oeste)
 			self.orientacion().mover(self)
 		}

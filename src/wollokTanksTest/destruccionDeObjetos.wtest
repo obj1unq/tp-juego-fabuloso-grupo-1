@@ -1,0 +1,38 @@
+import wollok.game.*
+import enemigo.*
+import base.*
+import orientaciones.*
+import powerUps.*
+import randomizer.*
+import tanque.*
+import bala.*
+import managerpowerup.*
+import paredes.*
+import nivel.*
+import efectos.*
+import ObjetosTest.*
+
+describe "wollok Tanques" {
+	var balaEnemigo
+	var tanque
+	var enemigo
+	var balaTanque
+	var paredNivel1
+	var balaNivel1
+	var balaNivel2
+	var balaNivel3
+	var balaNivel4
+	var enemigoConPosicion
+	fixture {
+		game.clear() //limpio juego antes de test
+		tanque = new Tanque(orientacion=este,position=game.at(base.position().x() -2,base.position().y()))
+		enemigo = new TanqueEnemigo()
+		balaEnemigo = new BalaComun(position = enemigo.position(), orientacion= enemigo.orientacion(),nivel= enemigo.nivel() )
+		balaTanque = new BalaComun(position = tanque.position(), orientacion= tanque.orientacion(),nivel= tanque.nivel() )
+		paredNivel1 = new Pared()
+		balaNivel1=new BalaComun(nivel=1)
+		balaNivel2=new BalaComun(nivel=2)
+		balaNivel3=new BalaComun(nivel=3)
+		balaNivel4=new BalaComun(nivel=4)
+		enemigoConPosicion= new TanqueEnemigo(position = game.center())
+	}

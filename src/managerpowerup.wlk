@@ -7,9 +7,6 @@ object managerPowerUp {
 	
 	method inicializarPowersUps(){
 		game.onTick(8000, "managerPowerUp", { managerPowerUp.agregarPower(managerPowerUp.powerRandom()) })
-		
-		game.whenCollideDo(nivelManager.jugador(), {powerUps => nivelManager.jugador().tomarPowerUps(powerUps)})
-//		game.whenCollideDo(tanquePlayer, {powerUps => tanquePlayer.tomarPowerUps(powerUps)})	
 	}
 	
 	method agregarPower(powerRandom){
@@ -26,4 +23,3 @@ object managerPowerUp {
 		return self.powerUps().anyOne()
 	}
 }
-

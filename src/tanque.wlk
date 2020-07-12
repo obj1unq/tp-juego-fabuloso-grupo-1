@@ -15,16 +15,18 @@ class ObjectosQueRecibenDanio{
 	var property danioRecibido = 0
 	var adicionalesAImagen= ""
 	
-	method vida(){ return 100 + ((self.nivel()-1) *100) }
+	method vida(){ return 100 + ((self.nivel()-1) *100) } //+100 vida por nivel que sube
 	
-	method pathImagen() //EJ: "Paredes/pared-"
+	method reducirDanioRecibido(cantidad){	
+		danioRecibido = (self.danioRecibido() - cantidad).max(0)
+	}
 	
-	method reducirDanioRecibido(cantidad)
-		{	danioRecibido = (self.danioRecibido() - cantidad).max(0)
-		}
+	method configurarColisiones(){
+		game.whenCollideDo(self,{elemento => self.aplicarEfectoDeObjeto(elemento)})
+	}
 	
-	method vidaRestante()
-		{	return self.vida() - self.danioRecibido()
+	method vidaRestante(){
+			return self.vida() - self.danioRecibido()
 		}
 
 	method subirNivel() {
@@ -33,15 +35,19 @@ class ObjectosQueRecibenDanio{
 			self.danioRecibido(0)
 		}
 	}
-			
-	method recibirImpactoDe(unaBala)
-		{	self.danioRecibido(self.danioRecibido() + unaBala.danio())
-			self.destruirSiEstoySinVida()
-		}
+	method aplicarEfectoDeObjeto(unObjeto){
+			unObjeto.aplicar(self)
+	}
+	
+	method recibirDanio(unaBala){
+		self.danioRecibido(self.danioRecibido() + unaBala.danio())
+		self.destruirSiEstoySinVida()
+	}		
+
 		
-	method destruirSiEstoySinVida()
-		{	if (self.vidaRestante() <= 0)
-			{	self.destruir()
+	method destruirSiEstoySinVida(){
+		if (self.vidaRestante() <= 0){
+				self.destruir()
 			}
 		}
 	
@@ -56,6 +62,7 @@ class ObjectosQueRecibenDanio{
 
 class ObjetosQueCambiaSegunDanio inherits  ObjectosQueRecibenDanio{
 
+	method pathImagen()
 	
 	method agregarEfectoDeimagen(efecto){
 		self.adicionalesAImagen(efecto)
@@ -65,10 +72,11 @@ class ObjetosQueCambiaSegunDanio inherits  ObjectosQueRecibenDanio{
 	method normalizarImagen(){
 		self.adicionalesAImagen("")
 	}
-	override method recibirImpactoDe(unaBala){
+		
+	override method recibirDanio(unaBala){
 		super(unaBala)
 		self.agregarEfectoDeimagen("danio")
-	}		
+	}
 	
 	method imagenNormal(){
 		return self.nivel().toString() + "-"
@@ -92,39 +100,45 @@ class ObjetosQueCambiaSegunDanio inherits  ObjectosQueRecibenDanio{
 
 class TanqueBase inherits ObjetosQueCambiaSegunDanio{
 	
-	var property orientacion = null
-	var property target = null
+	var property orientacion = randomizer.orientacionAleatoria()
 	
 	override method imagenNormal(){
 		return self.nivel().toString() + "-" + orientacion.imagen().toString()
 	}
 	
-	method move(nuevaPosicion) 
-		{	if (self.puedeMover(nuevaPosicion)) 
+	method move(nuevaPosicion) {
+		if (self.puedeMover(nuevaPosicion)) 
 			{	 self.position(nuevaPosicion)
 			}
 		}
 		
-	method puedeMover(hacia)
-		{	return 	 game.getObjectsIn(hacia).all({cosa => cosa.esAtravezable()})
+	method puedeMover(hacia){
+		return 	 game.getObjectsIn(hacia).all({cosa => cosa.esAtravezable()})
 					 and self.orientacion().puedeMover(hacia)
 		}
+		
 	method disparar(){
 		self.agregarEfectoDeimagen("disparo")
-		managerBala.generarBalaDisparadaPor(self)
+		managerBala.generarMovimientoDe(self.generarBala())
+
+	}
+	method generarBala(){
+		return new BalaComun(position= self.position(), 
+							orientacion= self.orientacion(),
+							nivel= self.nivel())
 	}
 }
 
 
 class Tanque inherits TanqueBase{
-	
+
 	override method  pathImagen(){
 		return "Players/Tanque-"
 	}
 	
 	override method destruir (){
 		super()
-		nivelManager.mapaGameOver()
+//		nivelManager.mapaGameOver()
 	}
 	
 	method tomarPowerUps(powerUp){

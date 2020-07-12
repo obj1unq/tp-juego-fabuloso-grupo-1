@@ -8,8 +8,6 @@ import efectos.*
 
 class Pared inherits ObjetosQueCambiaSegunDanio{
 	
-//	override method vida(){	return 100	}
-	
 	override method  pathImagen(){
 		return "Paredes/pared-"
 	}
@@ -27,6 +25,10 @@ class Pared inherits ObjetosQueCambiaSegunDanio{
 	
 	override method imagenNormal(){
 		return self.nivel().toString() + "-" + self.nombreDeImagenSegunDanio() + ".png"
+	}
+	override method aplicarEfectoDeObjeto(unObjeto){
+		super(unObjeto)
+		
 	}
 }
 

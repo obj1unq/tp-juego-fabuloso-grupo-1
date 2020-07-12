@@ -7,13 +7,24 @@ import orientaciones.*
 
 object wollokTankConfig {
 
-	method InicializarJuego(){
+	method inicializarJuego(){
 		self.configuracionVentanaGame()
-		self.inicializarPrimerNivel()
+		nivelManager.inicializarNivel(nivel1)
+		nivelManager.crearJugador1()
+		
 		self.configurarControles()
-		score.mostrarMenuSuperior()
+		self.VisualesMenuSuperior()
+		
+		game.addVisual(nivelManager.jugador())
 		managerPowerUp.inicializarPowersUps()
+
+		nivelManager.jugador().configurarColisiones()
 		game.onTick (1000, "imagenNormal",{normalizadorDeImagenes.normalizarImagen()})
+	}
+	
+	method VisualesMenuSuperior(){
+		barraDeVida.mostrar()
+		score.mostrar()
 	}
 	
 	method configurarControles(){
@@ -24,11 +35,9 @@ object wollokTankConfig {
 		keyboard.right().onPressDo { este.mover(nivelManager.jugador()) }
 	}
 	
-	method inicializarPrimerNivel(){
-		nivelManager.nivel(new Nivel1())
-    	nivelManager.base(base)
-    	nivelManager.crearJugador1()
-		nivelManager.incializarMapa()
+	method crearJugardor(){
+		nivelManager.crearJugador1()
+		game.whenCollideDo(nivelManager.jugador(),{elemento => nivelManager.jugador().recibirImpactoDe(elemento)})
 	}
 	
 	method configuracionVentanaGame(){
@@ -37,6 +46,10 @@ object wollokTankConfig {
 		game.width(20)
 		game.cellSize(41)
 		game.boardGround("Fondos/Fondo-1.png")
+	}
+	
+	method ubicacionSalidaPlayer(){
+		nivelManager.jugador().position(game.at(base.position().x() -2,base.position().y())) 
 	}
 }
 	

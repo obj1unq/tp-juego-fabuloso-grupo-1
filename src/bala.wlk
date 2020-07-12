@@ -17,6 +17,7 @@ class BalaComun {
 	method danio(){
 	 return self.nivel() * 15	
 	}
+	
 	method image(){
 		return "Disparos/normal-" + self.nivel() +"-"+ orientacion.imagen()							
 	}
@@ -36,24 +37,25 @@ class BalaComun {
 	method puedeMover(hacia){
 		return self.orientacion().puedeMover(hacia)
 	}
-	
-	method ocasionarDanioSiCorresponde(unObjeto){
-		if (!unObjeto.esAtravezable()){
-			unObjeto.recibirImpactoDe(self)
-			managerBala.borrarBala(self)
-		}
-	}
 		
 	method esAtravezable(){
 		return true
 	}
+	
+	method causaDanio(){
+		return true
+	}
+	
 	method aplicar(){}
-	method aplicar(parametro){}
+	
+	method aplicar(unTanque){
+			managerBala.borrarBala(self)
+			unTanque.recibirDanio(self)
+	}
 }
 
 
 object managerBala{
-	var numeroDeBala=1
 	var property balasGeneradas=#{}
 	var nombreDeTick=""
 	
@@ -66,7 +68,7 @@ object managerBala{
 	
 	method generaMovimientoSinoExiste(){
 		if (nombreDeTick == ""){
-		game.onTick(2000, "moverBalas", {self.sihayBalasMover()})
+		game.onTick(1000, "moverBalas", {self.sihayBalasMover()})
 		nombreDeTick = "moverBalas"
 		}
 	}
@@ -83,15 +85,10 @@ object managerBala{
 		   nombreDeTick = ""	
 	 	}
 	}
-		method generarBalaDisparadaPor(objeto){
-			const balaNueva= new BalaComun	(position = objeto.position(), 
-											 orientacion= objeto.orientacion(),
-											 nivel= objeto.nivel())
-			self.generaMovimientoSinoExiste()
-			balaNueva.salirDisparada()
-			game.addVisual(balaNueva)
-			game.whenCollideDo(balaNueva, { elemento => balaNueva.ocasionarDanioSiCorresponde(elemento)})
-		 	numeroDeBala ++	
-		 	balasGeneradas.add(balaNueva)
-		 }
+	method generarMovimientoDe(unaBala){
+	 	self.generaMovimientoSinoExiste()
+	 	unaBala.salirDisparada()
+	 	game.addVisual(unaBala)
+	 	balasGeneradas.add(unaBala)
+	}
 }

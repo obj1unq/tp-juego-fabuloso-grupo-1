@@ -53,15 +53,6 @@ class AnimacionExplocionTanque{
 		method aplicar(){}
 }
 
-object animacionExplosionBase{
-	var animacion = 1
-	
-	
-	method siguienteAnimacion(){
-		animacion = animacion + 1 
-	}
-	
-}
 
 
 class AnimacionTomarPowerUps{
@@ -109,6 +100,9 @@ object barraDeVida{
 		
 		method redondeDeDanio(){
 			return self.porcetajeDanioRecibido().roundUp()
+		}
+		method mostrar(){
+			game.addVisual(self)
 		}					
 	}
 object  enemigosFaltantes {
@@ -161,7 +155,7 @@ object imagenDeNivel {
 object score {
 	var property position = game.at(0,19)
 	
-	method mostrarMenuSuperior(){
+	method mostrar(){
 		game.addVisual(imagenDeNivel)
 	    game.addVisual(enemigosFaltantes)
 		game.addVisual(score)

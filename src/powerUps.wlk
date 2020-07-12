@@ -26,6 +26,9 @@ class PowerUp{
 	 	animacion.animar(self.position())
 	 	game.removeVisual(self)
 	}
+	method causaDanio(){
+		return false
+	}
 	
 }
 
@@ -84,8 +87,8 @@ object powerUpDestruccion inherits PowerUp{
 	}
 	override method aplicar(tanque){
 		super(tanque)
-		if(not tanqueEnemigoManagwer.tanques().isEmpty()){
-			tanqueEnemigoManagwer.destruirTodos()
+		if(not tanqueEnemigoManager.tanques().isEmpty()){
+			tanqueEnemigoManager.destruirTodos()
 		}	
 	}
 
