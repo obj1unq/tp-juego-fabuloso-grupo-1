@@ -1,5 +1,4 @@
 import wollok.game.*
-import efectos.*
 import wollokTankConfig.*
 
 program TanquesGame {
