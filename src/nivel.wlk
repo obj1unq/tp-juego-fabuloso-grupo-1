@@ -73,30 +73,6 @@ object nivelManager{
 	method inicializarParedes(unNivel){
 		managerParedes.construirParedesDe(unNivel.mapa())
 	}
-//
-//    method filaDeParedes(unaCoordenadaY,unaFila){
-//    	((0..unaFila.size()-1)).forEach({unaCoordenaEnX=>self.dibujarUnaParedEn_(unaCoordenaEnX, unaCoordenadaY, unaFila.get(unaCoordenaEnX))})
-//    }
-//    
-//    method dibujarUnaParedEn_(x,y,tipoPared){
-//    	tipoPared.dibujarPared(x,y)
-//    }
-//
-//    method dibujarParedesPorLista(lista){
-//		lista.forEach({parDecoordenadas=> self.dibujarParDeCoordenada(parDecoordenadas)})
-//	}
-//	method dibujarParDeCoordenada(parDeCoordenadas){
-//		self.dibujarUnaParedEn_(parDeCoordenadas.get(1),parDeCoordenadas.get(0),b) //
-//	}
-
-//    **********************
-//***********************
-    
-//	method limpiarMapa(){
-//		self.paredesDeNivelActual().forEach({unaPared=> game.removeVisual(unaPared)}) //quita Visuales de Paredes
-//		self.paredesDeNivelActual().clear() //borra lista de paredes
-//	}
-	
 	method reubicarJugador(){//borra la visual la reUbico y la vuelvo a mostrar
 		game.removeVisual(self.jugador())
 		self.jugador().position(game.at(base.position().x() -2,base.position().y()))
@@ -116,55 +92,11 @@ object nivelManager{
 	}
 	
 }
-/********* objetos de la matriz del nivel
- *  o = sin pared
- *  x = con pared
- * 	b= pared de base
- */
-//class FactoryPared {
-//	method dibujarPared(x,y){
-//		self.configurarPared(self.paredNueva(x,y))
-//	}
-//	
-//	method paredNueva(x,y){
-//		return new Pared(position = game.at(x,y))
-//	}
-//	method configurarPared(unaPared){
-//		game.addVisual(unaPared)
-////		nivelManager.paredesDeNivelActual().add(unaPared)
-//		game.whenCollideDo(unaPared,{unElemento => unaPared.aplicarEfectoDeObjeto(unElemento)})
-//	}
-//}
-//
-//object o inherits FactoryPared{
-//	override method dibujarPared(x,y){}
-//}
-//
-//object x inherits FactoryPared{
-//	override method configurarPared(unaPared){
-//		super(unaPared)
-//		nivelManager.paredesDeNivelActual().add(unaPared)
-//	}
-//}
-//
-//object b inherits FactoryPared {
-//	override method configurarPared(unaPared){
-//		super(unaPared)
-//		base.paredesDeBase().add(unaPared)
-//	}
-//}
 
 class Nivel{
-	
 	method mapa()           // abstracto
-	
 	method maxTanques()   // abstracto
-	
 	method siguienteNivel() //abstracto
-
-	method ubicarPlayer(jugador){
-		game.addVisual(jugador)
-	}
 }
 
 object nivel1 inherits Nivel {
@@ -199,12 +131,6 @@ object nivel1 inherits Nivel {
 	override method siguienteNivel(){
 		 nivelManager.pasarANivel(nivel2)
 	}
-			
-	override method ubicarPlayer(jugador){
-		super(jugador)
-		game.say(jugador, "A Jugar!")
-	}
-	
 }
 object nivel2 inherits Nivel {
 	const property nombreNivel = "nivel2"
@@ -238,11 +164,6 @@ object nivel2 inherits Nivel {
 	override method siguienteNivel(){
 		 nivelManager.pasarANivel(nivel3)
 	}
-	
-	override method ubicarPlayer(jugador){
-		super(jugador)
-		game.say(jugador, "Pasaste de Nivel!! Sigamoos Jugando!")
-	}
 }
 
 object nivel3 inherits Nivel {
@@ -272,16 +193,8 @@ object nivel3 inherits Nivel {
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o],
 				[o,o,o,o,o,o,o,o,o,o, o,o,o,o,o,o,o,o,o,o]]
 	}
-	
-	
-	
 	override method siguienteNivel(){
 		 nivelManager.mapaFinal(win)
-	}
-			
-	override method ubicarPlayer(jugador){
-		super(jugador)
-		game.say(jugador, "Ultimo Nivel!! Sigamos adelante!")
 	}
 }
 
