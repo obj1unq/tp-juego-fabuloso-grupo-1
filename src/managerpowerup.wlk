@@ -4,7 +4,7 @@ import nivel.*
 
 object managerPowerUp {
 	const property powerUps = [powerUpCuracion,powerUpBase,powerUpAumentoDanio,powerUpDestruccion,powerUpCuracionBase]
-	
+
 	method inicializarPowersUps(){
 		game.onTick(8000, "managerPowerUp", { managerPowerUp.agregarPower(managerPowerUp.powerRandom()) })
 	}
