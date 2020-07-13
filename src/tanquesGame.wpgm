@@ -1,14 +1,4 @@
 import wollok.game.*
-//import enemigo.*
-//import base.*
-//import orientaciones.*
-//import powerUps.*
-//import randomizer.*
-//import tanque.*
-//import bala.*
-//import managerpowerup.*
-//import paredes.*
-//import nivel.*
 import efectos.*
 import wollokTankConfig.*
 
