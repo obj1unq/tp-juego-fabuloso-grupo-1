@@ -5,6 +5,7 @@ import randomizer.*
 import paredes.*
 import efectos.*
 import nivel.*
+import tanque.*
 
 class PowerUp{
 	var property position = self.posicionNueva()

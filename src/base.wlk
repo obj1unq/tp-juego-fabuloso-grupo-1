@@ -36,12 +36,12 @@ object base inherits ObjectosQueRecibenDanio {
 		}
 	}
 	
-	method dibujarParedes (){
-	   nivelManager.dibujarParedesPorLista(self.paredesBaseCoordenadas())
-	}
+//	method dibujarParedes (){
+//	   nivelManager.dibujarParedesPorLista(self.paredesBaseCoordenadas())
+//	}
 	method ubicarBase(){
 		game.addVisual(self)
-		self.dibujarParedes()
+		managerParedes.dibujarParedesPorLista(self.paredesBaseCoordenadas())
 		self.configurarColisiones()
 	}
 
