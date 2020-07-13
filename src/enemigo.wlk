@@ -6,6 +6,7 @@ import base.*
 import randomizer.*
 import efectos.*
 import nivel.*
+import objetosParaHerencia.*
 
 /* manager de tanques enemigos */
 object tanqueEnemigoManager{

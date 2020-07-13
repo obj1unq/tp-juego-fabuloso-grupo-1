@@ -6,6 +6,7 @@ import randomizer.*
 import tanque.*
 import paredes.*
 import nivel.*
+import objetosParaHerencia.*
 
 object base inherits ObjectosQueRecibenDanio {
 	var property paredesDeBase=#{}

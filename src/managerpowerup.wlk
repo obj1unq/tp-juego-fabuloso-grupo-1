@@ -6,7 +6,7 @@ object managerPowerUp {
 	const property powerUps = [powerUpCuracion,powerUpBase,powerUpAumentoDanio,powerUpDestruccion,powerUpCuracionBase]
 
 	method inicializarPowersUps(){
-		game.onTick(8000, "managerPowerUp", { managerPowerUp.agregarPower(managerPowerUp.powerRandom()) })
+		game.onTick(8000, "managerPowerUp", { self.agregarPower(self.powerRandom()) })
 	}
 	
 	method agregarPower(powerRandom){

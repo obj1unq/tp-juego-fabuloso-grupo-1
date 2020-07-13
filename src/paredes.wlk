@@ -6,6 +6,7 @@ import tanque.*
 import orientaciones.*
 import efectos.*
 import nivel.*
+import objetosParaHerencia.*
 
 class Pared inherits ObjetosQueCambiaSegunDanio{
 	
