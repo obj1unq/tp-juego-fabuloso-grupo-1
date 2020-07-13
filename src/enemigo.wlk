@@ -11,7 +11,7 @@ import nivel.*
 object tanqueEnemigoManager{
 	const property tanques = []
 	const property tankOnTickSpeed = 1000
-//	var orientacion = norte
+
 	var property maxTanques = 0
 	
 	method target(){
@@ -20,12 +20,7 @@ object tanqueEnemigoManager{
 	method jugador() {
 		return nivelManager.jugador()
 	} 
-	
-//	method orientacion(){
-//		orientacion = orientacion.siguienteOrientacion()
-//		return orientacion
-//	}
-	
+
 	method tanqueEnemigoNuevo(){
 		return new TanqueEnemigo(position = randomizer.emptyPosition(), 
 								 objetivo= self.target())
